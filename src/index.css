@@ -8,8 +8,21 @@
 }
 
 @theme {
-    --color-yellow: #e53935; /* Revolutionary red accent */
+    /* Revolutionary Color Palette */
+    --color-revolutionary-red: #d32f2f;
+    --color-revolutionary-yellow: #ffeb3b;
+    --color-communist-red: #c62828;
+    --color-star-yellow: #ffd600;
+    --color-hammer-sickle: #ffca28;
+    --color-deep-red: #b71c1c;
+    --color-golden-yellow: #ff8f00;
+    --color-revolution-orange: #ff5722;
+    
+    /* Legacy colors for gradual transition */
+    --color-yellow: var(--color-star-yellow);
     --color-white-100: #efefef;
+    
+    /* Fonts */
     --font-sans: "Mona Sans", sans-serif;
     --font-modern-negra: "Modern Negra", sans-serif;
     --font-serif: "DM Serif Text", serif;
@@ -37,7 +50,7 @@ body {
 }
 
 @utility text-gradient {
-    background: linear-gradient(to bottom, #ffffff, #ff6b6b);
+    background: linear-gradient(135deg, var(--color-revolutionary-red) 0%, var(--color-star-yellow) 50%, var(--color-communist-red) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -46,7 +59,7 @@ body {
 @utility radial-gradient {
     background: radial-gradient(
             circle at center,
-            #434343 0%,
+            var(--color-deep-red) 0%,
             #000 50%,
             transparent 100%
     );
@@ -110,7 +123,7 @@ body {
                 @apply flex lg:flex-row flex-col w-full gap-10 justify-between items-center lg:items-end mx-auto;
 
                 p:nth-of-type(2) {
-                    @apply font-modern-negra text-6xl text-yellow max-w-xl;
+                    @apply font-modern-negra text-6xl text-[var(--color-star-yellow)] max-w-xl;
                 }
 
                 p:last-of-type {
@@ -125,7 +138,7 @@ body {
                     }
 
                     a {
-                        @apply font-semibold opacity-80 2xl:text-start text-center hover:text-yellow;
+                        @apply font-semibold opacity-80 2xl:text-start text-center hover:text-[var(--color-star-yellow)];
                     }
                 }
             }
@@ -169,7 +182,7 @@ body {
                     @apply flex justify-between items-start;
 
                     h3 {
-                        @apply font-modern-negra 2xl:text-3xl text-xl text-yellow;
+                        @apply font-modern-negra 2xl:text-3xl text-xl text-[var(--color-star-yellow)];
                     }
 
                     p {
@@ -205,14 +218,14 @@ body {
                     @apply flex flex-col justify-between md:gap-2 gap-5;
 
                     span {
-                        @apply text-yellow font-bold text-5xl;
+                        @apply text-[var(--color-star-yellow)] font-bold text-5xl;
                     }
                 }
             }
         }
 
         .badge {
-            @apply inline-block rounded-full bg-white text-black px-4 py-2 text-sm font-medium mb-8;
+            @apply inline-block rounded-full bg-[var(--color-star-yellow)] text-black px-4 py-2 text-sm font-medium mb-8;
         }
 
         .top-grid {
@@ -244,7 +257,7 @@ body {
         @apply flex-center flex-col min-h-dvh p-5 mt-20 relative radial-gradient;
 
         h2 {
-            @apply relative md:text-[20vw] text-8xl text-nowrap leading-none font-modern-negra text-center text-[#505050] mb-8;
+            @apply relative md:text-[20vw] text-8xl text-nowrap leading-none font-modern-negra text-center text-[var(--color-deep-red)] mb-8;
         }
 
         .content {
@@ -289,7 +302,7 @@ body {
             @apply grid md:grid-cols-4 grid-cols-2 md:gap-20 gap-10 sm:mb-32 mb-20 relative z-10 md:max-w-6xl md:mx-auto;
 
             button {
-                @apply md:text-3xl text-xl pb-2 cursor-pointer hover:text-yellow hover:border-yellow border-b-1 transition-colors font-modern-negra;
+                @apply md:text-3xl text-xl pb-2 cursor-pointer hover:text-[var(--color-star-yellow)] hover:border-[var(--color-star-yellow)] border-b-1 transition-colors font-modern-negra;
             }
         }
 
@@ -300,7 +313,7 @@ body {
                 @apply flex items-center justify-between w-full absolute;
 
                 button {
-                    @apply text-white hover:text-yellow cursor-pointer transition-colors max-w-36;
+                    @apply text-white hover:text-[var(--color-star-yellow)] cursor-pointer transition-colors max-w-36;
 
                     span {
                         @apply text-3xl font-modern-negra leading-none hidden md:block;
@@ -324,7 +337,7 @@ body {
                 @apply space-y-4 lg:translate-y-20;
 
                 #title {
-                    @apply font-modern-negra md:text-6xl text-3xl text-yellow max-w-40;
+                    @apply font-modern-negra md:text-6xl text-3xl text-[var(--color-star-yellow)] max-w-40;
                 }
             }
 

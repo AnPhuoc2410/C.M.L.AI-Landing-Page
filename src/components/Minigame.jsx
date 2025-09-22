@@ -8,7 +8,7 @@ const shuffleArray = (array) => {
     const copy = [...array]
     for (let i = copy.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1))
-        ;[copy[i], copy[j]] = [copy[j], copy[i]]
+            ;[copy[i], copy[j]] = [copy[j], copy[i]]
     }
     return copy
 }
@@ -25,7 +25,41 @@ const MiniGame = () => {
     const current = questions[index]
 
     useGSAP(() => {
-        gsap.fromTo('#quiz-quote', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 })
+        // Revolutionary entrance animation
+        gsap.fromTo('#quiz-quote',
+            {
+                opacity: 0,
+                y: 30,
+                scale: 0.9,
+                rotationX: 45
+            },
+            {
+                opacity: 1,
+                y: 0,
+                scale: 1,
+                rotationX: 0,
+                duration: 0.8,
+                ease: 'back.out(1.7)'
+            }
+        )
+
+        // Revolutionary symbols animation
+        gsap.to('.revolutionary-symbol', {
+            rotation: 360,
+            duration: 10,
+            ease: 'none',
+            repeat: -1,
+            stagger: 2
+        })
+
+        // Quiz container pulse effect
+        gsap.to('.quiz-container', {
+            boxShadow: '0 0 40px rgba(211, 47, 47, 0.3), inset 0 0 20px rgba(255, 235, 59, 0.1)',
+            duration: 3,
+            ease: 'power2.inOut',
+            yoyo: true,
+            repeat: -1
+        })
     }, [index])
 
     const pick = (choice) => {
@@ -53,9 +87,26 @@ const MiniGame = () => {
     }
 
     return (
-        <section id="minigame" className="relative py-16">
-            <h2 className="text-center text-3xl font-bold mb-2">Marx hay AI nói?</h2>
-            <p className="text-center opacity-70 mb-10">Chọn nguồn gốc của trích dẫn dưới đây</p>
+        <section id="minigame" className="relative py-16 bg-gradient-to-br from-black via-[var(--color-deep-red)] to-black">
+            {/* Revolutionary background symbols */}
+            <div className="revolutionary-symbol absolute top-10 left-10 text-6xl text-[var(--color-star-yellow)] opacity-20">☭</div>
+            <div className="revolutionary-symbol absolute top-20 right-20 text-5xl text-[var(--color-revolutionary-red)] opacity-20">⚒</div>
+            <div className="revolutionary-symbol absolute bottom-20 left-1/4 text-4xl text-[var(--color-star-yellow)] opacity-15">🚩</div>
+            <div className="revolutionary-symbol absolute bottom-10 right-1/3 text-3xl text-[var(--color-revolutionary-red)] opacity-15">⭐</div>
+
+            <div className="relative z-10">
+                <div className="text-center mb-10">
+                    <h2 className="text-4xl font-bold text-gradient mb-4">
+                        ☭ Marx hay AI nói? ☭
+                    </h2>
+                    <p className="text-[var(--color-star-yellow)] text-lg font-semibold mb-2">
+                        🧠 Trò chơi Cách mạng Tri thức 🧠
+                    </p>
+                    <p className="text-white opacity-80">
+                        Kiểm tra khả năng phân biệt giữa tư tưởng Marx-Lenin và AI hiện đại
+                    </p>
+                </div>
+            </div>
 
             {!finished ? (
                 <div ref={containerRef} className="mx-auto max-w-3xl border border-white/10 rounded-2xl p-6 md:p-8 bg-black/30 backdrop-blur">
