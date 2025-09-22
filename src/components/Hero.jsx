@@ -100,15 +100,14 @@ const Hero = () => {
             </div>
         </section>
 
-        {/* Video nền */}
+        {/* Background video (kept) */}
         <div className="video absolute inset-0">
             <video
                 ref={videoRef}
                 muted
                 playsInline
                 preload="auto"
-                src="/videos/output.mp4" 
-                // 📌 đổi: video nền AI / digital / triết học
+                src="/videos/output.mp4"
             />
         </div>
         </>

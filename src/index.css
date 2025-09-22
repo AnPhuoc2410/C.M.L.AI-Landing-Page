@@ -8,7 +8,7 @@
 }
 
 @theme {
-    --color-yellow: #e7d393;
+    --color-yellow: #e53935; /* Revolutionary red accent */
     --color-white-100: #efefef;
     --font-sans: "Mona Sans", sans-serif;
     --font-modern-negra: "Modern Negra", sans-serif;
@@ -37,7 +37,7 @@ body {
 }
 
 @utility text-gradient {
-    background: linear-gradient(to bottom, #ffffff, #898989);
+    background: linear-gradient(to bottom, #ffffff, #ff6b6b);
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -159,7 +159,7 @@ body {
             }
 
             h2 {
-                @apply text-xl font-medium;
+                @apply text-xl font-medium uppercase tracking-wide text-white/80;
             }
 
             ul {

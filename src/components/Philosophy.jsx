@@ -29,7 +29,7 @@ const Philosophy = () => {
             <div className="container mx-auto px-6 md:px-12 grid md:grid-cols-2 gap-12 relative z-10">
                 {/* Marxist Theory Section */}
                 <div className="popular">
-                    <h2 className="text-3xl font-bold text-gradient mb-6">
+                    <h2 className="text-3xl font-bold text-gradient mb-6 uppercase tracking-wide">
                         Nền tảng Triết học Mác – Lênin
                     </h2>
                     <ul className="space-y-6">
@@ -47,7 +47,7 @@ const Philosophy = () => {
 
                 {/* AI Section */}
                 <div className="loved">
-                    <h2 className="text-3xl font-bold text-gradient mb-6">
+                    <h2 className="text-3xl font-bold text-gradient mb-6 uppercase tracking-wide">
                         Trí tuệ nhân tạo trong Thời đại mới
                     </h2>
                     <ul className="space-y-6">

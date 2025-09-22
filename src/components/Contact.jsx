@@ -44,7 +44,7 @@ const Contact = () => {
 
   return (
     <footer id="contact" className="relative bg-black text-white">
-      {/* Decorative leaf images - TODO: đổi thành icon/ảnh phù hợp nếu không muốn dùng lá */}
+      {/* Decorative placeholders */}
       <img
         src="/images/footer-right-leaf.png"
         alt="leaf-right"

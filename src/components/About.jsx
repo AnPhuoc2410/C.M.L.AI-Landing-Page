@@ -1,6 +1,8 @@
 import gsap from 'gsap';
 import { SplitText } from 'gsap/all'
 import { useGSAP } from '@gsap/react'
+import { Canvas } from '@react-three/fiber'
+import { OrbitControls } from '@react-three/drei'
 
 const About = () => {
 
@@ -56,19 +58,47 @@ const About = () => {
             </div>
 
             <div className="top-grid">
-                <div className="md:col-span-3">
+                <div className="md:col-span-3 relative">
                     <div className="noisy" />
-                    <img src="/images/abt1.png" alt="about-img-1" /> {/* NOTE: thay hình sau */}
+                    <img src="/images/abt1.png" alt="about-img-1" />
                 </div>
 
-                <div className="md:col-span-6">
+                <div className="md:col-span-6 relative">
                     <div className="noisy" />
-                    <img src="/images/abt2.png" alt="about-img-2" /> {/* NOTE: thay hình sau */}
+                    {/* Embedded 3D wireframe sphere moved from Hero */}
+                    <div className="absolute inset-0">
+                        <Canvas camera={{ position: [0, 0, 4] }}>
+                            <ambientLight intensity={0.8} />
+                            <directionalLight position={[4, 6, 8]} intensity={1} />
+                            {/* ☭ Hammer and Sickle constructed from primitives */}
+                            <group rotation={[0.2, -0.3, 0.1]} position={[0, 0.1, 0]}>
+                                {/* Sickle (crescent) */}
+                                <mesh rotation={[Math.PI / 2, 0, 0]}>
+                                    <torusGeometry args={[1.2, 0.12, 24, 120, Math.PI * 1.35]} />
+                                    <meshStandardMaterial color="#ffd54f" metalness={0.4} roughness={0.35} />
+                                </mesh>
+
+                                {/* Hammer handle */}
+                                <mesh position={[-0.15, 0.2, 0.05]} rotation={[0, 0, -Math.PI / 4]}>
+                                    <boxGeometry args={[0.15, 1.5, 0.15]} />
+                                    <meshStandardMaterial color="#ffd54f" metalness={0.3} roughness={0.5} />
+                                </mesh>
+
+                                {/* Hammer head */}
+                                <mesh position={[0.35, 0.7, 0.05]} rotation={[0, 0, -Math.PI / 4]}>
+                                    <boxGeometry args={[0.5, 0.25, 0.25]} />
+                                    <meshStandardMaterial color="#ffd54f" metalness={0.3} roughness={0.5} />
+                                </mesh>
+                            </group>
+
+                            <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.8} />
+                        </Canvas>
+                    </div>
                 </div>
 
-                <div className="md:col-span-3">
+                <div className="md:col-span-3 relative">
                     <div className="noisy" />
-                    <img src="/images/abt5.png" alt="about-img-5" /> {/* NOTE: thay hình sau */}
+                    <img src="/images/abt5.png" alt="about-img-5" />
                 </div>
             </div>
 

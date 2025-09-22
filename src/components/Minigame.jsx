@@ -1,103 +1,123 @@
 'use client';
-import { allConcepts } from '../../constants/index.js'
-import { useRef, useState } from 'react'
+import { quizQuestions } from '../../constants/index.js'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
-import gsap from 'gsap';
+import gsap from 'gsap'
+
+const shuffleArray = (array) => {
+    const copy = [...array]
+    for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1))
+        ;[copy[i], copy[j]] = [copy[j], copy[i]]
+    }
+    return copy
+}
 
 const MiniGame = () => {
-    const contentRef = useRef();
-    const [currentIndex, setCurrentIndex] = useState(0);
+    const containerRef = useRef()
+    const [index, setIndex] = useState(0)
+    const [score, setScore] = useState(0)
+    const [answered, setAnswered] = useState(false)
+    const [selected, setSelected] = useState(null)
+    const [finished, setFinished] = useState(false)
+
+    const questions = useMemo(() => shuffleArray(quizQuestions).slice(0, 5), [])
+    const current = questions[index]
 
     useGSAP(() => {
-        gsap.fromTo('#title', { opacity: 0 }, { opacity: 1, duration: 1 });
-        gsap.fromTo('.concept img', { opacity: 0, xPercent: -100 }, {
-            xPercent: 0, opacity: 1, duration: 1, ease: 'power1.inOut'
-        });
-        gsap.fromTo('.details h2', { yPercent: 100, opacity: 0 }, {
-            yPercent: 0, opacity: 1, ease: 'power1.inOut'
-        });
-        gsap.fromTo('.details p', { yPercent: 100, opacity: 0 }, {
-            yPercent: 0, opacity: 1, ease: 'power1.inOut'
-        });
-    }, [currentIndex]);
+        gsap.fromTo('#quiz-quote', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 })
+    }, [index])
 
-    const totalConcepts = allConcepts.length;
-
-    const goToSlide = (index) => {
-        const newIndex = (index + totalConcepts) % totalConcepts;
-        setCurrentIndex(newIndex);
+    const pick = (choice) => {
+        if (answered) return
+        setSelected(choice)
+        const isCorrect = choice === current.answer
+        setScore((s) => s + (isCorrect ? 1 : 0))
+        setAnswered(true)
     }
 
-    const getConceptAt = (indexOffset) => {
-        return allConcepts[(currentIndex + indexOffset + totalConcepts) % totalConcepts]
+    const next = () => {
+        if (!answered) return
+        const hasNext = index + 1 < questions.length
+        if (hasNext) {
+            setIndex((i) => i + 1)
+            setAnswered(false)
+            setSelected(null)
+        } else {
+            setFinished(true)
+        }
     }
 
-    const currentConcept = getConceptAt(0);
-    const prevConcept = getConceptAt(-1);
-    const nextConcept = getConceptAt(1);
+    const restart = () => {
+        window.location.reload()
+    }
 
     return (
-        <section id="minigame" aria-labelledby="minigame-heading" className="relative py-16">
-            {/* TODO: Replace these leaf images with themed icons if needed */}
-            <img src="/images/slider-left-leaf.png" alt="left-leaf" id="m-left-leaf" />
-            <img src="/images/slider-right-leaf.png" alt="right-leaf" id="m-right-leaf" />
+        <section id="minigame" className="relative py-16">
+            <h2 className="text-center text-3xl font-bold mb-2">Marx hay AI nói?</h2>
+            <p className="text-center opacity-70 mb-10">Chọn nguồn gốc của trích dẫn dưới đây</p>
 
-            <h2 id="minigame-heading" className="text-center text-3xl font-bold mb-10">
-                Mini Game: Marx hay AI nói?
-            </h2>
-
-            {/* Navigation tabs */}
-            <nav className="concept-tabs flex justify-center flex-wrap gap-3 mb-8" aria-label="Concept Navigation">
-                {allConcepts.map((concept, index) => {
-                    const isActive = index === currentIndex;
-                    return (
-                        <button
-                            key={concept.id}
-                            className={`
-                                px-4 py-2 border rounded-full text-sm transition-all
-                                ${isActive ? 'text-white border-white bg-gray-800' : 'text-white/50 border-white/50 hover:text-white hover:border-white'}
-                            `}
-                            onClick={() => goToSlide(index)}
-                        >
-                            {concept.name}
-                        </button>
-                    )
-                })}
-            </nav>
-
-            <div className="content grid md:grid-cols-2 gap-8 items-center">
-                {/* Arrows */}
-                <div className="arrows absolute top-1/2 left-0 right-0 flex justify-between px-4">
-                    <button onClick={() => goToSlide(currentIndex - 1)} className="flex items-center gap-2">
-                        <img src="/images/left-arrow.png" alt="left-arrow" aria-hidden="true" />
-                        <span className="hidden md:inline">{prevConcept.name}</span>
-                    </button>
-                    <button onClick={() => goToSlide(currentIndex + 1)} className="flex items-center gap-2">
-                        <span className="hidden md:inline">{nextConcept.name}</span>
-                        <img src="/images/right-arrow.png" alt="right-arrow" aria-hidden="true" />
-                    </button>
-                </div>
-
-                {/* Current concept image */}
-                <div className="concept flex justify-center">
-                    <img
-                        src={currentConcept.image}
-                        className="object-contain max-h-[300px]"
-                        alt={currentConcept.name}
-                    />
-                </div>
-
-                {/* Current concept details */}
-                <div className="details text-center md:text-left">
-                    <div ref={contentRef} className="info mb-4">
-                        <p className="text-sm uppercase tracking-wider text-gray-400">Quote from:</p>
-                        <p id="title" className="text-xl font-bold">{currentConcept.name}</p>
+            {!finished ? (
+                <div ref={containerRef} className="mx-auto max-w-3xl border border-white/10 rounded-2xl p-6 md:p-8 bg-black/30 backdrop-blur">
+                    <div id="quiz-quote" className="text-center md:text-2xl text-xl leading-relaxed mb-6">
+                        “{current.quote}”
                     </div>
-                    <h2 className="text-2xl font-semibold mb-3">{currentConcept.title}</h2>
-                    <p className="text-gray-300">{currentConcept.description}</p>
+                    <div className="flex justify-center gap-4 md:gap-6">
+                        {['Marx', 'AI'].map((label) => {
+                            const base = 'px-6 py-3 rounded-full border transition-all text-sm md:text-base'
+                            const state = answered
+                                ? label === current.answer
+                                    ? 'bg-yellow text-black border-yellow'
+                                    : label === selected
+                                        ? 'opacity-50 border-white/20'
+                                        : 'border-white/20'
+                                : 'hover:border-yellow'
+                            return (
+                                <button
+                                    key={label}
+                                    className={`${base} ${state}`}
+                                    onClick={() => pick(label)}
+                                    aria-pressed={selected === label}
+                                >
+                                    {label}
+                                </button>
+                            )
+                        })}
+                    </div>
+
+                    <div className="mt-8 text-center min-h-[72px]">
+                        {answered && (
+                            <div>
+                                <p className="font-semibold mb-1">
+                                    {selected === current.answer ? 'Chính xác!' : 'Chưa đúng.'}
+                                </p>
+                                <p className="opacity-80 text-sm">
+                                    Nguồn: {current.source} — {current.explanation}
+                                </p>
+                            </div>
+                        )}
+                    </div>
+
+                    <div className="mt-6 flex justify-between items-center">
+                        <p className="opacity-70 text-sm">Điểm: {score}/{questions.length}</p>
+                        <button
+                            className={`px-5 py-2 rounded-md border ${answered ? 'border-yellow hover:bg-yellow hover:text-black' : 'border-white/20 opacity-50 cursor-not-allowed'}`}
+                            onClick={next}
+                            disabled={!answered}
+                        >
+                            {index + 1 < questions.length ? 'Câu tiếp theo' : 'Hoàn thành'}
+                        </button>
+                    </div>
                 </div>
-            </div>
+            ) : (
+                <div className="mx-auto max-w-xl text-center space-y-4">
+                    <h3 className="text-2xl font-bold">Hoàn thành!</h3>
+                    <p className="opacity-80">Bạn đạt {score}/{questions.length} điểm.</p>
+                    <button className="px-6 py-3 rounded-md border border-yellow hover:bg-yellow hover:text-black" onClick={restart}>Chơi lại</button>
+                </div>
+            )}
         </section>
     )
 }
-export default MiniGame;
+
+export default MiniGame

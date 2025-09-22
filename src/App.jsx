@@ -7,7 +7,7 @@ import Hero from "./components/Hero.jsx";
 import Philosophy from "./components/Philosophy.jsx";
 import About from "./components/About.jsx";
 import Timeline from "./components/Timeline.jsx";
-import MiniGame from "./components/MiniGame.jsx";
+import MiniGame from "./components/Minigame.jsx";
 import Contact from "./components/Contact.jsx";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
@@ -18,11 +18,11 @@ const App = () => {
       {/* Navigation */}
       <Navbar />
 
-      {/* Hero Section: Video Background + Title */}
-      {/* TODO: Replace /videos/hero-bg.mp4 with your actual background video */}
+      {/* Hero Section: GSAP intro + 3D scene */}
       <Hero />
 
-      {/* Section 1: Lý luận & Công nghệ */}
+      {/* Section 1: Lý luận & Công nghệ */
+      }
       <section id="philosophy" className="relative py-20 px-4">
         <Philosophy />
       </section>

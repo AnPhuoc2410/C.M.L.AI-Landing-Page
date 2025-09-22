@@ -1,5 +1,5 @@
 const navLinks = [
-  { id: "theory", title: "Triết học Mác – Lênin" },
+  { id: "philosophy", title: "Triết học Mác – Lênin" },
   { id: "about", title: "Về Dự Án" },
   { id: "art", title: "AI & Nghệ Thuật" },
   { id: "contact", title: "Liên hệ" },
@@ -156,6 +156,66 @@ const allConcepts = [
   },
 ];
 
+// =============================
+// Quiz: Marx vs AI
+// =============================
+const quizQuestions = [
+  {
+    id: 1,
+    quote:
+      "Sự phát triển của lực lượng sản xuất vật chất là tiền đề cho sự thay đổi các quan hệ sản xuất.",
+    answer: "Marx",
+    source: "Phép biện chứng duy vật",
+    explanation:
+      "Luận điểm về vai trò quyết định của lực lượng sản xuất đối với quan hệ sản xuất là cốt lõi của chủ nghĩa duy vật lịch sử.",
+  },
+  {
+    id: 2,
+    quote:
+      "Mạng nơ-ron có thể học các biểu diễn trừu tượng từ dữ liệu quy mô lớn mà không cần quy tắc viết sẵn.",
+    answer: "AI",
+    source: "Deep Learning",
+    explanation:
+      "Nhấn mạnh khả năng học tự động của mạng nơ-ron sâu, đặc trưng của AI hiện đại.",
+  },
+  {
+    id: 3,
+    quote:
+      "Tồn tại xã hội quyết định ý thức xã hội, không phải ngược lại.",
+    answer: "Marx",
+    source: "Chủ nghĩa duy vật lịch sử",
+    explanation:
+      "Một mệnh đề kinh điển của Mác về mối quan hệ giữa cơ sở hạ tầng và kiến trúc thượng tầng.",
+  },
+  {
+    id: 4,
+    quote:
+      "Mô hình ngôn ngữ dự đoán từ kế tiếp bằng cách tối thiểu hoá hàm mất mát trên kho văn bản khổng lồ.",
+    answer: "AI",
+    source: "NLP / LLM",
+    explanation:
+      "Mô tả cơ chế huấn luyện điển hình của các mô hình ngôn ngữ lớn hiện nay.",
+  },
+  {
+    id: 5,
+    quote:
+      "Lịch sử của mọi xã hội cho đến nay là lịch sử đấu tranh giai cấp.",
+    answer: "Marx",
+    source: "Tuyên ngôn của Đảng Cộng sản",
+    explanation:
+      "Trích dẫn nổi tiếng của Mác và Ăng-ghen về quy luật vận động lịch sử.",
+  },
+  {
+    id: 6,
+    quote:
+      "Trí tuệ nhân tạo nên được thiết kế có trách nhiệm, minh bạch và vì lợi ích chung.",
+    answer: "AI",
+    source: "AI Ethics",
+    explanation:
+      "Nêu nguyên tắc đạo đức trong phát triển AI hiện đại, không thuộc văn bản của Mác.",
+  },
+];
+
 export {
   navLinks,
   theoryLists,
@@ -167,4 +227,5 @@ export {
   storeInfo,
   socials,
   allConcepts,
+  quizQuestions,
 };

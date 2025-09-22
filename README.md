@@ -1,8 +1,10 @@
-# Marx-AI Landing — Full client-side React + Vite project
+# CMLAI — Communism · Marxism · Leninism · AI
 
-This repository is a single-page client-only landing experience themed *"Mác – Lênin & AI"*. It includes:
-- Hero with particle background + 3D bust effect
-- GSAP ScrollTrigger timeline sections
-- React Three Fiber 3D interactive globe
-- Minigame teaser cards
-- TailwindCSS + Framer Motion micro-interactions
+Single-page React + Vite landing themed around Marxist theory and AI.
+
+Includes:
+- Hero with GSAP intro, 3D wireframe sphere overlay (React Three Fiber)
+- Scroll-driven sections for Philosophy, About, Timeline, Mini Game, Contact
+- TailwindCSS utilities and Framer Motion micro-interactions
+
+Replace assets in `public/images` and `public/videos` as needed.
