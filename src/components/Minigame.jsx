@@ -1,6 +1,6 @@
 'use client';
 import { quizQuestions } from '../../constants/index.js'
-import { useEffect, useMemo, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 
@@ -8,58 +8,41 @@ const shuffleArray = (array) => {
     const copy = [...array]
     for (let i = copy.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1))
-            ;[copy[i], copy[j]] = [copy[j], copy[i]]
+        ;[copy[i], copy[j]] = [copy[j], copy[i]]
     }
     return copy
 }
 
 const MiniGame = () => {
-    const containerRef = useRef()
-    const [index, setIndex] = useState(0)
-    const [score, setScore] = useState(0)
-    const [answered, setAnswered] = useState(false)
-    const [selected, setSelected] = useState(null)
-    const [finished, setFinished] = useState(false)
-
-    const questions = useMemo(() => shuffleArray(quizQuestions).slice(0, 5), [])
+    const quoteRef = useRef(null)
+    const cardRef = useRef(null)
+        const [questions, setQuestions] = useState(() => shuffleArray(quizQuestions).slice(0, 5))
+        const [index, setIndex] = useState(0)
+        const [score, setScore] = useState(0)
+        const [answered, setAnswered] = useState(false)
+        const [selected, setSelected] = useState(null)
+        const [finished, setFinished] = useState(false)
     const current = questions[index]
 
     useGSAP(() => {
-        // Revolutionary entrance animation
-        gsap.fromTo('#quiz-quote',
-            {
-                opacity: 0,
-                y: 30,
-                scale: 0.9,
-                rotationX: 45
-            },
-            {
-                opacity: 1,
-                y: 0,
-                scale: 1,
-                rotationX: 0,
-                duration: 0.8,
-                ease: 'back.out(1.7)'
+        gsap.from(cardRef.current, {
+            y: 40,
+            opacity: 0,
+            duration: 0.8,
+            ease: 'power2.out',
+            scrollTrigger: {
+                trigger: '#minigame',
+                start: 'top 80%'
             }
+        })
+    }, [])
+
+    useGSAP(() => {
+        gsap.fromTo(
+            quoteRef.current,
+            { opacity: 0, y: 20 },
+            { opacity: 1, y: 0, duration: 0.5, ease: 'power2.out' }
         )
-
-        // Revolutionary symbols animation
-        gsap.to('.revolutionary-symbol', {
-            rotation: 360,
-            duration: 10,
-            ease: 'none',
-            repeat: -1,
-            stagger: 2
-        })
-
-        // Quiz container pulse effect
-        gsap.to('.quiz-container', {
-            boxShadow: '0 0 40px rgba(211, 47, 47, 0.3), inset 0 0 20px rgba(255, 235, 59, 0.1)',
-            duration: 3,
-            ease: 'power2.inOut',
-            yoyo: true,
-            repeat: -1
-        })
     }, [index])
 
     const pick = (choice) => {
@@ -83,90 +66,121 @@ const MiniGame = () => {
     }
 
     const restart = () => {
-        window.location.reload()
+            setQuestions(shuffleArray(quizQuestions).slice(0, 5))
+            setIndex(0)
+            setScore(0)
+            setAnswered(false)
+            setSelected(null)
+            setFinished(false)
     }
 
     return (
-        <section id="minigame" className="relative py-16 bg-gradient-to-br from-black via-[var(--color-deep-red)] to-black">
-            {/* Revolutionary background symbols */}
-            <div className="revolutionary-symbol absolute top-10 left-10 text-6xl text-[var(--color-star-yellow)] opacity-20">☭</div>
-            <div className="revolutionary-symbol absolute top-20 right-20 text-5xl text-[var(--color-revolutionary-red)] opacity-20">⚒</div>
-            <div className="revolutionary-symbol absolute bottom-20 left-1/4 text-4xl text-[var(--color-star-yellow)] opacity-15">🚩</div>
-            <div className="revolutionary-symbol absolute bottom-10 right-1/3 text-3xl text-[var(--color-revolutionary-red)] opacity-15">⭐</div>
+        <section id="minigame" className="section-spacing">
+            <div className="relative">
+                <div className="absolute inset-0 -z-10 bg-[radial-gradient(circle_at_top,rgba(96,165,250,0.18),transparent_60%)]" />
+                <div className="section-shell gap-10 text-center">
+                    <div className="mx-auto max-w-3xl space-y-4">
+                        <span className="section-heading">Interactive learning</span>
+                        <h2 className="section-title">Who said it—historic theory or modern AI?</h2>
+                        <p className="section-subtitle">
+                            Sharpen your interpretive skills by matching quotes to their origins. Trace how language carries ideology across
+                            eras, and how machines remix it today.
+                        </p>
+                    </div>
 
-            <div className="relative z-10">
-                <div className="text-center mb-10">
-                    <h2 className="text-4xl font-bold text-gradient mb-4">
-                        ☭ Marx hay AI nói? ☭
-                    </h2>
-                    <p className="text-[var(--color-star-yellow)] text-lg font-semibold mb-2">
-                        🧠 Trò chơi Cách mạng Tri thức 🧠
-                    </p>
-                    <p className="text-white opacity-80">
-                        Kiểm tra khả năng phân biệt giữa tư tưởng Marx-Lenin và AI hiện đại
-                    </p>
+                    {!finished ? (
+                        <div
+                            ref={cardRef}
+                            className="relative mx-auto max-w-3xl overflow-hidden rounded-3xl border border-white/10 bg-white/5 p-8 text-left shadow-[0_30px_80px_rgba(15,23,42,0.35)] backdrop-blur-xl"
+                        >
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(59,130,246,0.12),transparent_60%)]" />
+                            <div className="relative space-y-8">
+                                <div>
+                                    <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Quote {index + 1} of {questions.length}</p>
+                                    <blockquote ref={quoteRef} className="mt-4 text-xl font-medium leading-relaxed text-white md:text-2xl">
+                                        “{current.quote}”
+                                    </blockquote>
+                                </div>
+
+                                <div className="flex flex-col gap-4 md:flex-row md:gap-6">
+                                    {['Marx', 'AI'].map((label) => {
+                                        const isCorrect = label === current.answer
+                                        const isSelected = selected === label
+                                        return (
+                                            <button
+                                                key={label}
+                                                onClick={() => pick(label)}
+                                                aria-pressed={isSelected}
+                                                className={`relative flex-1 rounded-2xl border px-6 py-4 text-sm font-semibold uppercase tracking-[0.3em] transition-all duration-200 ${
+                                                    answered
+                                                        ? isCorrect
+                                                            ? 'border-emerald-300/60 bg-emerald-400/10 text-emerald-200 shadow-inner shadow-emerald-400/20'
+                                                            : isSelected
+                                                                ? 'border-white/10 bg-black/40 text-slate-500'
+                                                                : 'border-white/10 bg-black/30 text-slate-400'
+                                                        : 'border-white/10 bg-black/30 text-slate-200 hover:border-white/30 hover:bg-white/10'
+                                                }`}
+                                            >
+                                                {label}
+                                                <span className="absolute inset-0 rounded-2xl border border-white/5 opacity-0 transition-opacity duration-200 hover:opacity-100" />
+                                            </button>
+                                        )
+                                    })}
+                                </div>
+
+                                <div className="min-h-[88px] rounded-2xl border border-white/5 bg-black/40 p-5 backdrop-blur-md">
+                                    {answered ? (
+                                        <div className="space-y-3">
+                                            <p className="text-lg font-semibold text-white">
+                                                {selected === current.answer ? 'Correct insight' : 'A thoughtful misstep'}
+                                            </p>
+                                            <p className="text-sm text-slate-300">
+                                                Source: {current.source} — {current.explanation}
+                                            </p>
+                                        </div>
+                                    ) : (
+                                        <p className="text-sm text-slate-400">Choose an answer to reveal the context behind the statement.</p>
+                                    )}
+                                </div>
+
+                                <div className="flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
+                                    <p className="text-sm text-slate-400">Score: {score}/{questions.length}</p>
+                                    <button
+                                        onClick={next}
+                                        disabled={!answered}
+                                        className={`inline-flex items-center gap-2 rounded-full px-5 py-2.5 text-sm font-semibold transition-colors duration-200 ${
+                                            answered
+                                                ? 'bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 text-white hover:opacity-95'
+                                                : 'bg-white/5 text-slate-500'
+                                        }`}
+                                    >
+                                        {index + 1 < questions.length ? 'Next prompt' : 'See results'}
+                                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                            <path strokeLinecap="round" strokeLinejoin="round" d="M8.25 4.5 15.75 12l-7.5 7.5" />
+                                        </svg>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    ) : (
+                        <div className="mx-auto max-w-xl space-y-6">
+                            <div className="rounded-3xl border border-white/10 bg-white/5 p-8 shadow-[0_30px_80px_rgba(15,23,42,0.35)] backdrop-blur-xl">
+                                <h3 className="text-2xl font-semibold text-white">Great reflections!</h3>
+                                <p className="mt-3 text-slate-200">You scored {score}/{questions.length}. Share your insights with the cohort or run it again.</p>
+                                <button
+                                    onClick={restart}
+                                    className="mt-6 inline-flex items-center gap-2 rounded-full border border-white/15 px-5 py-2.5 text-sm font-semibold text-white hover:border-white/30"
+                                >
+                                    Play again
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-4 w-4">
+                                        <path strokeLinecap="round" strokeLinejoin="round" d="M4.5 9A7.5 7.5 0 0 1 12 1.5v0A7.5 7.5 0 0 1 19.5 9M12 22.5V12m0 0 3.75 3.75M12 12 8.25 15.75" />
+                                    </svg>
+                                </button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
-
-            {!finished ? (
-                <div ref={containerRef} className="mx-auto max-w-3xl border border-white/10 rounded-2xl p-6 md:p-8 bg-black/30 backdrop-blur">
-                    <div id="quiz-quote" className="text-center md:text-2xl text-xl leading-relaxed mb-6">
-                        “{current.quote}”
-                    </div>
-                    <div className="flex justify-center gap-4 md:gap-6">
-                        {['Marx', 'AI'].map((label) => {
-                            const base = 'px-6 py-3 rounded-full border transition-all text-sm md:text-base'
-                            const state = answered
-                                ? label === current.answer
-                                    ? 'bg-yellow text-black border-yellow'
-                                    : label === selected
-                                        ? 'opacity-50 border-white/20'
-                                        : 'border-white/20'
-                                : 'hover:border-yellow'
-                            return (
-                                <button
-                                    key={label}
-                                    className={`${base} ${state}`}
-                                    onClick={() => pick(label)}
-                                    aria-pressed={selected === label}
-                                >
-                                    {label}
-                                </button>
-                            )
-                        })}
-                    </div>
-
-                    <div className="mt-8 text-center min-h-[72px]">
-                        {answered && (
-                            <div>
-                                <p className="font-semibold mb-1">
-                                    {selected === current.answer ? 'Chính xác!' : 'Chưa đúng.'}
-                                </p>
-                                <p className="opacity-80 text-sm">
-                                    Nguồn: {current.source} — {current.explanation}
-                                </p>
-                            </div>
-                        )}
-                    </div>
-
-                    <div className="mt-6 flex justify-between items-center">
-                        <p className="opacity-70 text-sm">Điểm: {score}/{questions.length}</p>
-                        <button
-                            className={`px-5 py-2 rounded-md border ${answered ? 'border-yellow hover:bg-yellow hover:text-black' : 'border-white/20 opacity-50 cursor-not-allowed'}`}
-                            onClick={next}
-                            disabled={!answered}
-                        >
-                            {index + 1 < questions.length ? 'Câu tiếp theo' : 'Hoàn thành'}
-                        </button>
-                    </div>
-                </div>
-            ) : (
-                <div className="mx-auto max-w-xl text-center space-y-4">
-                    <h3 className="text-2xl font-bold">Hoàn thành!</h3>
-                    <p className="opacity-80">Bạn đạt {score}/{questions.length} điểm.</p>
-                    <button className="px-6 py-3 rounded-md border border-yellow hover:bg-yellow hover:text-black" onClick={restart}>Chơi lại</button>
-                </div>
-            )}
         </section>
     )
 }

@@ -1,119 +1,145 @@
-import gsap from 'gsap';
-import { SplitText } from 'gsap/all'
-import { useGSAP } from '@gsap/react'
-import { Canvas } from '@react-three/fiber'
-import { OrbitControls } from '@react-three/drei'
+import React, { useRef } from "react";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
+import { Canvas } from "@react-three/fiber";
+import { OrbitControls } from "@react-three/drei";
 
 const About = () => {
+    const mediaCardsRef = useRef([]);
 
     useGSAP(() => {
-        const titleSplit = SplitText.create('#about h2', {
-            type: 'words'
-        })
-
-        const scrollTimeline = gsap.timeline({
+        gsap.from("#about header", {
+            y: 40,
+            opacity: 0,
+            duration: 0.9,
+            ease: "power2.out",
             scrollTrigger: {
-                trigger: '#about',
-                start: 'top center'
-            }
-        })
+                trigger: "#about",
+                start: "top 80%",
+            },
+        });
 
-        scrollTimeline
-            .from(titleSplit.words, {
-                opacity: 0, duration: 1, yPercent: 100, ease: 'expo.out', stagger: 0.02
-            })
-            .from('.top-grid div, .bottom-grid div', {
-                opacity: 0, duration: 1, ease: 'power1.inOut', stagger: 0.04,
-            }, '-=0.5')
-    })
+        gsap.from("#about-stats li", {
+            y: 20,
+            opacity: 0,
+            duration: 0.6,
+            stagger: 0.12,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: "#about",
+                start: "top 75%",
+            },
+        });
+
+        gsap.from(mediaCardsRef.current, {
+            scale: 0.95,
+            opacity: 0,
+            duration: 0.8,
+            stagger: 0.1,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: "#about",
+                start: "top 70%",
+            },
+        });
+    }, []);
+
+    const stats = [
+        { label: "Scholars contributing", value: "54" },
+        { label: "Published frameworks", value: "18" },
+        { label: "Open-source tools", value: "7" },
+    ];
 
     return (
-        <div id="about">
-            <div className="mb-16 md:px-0 px-5">
-                <div className="content">
-                    <div className="md:col-span-8">
-                        <p className="badge">Philosophy & AI</p>
-                        <h2>
-                            Nơi triết học <span className="text-white">gặp</span> công nghệ
+        <section id="about" className="section-spacing">
+            <div className="section-shell gap-12">
+                <header className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+                    <div className="max-w-3xl space-y-4">
+                        <span className="section-heading">Why we exist</span>
+                        <h2 className="section-title">
+                            Designing collaborative infrastructures where philosophy and AI co-evolve
                         </h2>
+                        <p className="section-subtitle">
+                            Our studio curates learning experiences, research residencies, and speculative prototypes that empower teams
+                            to align intelligent systems with human-centered values.
+                        </p>
+                    </div>
+                    <ul id="about-stats" className="grid grid-cols-1 gap-3 sm:grid-cols-3">
+                        {stats.map((item) => (
+                            <li key={item.label} className="rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-center">
+                                <p className="text-xs uppercase tracking-[0.3em] text-slate-400">{item.label}</p>
+                                <p className="mt-2 text-2xl font-semibold text-white">{item.value}</p>
+                            </li>
+                        ))}
+                    </ul>
+                </header>
+
+                <div className="grid gap-10 lg:grid-cols-[1.1fr_0.9fr]">
+                    <div className="space-y-6">
+                        <div className="glass-surface relative overflow-hidden p-8">
+                            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(59,130,246,0.14),transparent_55%)]" />
+                            <div className="relative space-y-5">
+                                <h3 className="text-2xl font-semibold text-white">Learning pathways</h3>
+                                <p>
+                                    Iterate through curated modules that weave socio-economic theory with technical craft. Each cohort explores
+                                    policy, ethics, and emergent tooling through collaborative inquiry.
+                                </p>
+                                <div className="flex flex-wrap gap-3 text-xs font-medium uppercase tracking-[0.3em] text-cyan-200/80">
+                                    <span className="rounded-full border border-cyan-200/30 px-3 py-1">Workshops</span>
+                                    <span className="rounded-full border border-cyan-200/30 px-3 py-1">Studios</span>
+                                    <span className="rounded-full border border-cyan-200/30 px-3 py-1">Policy labs</span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="grid gap-6 sm:grid-cols-2">
+                            {["/images/abt1.png", "/images/abt5.png", "/images/abt3.png", "/images/abt4.png"].map((src, index) => (
+                                <figure
+                                    key={src}
+                                    ref={(el) => {
+                                        mediaCardsRef.current[index] = el;
+                                    }}
+                                    className="relative overflow-hidden rounded-3xl border border-white/10 bg-white/5"
+                                >
+                                    <img src={src} alt="studio documentation" className="h-full w-full object-cover" />
+                                    <figcaption className="absolute inset-x-4 bottom-4 rounded-2xl border border-white/20 bg-black/40 px-4 py-3 text-xs uppercase tracking-[0.25em] text-slate-200/90 backdrop-blur-md">
+                                        Cohort insight {index + 1}
+                                    </figcaption>
+                                </figure>
+                            ))}
+                        </div>
                     </div>
 
-                    <div className="sub-content">
-                        <p>
-                            Triết học Mác – Lênin giúp chúng ta hiểu quy luật phát triển xã hội,
-                            trong khi AI mở ra hướng ứng dụng công nghệ mới. Kết hợp cả hai tạo nên
-                            tầm nhìn vừa khoa học vừa hiện đại.
-                        </p>
-
-                        <div>
-                            <p className="md:text-3xl text-xl font-bold">
-                                <span>4.5</span>/5
-                            </p>
-                            <p className="text-sm text-white-100">
-                                Hơn +12000 sinh viên & nhà nghiên cứu quan tâm
+                    <div className="glass-surface flex min-h-[420px] flex-col overflow-hidden">
+                        <div className="relative flex-1">
+                            <Canvas camera={{ position: [0, 0, 4] }}>
+                                <ambientLight intensity={0.8} />
+                                <directionalLight position={[4, 6, 8]} intensity={1} />
+                                <group scale={1.1}>
+                                    <mesh>
+                                        <icosahedronGeometry args={[1.6, 1]} />
+                                        <meshStandardMaterial color="#38bdf8" metalness={0.4} roughness={0.2} wireframe />
+                                    </mesh>
+                                    <mesh>
+                                        <sphereGeometry args={[0.7, 64, 64]} />
+                                        <meshStandardMaterial color="#6366f1" opacity={0.4} transparent />
+                                    </mesh>
+                                </group>
+                                <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.8} />
+                            </Canvas>
+                            <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(59,130,246,0.18),transparent_65%)]" />
+                        </div>
+                        <div className="border-t border-white/10 p-6">
+                            <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Systems observatory</p>
+                            <p className="mt-2 text-sm text-slate-200">
+                                Simulate power dynamics, resource flows, and algorithmic impact before real-world deployment.
                             </p>
                         </div>
                     </div>
                 </div>
             </div>
+        </section>
+    );
+};
 
-            <div className="top-grid">
-                <div className="md:col-span-3 relative">
-                    <div className="noisy" />
-                    <img src="/images/abt1.png" alt="about-img-1" />
-                </div>
-
-                <div className="md:col-span-6 relative">
-                    <div className="noisy" />
-                    {/* Embedded 3D wireframe sphere moved from Hero */}
-                    <div className="absolute inset-0">
-                        <Canvas camera={{ position: [0, 0, 4] }}>
-                            <ambientLight intensity={0.8} />
-                            <directionalLight position={[4, 6, 8]} intensity={1} />
-                            {/* ☭ Hammer and Sickle constructed from primitives */}
-                            <group rotation={[0.2, -0.3, 0.1]} position={[0, 0.1, 0]}>
-                                {/* Sickle (crescent) */}
-                                <mesh rotation={[Math.PI / 2, 0, 0]}>
-                                    <torusGeometry args={[1.2, 0.12, 24, 120, Math.PI * 1.35]} />
-                                    <meshStandardMaterial color="#ffd54f" metalness={0.4} roughness={0.35} />
-                                </mesh>
-
-                                {/* Hammer handle */}
-                                <mesh position={[-0.15, 0.2, 0.05]} rotation={[0, 0, -Math.PI / 4]}>
-                                    <boxGeometry args={[0.15, 1.5, 0.15]} />
-                                    <meshStandardMaterial color="#ffd54f" metalness={0.3} roughness={0.5} />
-                                </mesh>
-
-                                {/* Hammer head */}
-                                <mesh position={[0.35, 0.7, 0.05]} rotation={[0, 0, -Math.PI / 4]}>
-                                    <boxGeometry args={[0.5, 0.25, 0.25]} />
-                                    <meshStandardMaterial color="#ffd54f" metalness={0.3} roughness={0.5} />
-                                </mesh>
-                            </group>
-
-                            <OrbitControls enableZoom={false} enablePan={false} autoRotate autoRotateSpeed={0.8} />
-                        </Canvas>
-                    </div>
-                </div>
-
-                <div className="md:col-span-3 relative">
-                    <div className="noisy" />
-                    <img src="/images/abt5.png" alt="about-img-5" />
-                </div>
-            </div>
-
-            <div className="bottom-grid">
-                <div className="md:col-span-8">
-                    <div className="noisy" />
-                    <img src="/images/abt3.png" alt="about-img-3" /> {/* NOTE: thay hình sau */}
-                </div>
-
-                <div className="md:col-span-4">
-                    <div className="noisy" />
-                    <img src="/images/abt4.png" alt="about-img-4" /> {/* NOTE: thay hình sau */}
-                </div>
-            </div>
-        </div>
-    )
-}
-export default About
+export default About;

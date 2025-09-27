@@ -1,129 +1,219 @@
-import React from "react";
-import { navLinks } from "../../constants/index.js";
+import React, { useEffect, useRef, useState } from "react";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { navLinks } from "../../constants/index.js";
 
 const Navbar = () => {
-  useGSAP(() => {
-    // Revolutionary navbar entrance animation
-    gsap.from("nav", {
-      y: -100,
-      opacity: 0,
-      duration: 1,
-      ease: "back.out(1.7)",
-      delay: 0.5
-    });
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const navRef = useRef(null);
 
-    // Enhanced navbar background animation
-    const navTween = gsap.timeline({
-      scrollTrigger: {
-        trigger: "nav",
-        start: "bottom top",
-      },
-    });
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 12);
+    };
 
-    navTween.fromTo(
-      "nav",
-      { 
-        backgroundColor: "transparent",
-        boxShadow: "none"
-      },
-      {
-        backgroundColor: "rgba(211, 47, 47, 0.95)",
-        backdropFilter: "blur(15px)",
-        boxShadow: "0 4px 20px rgba(211, 47, 47, 0.3)",
-        duration: 1,
-        ease: "power1.inOut",
+    handleScroll();
+    window.addEventListener("scroll", handleScroll, { passive: true });
+
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
+  useEffect(() => {
+    if (isMenuOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [isMenuOpen]);
+
+  useGSAP(
+    () => {
+      gsap.from(navRef.current, {
+        y: -32,
+        opacity: 0,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+
+      gsap.from(".nav-link-item", {
+        y: 16,
+        opacity: 0,
+        duration: 0.4,
+        stagger: 0.08,
+        ease: "power2.out",
+        delay: 0.1,
+      });
+
+      gsap.from(".nav-cta", {
+        y: 16,
+        opacity: 0,
+        duration: 0.4,
+        ease: "power2.out",
+        delay: 0.2,
+      });
+    },
+    { scope: navRef }
+  );
+
+  useGSAP(
+    () => {
+      if (isMenuOpen) {
+        gsap.fromTo(
+          "#mobile-nav-panel",
+          { opacity: 0, yPercent: -4 },
+          { opacity: 1, yPercent: 0, duration: 0.35, ease: "power2.out" }
+        );
       }
-    );
-
-    // Revolutionary logo pulse animation
-    gsap.to(".revolutionary-logo", {
-      scale: 1.1,
-      textShadow: "0 0 15px var(--color-star-yellow)",
-      duration: 2,
-      ease: "power2.inOut",
-      yoyo: true,
-      repeat: -1
-    });
-
-    // Navigation links hover animations
-    const navItems = document.querySelectorAll('.nav-link');
-    navItems.forEach(item => {
-      item.addEventListener('mouseenter', () => {
-        gsap.to(item, {
-          scale: 1.05,
-          color: "var(--color-star-yellow)",
-          textShadow: "0 0 10px var(--color-star-yellow)",
-          duration: 0.3,
-          ease: 'power2.out'
-        });
-      });
-      
-      item.addEventListener('mouseleave', () => {
-        gsap.to(item, {
-          scale: 1,
-          color: "white",
-          textShadow: "none",
-          duration: 0.3,
-          ease: 'power2.out'
-        });
-      });
-    });
-
-    // Revolutionary symbols floating animation
-    gsap.to(".nav-symbol", {
-      y: -5,
-      rotation: 5,
-      duration: 3,
-      ease: "sine.inOut",
-      yoyo: true,
-      repeat: -1,
-      stagger: 0.5
-    });
-  });
+    },
+    { scope: navRef, dependencies: [isMenuOpen] }
+  );
 
   return (
-    <nav className="fixed top-0 w-full z-50 px-6 py-4 flex items-center justify-between transition-all duration-300 border-b border-transparent hover:border-[var(--color-star-yellow)]">
-      {/* Revolutionary Logo */}
-      <a href="#hero" className="revolutionary-logo flex items-center gap-3 text-[var(--color-star-yellow)] group">
-        <div className="relative">
-          <img src="/images/logo.png" alt="CMLAI logo" className="h-10 w-10 transition-transform duration-300 group-hover:rotate-12" />
-          <div className="nav-symbol absolute -top-1 -right-1 text-xs text-[var(--color-revolutionary-red)]">☭</div>
-        </div>
-        <div>
-          <p className="font-modern-negra text-2xl tracking-wide text-gradient">CMLAI</p>
-          <p className="text-xs text-[var(--color-revolutionary-red)] font-semibold opacity-80">Cách mạng Tri thức</p>
-        </div>
-      </a>
+    <nav
+      ref={navRef}
+      className={`fixed top-0 z-50 w-full transition-all duration-300 backdrop-blur-xl ${
+        isScrolled ? "bg-slate-950/90 border-b border-white/10 shadow-lg shadow-blue-500/5" : "bg-transparent"
+      }`}
+      aria-label="Primary navigation"
+    >
+      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
+        <a href="#hero" className="group inline-flex items-center gap-3" aria-label="CMLAI home">
+          <span className="relative flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-blue-500 via-cyan-500 to-purple-500 shadow-lg shadow-blue-600/20 transition-transform duration-300 group-hover:rotate-6">
+            <img src="/images/logo.png" alt="CMLAI logo" className="h-7 w-7 object-contain" />
+          </span>
+          <div className="leading-tight">
+            <p className="text-lg font-semibold tracking-tight text-white xl:text-xl">CMLAI Studio</p>
+            <p className="text-xs uppercase tracking-[0.3em] text-slate-400">Philosophy × Intelligence</p>
+          </div>
+        </a>
 
-      {/* Revolutionary Navigation */}
-      <ul className="flex gap-8 text-sm md:text-base items-center">
-        {navLinks.map((link, index) => (
-          <li key={link.id} className="relative">
-            <a
-              href={`#${link.id}`}
-              className="nav-link hover:text-[var(--color-star-yellow)] transition-all duration-300 uppercase tracking-wide font-semibold relative group"
-            >
-              {link.title}
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-[var(--color-revolutionary-red)] to-[var(--color-star-yellow)] transition-all duration-300 group-hover:w-full"></span>
-            </a>
-            {/* Revolutionary symbol decorations */}
-            {index === 0 && <span className="nav-symbol absolute -top-2 -right-2 text-xs text-[var(--color-star-yellow)]">☭</span>}
-            {index === 2 && <span className="nav-symbol absolute -top-2 -right-2 text-xs text-[var(--color-revolutionary-red)]">⚒</span>}
-          </li>
-        ))}
-        
-        {/* Revolutionary Call to Action */}
-        <li>
+        <ul className="hidden items-center gap-8 text-sm font-medium text-slate-200 md:flex">
+          {navLinks.map((link) => (
+            <li key={link.id} className="nav-link-item">
+              <a
+                href={`#${link.id}`}
+                className="group relative inline-flex items-center gap-2 rounded-full px-3 py-1 transition-colors duration-200 hover:text-white"
+              >
+                <span>{link.title}</span>
+                <span className="absolute inset-0 -z-10 rounded-full bg-white/5 opacity-0 transition-opacity duration-200 group-hover:opacity-100" />
+              </a>
+            </li>
+          ))}
+        </ul>
+
+        <div className="flex items-center gap-4">
           <a
             href="#contact"
-            className="px-4 py-2 bg-gradient-to-r from-[var(--color-revolutionary-red)] to-[var(--color-communist-red)] text-white font-bold rounded-lg hover:scale-105 transition-all duration-300 shadow-lg hover:shadow-xl border border-[var(--color-star-yellow)]"
+            className="nav-cta hidden items-center gap-2 rounded-full bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 px-4 py-2 text-sm font-semibold text-white shadow-lg shadow-blue-500/30 transition-transform duration-200 hover:-translate-y-0.5 hover:shadow-blue-500/40 md:inline-flex"
           >
-            🚩 Gia nhập
+            <span>Let&apos;s collaborate</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="h-4 w-4"
+              aria-hidden="true"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3"
+              />
+            </svg>
           </a>
-        </li>
-      </ul>
+
+          <button
+            type="button"
+            className="inline-flex h-11 w-11 items-center justify-center rounded-2xl border border-white/10 bg-white/5 text-white md:hidden"
+            onClick={() => setIsMenuOpen((prev) => !prev)}
+            aria-expanded={isMenuOpen}
+            aria-controls="mobile-nav"
+            aria-label="Toggle navigation"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="h-6 w-6"
+            >
+              {isMenuOpen ? (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+              ) : (
+                <path strokeLinecap="round" strokeLinejoin="round" d="M3.75 7.5h16.5M3.75 12h16.5M12 16.5h8.25" />
+              )}
+            </svg>
+          </button>
+        </div>
+      </div>
+
+      <div
+        id="mobile-nav"
+        className={`md:hidden ${isMenuOpen ? "pointer-events-auto opacity-100" : "pointer-events-none opacity-0"} fixed inset-0 z-40 flex flex-col bg-slate-950/95 backdrop-blur-xl transition-opacity duration-300`}
+      >
+        <div className="flex items-center justify-between px-6 py-4">
+          <p className="text-sm font-semibold uppercase tracking-[0.2em] text-slate-400">Navigate</p>
+          <button
+            type="button"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 text-white"
+            onClick={() => setIsMenuOpen(false)}
+            aria-label="Close navigation"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="h-5 w-5"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+        </div>
+
+        <nav id="mobile-nav-panel" className="flex flex-1 flex-col justify-between px-6 pb-10">
+          <ul className="space-y-4">
+            {navLinks.map((link) => (
+              <li key={link.id}>
+                <a
+                  href={`#${link.id}`}
+                  className="block rounded-2xl border border-white/10 bg-white/5 px-4 py-3 text-base font-semibold text-white transition-transform duration-200 hover:-translate-y-0.5"
+                  onClick={() => setIsMenuOpen(false)}
+                >
+                  {link.title}
+                </a>
+              </li>
+            ))}
+          </ul>
+
+          <a
+            href="#contact"
+            className="nav-cta inline-flex w-full items-center justify-center gap-2 rounded-2xl bg-gradient-to-r from-blue-500 via-cyan-500 to-purple-500 px-4 py-3 text-sm font-semibold text-white shadow-lg shadow-blue-500/30"
+            onClick={() => setIsMenuOpen(false)}
+          >
+            <span>Let&apos;s collaborate</span>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              fill="none"
+              viewBox="0 0 24 24"
+              strokeWidth={1.5}
+              stroke="currentColor"
+              className="h-4 w-4"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
+            </svg>
+          </a>
+        </nav>
+      </div>
     </nav>
   );
 };

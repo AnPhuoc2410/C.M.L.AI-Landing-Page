@@ -1,10 +1,21 @@
-# CMLAI — Communism · Marxism · Leninism · AI
+# CMLAI — Collective Intelligence Landing
 
-Single-page React + Vite landing themed around Marxist theory and AI.
+Contemporary single-page experience built with React + Vite that explores the intersection of critical theory and responsible AI.
 
-Includes:
-- Hero with GSAP intro, 3D wireframe sphere overlay (React Three Fiber)
-- Scroll-driven sections for Philosophy, About, Timeline, Mini Game, Contact
-- TailwindCSS utilities and Framer Motion micro-interactions
+## Highlights
+
+- Glassmorphism navigation with responsive mobile drawer and section anchors.
+- Immersive hero with live research capsule video and animated metrics.
+- Philosophy, About, and Timeline sections redesigned as scroll-animated knowledge grids.
+- Interactive “Who said it?” mini-game with accessible feedback loop and instant restart.
+- Contact hub featuring visit/connect/programming cards and newsletter capture.
+
+## Scripts
+
+```bash
+npm install
+npm run dev
+npm run build
+```
 
 Replace assets in `public/images` and `public/videos` as needed.

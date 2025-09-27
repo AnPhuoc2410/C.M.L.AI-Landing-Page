@@ -1,8 +1,9 @@
 const navLinks = [
-  { id: "philosophy", title: "Triết học Mác – Lênin" },
-  { id: "about", title: "Về Dự Án" },
-  { id: "art", title: "AI & Nghệ Thuật" },
-  { id: "contact", title: "Liên hệ" },
+  { id: "philosophy", title: "Philosophy" },
+  { id: "about", title: "About" },
+  { id: "timeline", title: "Journey" },
+  { id: "minigame", title: "Interactive" },
+  { id: "contact", title: "Contact" },
 ];
 
 // =============================

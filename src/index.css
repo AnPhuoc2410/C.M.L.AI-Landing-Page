@@ -3,387 +3,198 @@
 @import "tailwindcss";
 
 @font-face {
-    font-family: "Modern Negra";
-    src: url("/fonts/Modern Negra Demo.ttf") format("truetype");
+  font-family: "Modern Negra";
+  src: url("/fonts/Modern Negra Demo.ttf") format("truetype");
 }
 
-@theme {
-    /* Revolutionary Color Palette */
-    --color-revolutionary-red: #d32f2f;
-    --color-revolutionary-yellow: #ffeb3b;
-    --color-communist-red: #c62828;
-    --color-star-yellow: #ffd600;
-    --color-hammer-sickle: #ffca28;
-    --color-deep-red: #b71c1c;
-    --color-golden-yellow: #ff8f00;
-    --color-revolution-orange: #ff5722;
-    
-    /* Legacy colors for gradual transition */
-    --color-yellow: var(--color-star-yellow);
-    --color-white-100: #efefef;
-    
-    /* Fonts */
-    --font-sans: "Mona Sans", sans-serif;
-    --font-modern-negra: "Modern Negra", sans-serif;
-    --font-serif: "DM Serif Text", serif;
+:root {
+  --color-bg-dark: #020617;
+  --color-bg-elevated: #0b1120;
+  --color-card: #0f172a;
+  --color-muted: #94a3b8;
+  --color-border: rgba(148, 163, 184, 0.12);
+  --color-highlight: rgba(14, 165, 233, 0.16);
+  --color-gradient-start: #3b82f6;
+  --color-gradient-mid: #06b6d4;
+  --color-gradient-end: #8b5cf6;
+
+  --font-sans: "Mona Sans", sans-serif;
+  --font-serif: "DM Serif Text", serif;
+  --font-display: "Modern Negra", sans-serif;
 }
 
 html,
 body {
-    width: 100%;
-    background-color: black;
-    color: white;
-    scroll-behavior: smooth;
-    overflow-x: hidden;
+  width: 100%;
+  background: radial-gradient(circle at 0% 0%, rgba(14, 165, 233, 0.12), transparent 45%),
+    radial-gradient(circle at 100% 0%, rgba(139, 92, 246, 0.12), transparent 40%),
+    var(--color-bg-dark);
+  color: white;
+  scroll-behavior: smooth;
+  overflow-x: hidden;
+  font-family: var(--font-sans);
 }
 
-@utility flex-center {
-    @apply flex justify-center items-center;
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: linear-gradient(115deg, rgba(59, 130, 246, 0.18), rgba(14, 165, 233, 0.08), rgba(139, 92, 246, 0));
+  filter: blur(120px);
+  opacity: 0.6;
+  pointer-events: none;
+  z-index: -2;
 }
 
-@utility col-center {
-    @apply flex flex-col justify-center items-center;
+* {
+  box-sizing: border-box;
 }
 
-@utility abs-center {
-    @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2;
+a {
+  color: inherit;
+  text-decoration: none;
 }
 
-@utility text-gradient {
-    background: linear-gradient(135deg, var(--color-revolutionary-red) 0%, var(--color-star-yellow) 50%, var(--color-communist-red) 100%);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
+img {
+  max-width: 100%;
+  display: block;
 }
 
-@utility radial-gradient {
-    background: radial-gradient(
-            circle at center,
-            var(--color-deep-red) 0%,
-            #000 50%,
-            transparent 100%
-    );
+main {
+  position: relative;
+  width: 100%;
+  overflow-x: hidden;
 }
 
-@utility masked-img {
-    mask-image: url("/images/mask-img.png");
-    mask-repeat: no-repeat;
-    mask-position: center;
-    mask-size: 50%;
+.section-shell {
+  margin-left: auto;
+  margin-right: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 3.5rem;
+  max-width: 72rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
 }
 
-@layer components {
-    main {
-        @apply w-full overflow-x-hidden;
-    }
-
-    nav {
-        @apply fixed z-50 w-full;
-
-        div {
-            @apply flex md:flex-row flex-col md:justify-between items-center gap-5 py-5 lg:px-0 px-5 container mx-auto;
-        }
-
-        p {
-            @apply font-modern-negra text-3xl -mb-2;
-        }
-
-        a {
-            @apply cursor-pointer text-nowrap md:text-base text-sm;
-        }
-
-        ul {
-            @apply flex-center lg:gap-12 gap-7;
-        }
-    }
-
-    .noisy {
-        @apply absolute inset-0 size-full bg-[url("/images/noise.png")];
-    }
-
-    #hero {
-        @apply relative z-10 min-h-dvh w-full border border-transparent;
-
-        h1 {
-            @apply md:mt-32 mt-40 text-8xl md:text-[20vw] leading-none text-center font-modern-negra;
-        }
-
-        .left-leaf {
-            @apply absolute left-0 md:top-20 xl:top-36 2xl:top-52 md:bottom-auto -bottom-20 md:w-fit w-1/3;
-        }
-
-        .right-leaf {
-            @apply absolute right-0 md:bottom-0 xl:top-0 2xl:top-12 top-1/2 md:w-fit w-24;
-        }
-
-        .body {
-            @apply container mx-auto absolute left-1/2 -translate-x-1/2 lg:bottom-20 top-auto md:top-[30vh] flex justify-between items-end px-5;
-
-            .content {
-                @apply flex lg:flex-row flex-col w-full gap-10 justify-between items-center lg:items-end mx-auto;
-
-                p:nth-of-type(2) {
-                    @apply font-modern-negra text-6xl text-[var(--color-star-yellow)] max-w-xl;
-                }
-
-                p:last-of-type {
-                    @apply 2xl:text-start text-center;
-                }
-
-                .view-cocktails {
-                    @apply space-y-5 text-lg lg:max-w-2xs md:max-w-xs w-full;
-
-                    p {
-                        @apply text-left;
-                    }
-
-                    a {
-                        @apply font-semibold opacity-80 2xl:text-start text-center hover:text-[var(--color-star-yellow)];
-                    }
-                }
-            }
-        }
-    }
-
-    video {
-        @apply w-full md:h-[80%] h-1/2 absolute bottom-0 left-0 md:object-contain object-bottom object-cover;
-    }
-
-    #cocktails {
-        @apply relative min-h-dvh w-full overflow-hidden;
-
-        #c-left-leaf {
-            @apply absolute left-0 md:bottom-0 md:top-auto -top-20 md:w-fit w-1/3;
-        }
-
-        #c-right-leaf {
-            @apply absolute right-0 md:bottom-0 md:top-auto -top-20 md:w-fit w-1/3;
-        }
-
-        .list {
-            @apply container mx-auto relative z-10 flex md:flex-row flex-col justify-between items-start gap-20 pt-40 2xl:px-0 px-5;
-
-            .popular {
-                @apply space-y-8 w-full md:w-fit;
-            }
-
-            .loved {
-                @apply space-y-8 w-full md:w-fit pb-20 md:pb-0;
-            }
-
-            h2 {
-                @apply text-xl font-medium uppercase tracking-wide text-white/80;
-            }
-
-            ul {
-                @apply space-y-8;
-
-                li {
-                    @apply flex justify-between items-start;
-
-                    h3 {
-                        @apply font-modern-negra 2xl:text-3xl text-xl text-[var(--color-star-yellow)];
-                    }
-
-                    p {
-                        @apply text-sm;
-                    }
-
-                    span {
-                        @apply text-xl font-medium;
-                    }
-                }
-            }
-        }
-    }
-
-    #about {
-        @apply min-h-screen py-28 2xl:px-0 px-5 container mx-auto;
-
-        .content {
-            @apply grid grid-cols-1 lg:grid-cols-12 gap-5;
-
-            h2 {
-                @apply text-5xl md:text-6xl font-modern-negra max-w-lg;
-            }
-
-            .sub-content {
-                @apply md:col-span-4 space-y-5 flex flex-col justify-between;
-
-                p {
-                    @apply text-lg;
-                }
-
-                div {
-                    @apply flex flex-col justify-between md:gap-2 gap-5;
-
-                    span {
-                        @apply text-[var(--color-star-yellow)] font-bold text-5xl;
-                    }
-                }
-            }
-        }
-
-        .badge {
-            @apply inline-block rounded-full bg-[var(--color-star-yellow)] text-black px-4 py-2 text-sm font-medium mb-8;
-        }
-
-        .top-grid {
-            @apply grid grid-cols-1 xl:grid-cols-12 gap-5 mb-5 md:px-0 px-5;
-
-            > div {
-                @apply rounded-3xl overflow-hidden h-72 relative;
-            }
-
-            img {
-                @apply object-cover w-full h-full;
-            }
-        }
-
-        .bottom-grid {
-            @apply grid grid-cols-1 md:grid-cols-12 gap-5 md:px-0 px-5;
-
-            > div {
-                @apply rounded-3xl overflow-hidden h-72 relative;
-            }
-
-            img {
-                @apply object-cover w-full h-full;
-            }
-        }
-    }
-
-    #art {
-        @apply flex-center flex-col min-h-dvh p-5 mt-20 relative radial-gradient;
-
-        h2 {
-            @apply relative md:text-[20vw] text-8xl text-nowrap leading-none font-modern-negra text-center text-[var(--color-deep-red)] mb-8;
-        }
-
-        .content {
-            @apply flex md:flex-row flex-col justify-between md:mb-16 md:mt-0 mt-40 gap-10;
-        }
-
-        .cocktail-img {
-            @apply md:w-[60vw] w-full h-[50vh] md:h-[70vh] rounded-4xl overflow-hidden absolute top-0 md:top-1/2 md:-translate-y-1/2 left-1/2 -translate-x-1/2;
-        }
-
-        .masked-container {
-            h2 {
-                @apply text-4xl md:text-5xl font-modern-negra text-center mb-10 text-white mt-32;
-            }
-
-            div {
-                @apply opacity-0 md:px-0 px-5 space-y-5 absolute md:bottom-5 bottom-52 left-1/2 -translate-x-1/2;
-
-                h3 {
-                    @apply md:text-5xl text-2xl text-center font-serif md:w-full w-80 text-white;
-                }
-
-                p {
-                    @apply text-lg text-center;
-                }
-            }
-        }
-    }
-
-    #menu {
-        @apply relative w-full md:mt-40 mt-0 2xl:px-0 px-5 py-20 radial-gradient;
-
-        #m-left-leaf {
-            @apply object-contain absolute -bottom-20 left-0 md:w-fit w-1/3;
-        }
-
-        #m-right-leaf {
-            @apply object-contain absolute -top-40 right-0 md:w-fit w-1/4;
-        }
-
-        .cocktail-tabs {
-            @apply grid md:grid-cols-4 grid-cols-2 md:gap-20 gap-10 sm:mb-32 mb-20 relative z-10 md:max-w-6xl md:mx-auto;
-
-            button {
-                @apply md:text-3xl text-xl pb-2 cursor-pointer hover:text-[var(--color-star-yellow)] hover:border-[var(--color-star-yellow)] border-b-1 transition-colors font-modern-negra;
-            }
-        }
-
-        .content {
-            @apply flex flex-col justify-between items-center container mx-auto relative;
-
-            .arrows {
-                @apply flex items-center justify-between w-full absolute;
-
-                button {
-                    @apply text-white hover:text-[var(--color-star-yellow)] cursor-pointer transition-colors max-w-36;
-
-                    span {
-                        @apply text-3xl font-modern-negra leading-none hidden md:block;
-                    }
-                }
-            }
-        }
-
-        .cocktail {
-            @apply flex-center mt-10;
-
-            img {
-                @apply object-contain h-[60vh];
-            }
-        }
-
-        .recipe {
-            @apply flex max-md:flex-col gap-10 md:items-center justify-between w-full lg:absolute bottom-0;
-
-            .info {
-                @apply space-y-4 lg:translate-y-20;
-
-                #title {
-                    @apply font-modern-negra md:text-6xl text-3xl text-[var(--color-star-yellow)] max-w-40;
-                }
-            }
-
-            .details {
-                @apply space-y-5 md:max-w-md text-left;
-
-                h2 {
-                    @apply md:text-5xl text-3xl font-serif;
-                }
-
-                p {
-                    @apply md:text-lg pe-5;
-                }
-            }
-        }
-    }
-
-    #contact {
-        @apply relative md:mt-20 mt-0 px-4 text-center w-full overflow-hidden radial-gradient;
-
-        #f-left-leaf {
-            @apply absolute bottom-0 left-0 pointer-events-none lg:w-fit w-1/3;
-        }
-
-        #f-right-leaf {
-            @apply absolute top-0 right-0 pointer-events-none hidden lg:block;
-        }
-
-        .content {
-            @apply container mx-auto lg:py-14 2xl:py-32 py-16 flex flex-col justify-between gap-10 min-h-dvh;
-
-            h2 {
-                @apply lg:text-6xl 2xl:text-8xl text-5xl font-modern-negra md:translate-y-0 translate-y-5;
-            }
-
-            h3 {
-                @apply uppercase xl:text-base 2xl:text-lg text-base mb-2;
-            }
-
-            p {
-                @apply lg:text-2xl 2xl:text-3xl text-sm;
-            }
-        }
-
-        .drink-img {
-            @apply absolute bottom-0 right-0 lg:w-96 w-1/3 pointer-events-none;
-        }
-    }
+@media (min-width: 768px) {
+  .section-shell {
+    gap: 4rem;
+  }
+}
+
+.section-heading {
+  font-size: 0.75rem;
+  letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: #94a3b8;
+  font-weight: 600;
+}
+
+.section-title {
+  color: white;
+  font-weight: 600;
+  font-size: clamp(2.25rem, 4vw, 3.75rem);
+  line-height: 1.1;
+}
+
+.font-display {
+  font-family: var(--font-display);
+}
+
+.section-subtitle {
+  color: rgba(226, 232, 240, 0.78);
+  font-size: clamp(1rem, 1.4vw, 1.125rem);
+  max-width: 38rem;
+}
+
+.grid-autofit {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+
+.text-gradient {
+  background: linear-gradient(120deg, var(--color-gradient-start), var(--color-gradient-mid), var(--color-gradient-end));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.glass-surface {
+  border-radius: 1.75rem;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(15, 23, 42, 0.65);
+  backdrop-filter: blur(24px);
+}
+
+.section-spacing {
+  padding-top: 6rem;
+  padding-bottom: 6rem;
+}
+
+@media (min-width: 768px) {
+  .section-spacing {
+    padding-top: 7rem;
+    padding-bottom: 7rem;
+  }
+}
+
+.orbit-gradient {
+  background: conic-gradient(from 180deg at 50% 50%, rgba(59, 130, 246, 0.28), rgba(6, 182, 212, 0.05), rgba(139, 92, 246, 0.32));
+}
+
+.glow-border {
+  position: relative;
+}
+
+.glow-border::after {
+  content: "";
+  position: absolute;
+  inset: -1px;
+  pointer-events: none;
+  border-radius: inherit;
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.4), rgba(6, 182, 212, 0.2), rgba(139, 92, 246, 0.4));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.glow-border:hover::after {
+  opacity: 1;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  color: white;
+  letter-spacing: -0.01em;
+}
+
+p {
+  color: rgba(226, 232, 240, 0.78);
+  font-size: 1rem;
+  line-height: 1.7;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+
+  50% {
+    transform: translate3d(0, -8px, 0);
+  }
+}
+
+@keyframes pulseOutline {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(59, 130, 246, 0.35);
+  }
+
+  50% {
+    box-shadow: 0 0 0 12px rgba(59, 130, 246, 0);
+  }
 }
