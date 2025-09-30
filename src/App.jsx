@@ -1,35 +1,43 @@
-import React from "react";
+import HeroSection from "./sections/HeroSection";
+import { ScrollSmoother, ScrollTrigger } from "gsap/all";
 import gsap from "gsap";
-import { ScrollTrigger } from "gsap/all";
+import MessageSection from "./sections/MessageSection";
+import FlavorSection from "./sections/FlavorSection";
+import { useGSAP } from "@gsap/react";
+import NutritionSection from "./sections/NutritionSection";
+import BenefitSection from "./sections/BenefitSection";
+import TestimonialSection from "./sections/TestimonialSection";
+import FooterSection from "./sections/FooterSection";
+import NavBar from "./components/Navbar";
 
-import Navbar from "./components/Navbar.jsx";
-import Hero from "./components/Hero.jsx";
-import Philosophy from "./components/Philosophy.jsx";
-import About from "./components/About.jsx";
-import Timeline from "./components/Timeline.jsx";
-import MiniGame from "./components/Minigame.jsx";
-import Contact from "./components/Contact.jsx";
-
-gsap.registerPlugin(ScrollTrigger);
+gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 const App = () => {
+  useGSAP(() => {
+    ScrollSmoother.create({
+      smooth: 3,
+      effects: true,
+    });
+  });
+
   return (
-    <main className="bg-black text-white font-sans overflow-x-hidden">
-      {/* Navigation */}
-      <Navbar />
+    <main>
+      <NavBar />
+      <div id="smooth-wrapper">
+        <div id="smooth-content">
+          <HeroSection />
+          <MessageSection />
+          <FlavorSection />
+          <NutritionSection />
 
-      {/* Hero Section: GSAP intro + 3D scene */}
-      <Hero />
+          <div>
+            <BenefitSection />
+            <TestimonialSection />
+          </div>
 
-      <Philosophy />
-
-      <About />
-
-      <Timeline />
-
-      <MiniGame />
-
-      <Contact />
+          <FooterSection />
+        </div>
+      </div>
     </main>
   );
 };
