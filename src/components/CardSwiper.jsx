@@ -1,75 +1,85 @@
-import { useState } from 'react';
-import { Swiper, SwiperSlide } from 'swiper/react';
-import { Navigation, Pagination } from 'swiper/modules';
-import 'swiper/css';
-import 'swiper/css/navigation';
-import 'swiper/css/pagination';
+import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
 
 const CardSwiper = () => {
   const [currentSlide, setCurrentSlide] = useState(1);
   const [totalSlides] = useState(10);
 
-  // Hall of Fame - Communist AI Pioneers
+  // Philosophy 4.0 - AI Thinkers and Innovators
   const cards = [
     {
       id: 1,
-      title: "Karl Marx",
-      image: "/images/p1.png",
-      description: "The father of scientific socialism, whose revolutionary ideas laid the foundation for understanding class struggle and collective ownership. His vision inspires our AI-driven approach to equality.",
+      title: "Dr. Triết",
+      image: "/images2/Triet.png",
+      description:
+        "Nhà triết học tiên phong trong việc kết hợp tư duy cổ điển với công nghệ AI hiện đại, tạo nên Philosophy 4.0.",
     },
     {
       id: 2,
-      title: "Vladimir Lenin",
-      image: "/images/p2.png",
-      description: "Revolutionary leader who transformed theory into practice, demonstrating the power of organized collective action. His strategic thinking guides our platform's architecture.",
+      title: "AI Philosopher",
+      image: "/images2/TrietAI.png",
+      description:
+        "Đại diện cho sự hợp nhất giữa trí tuệ nhân tạo và triết học, mở ra những khả năng vô hạn trong tư duy.",
     },
     {
       id: 3,
-      title: "Rosa Luxemburg",
-      image: "/images/p3.png",
-      description: "Champion of democratic socialism and workers' rights, her emphasis on mass participation reflects our community-driven AI development approach.",
+      title: "Digital Wisdom",
+      image: "/images2/TrietAI1.png",
+      description:
+        "Biểu tượng của trí tuệ số, nơi mà kiến thức truyền thống gặp gỡ với công nghệ edge computing.",
     },
     {
       id: 4,
-      title: "Che Guevara",
-      image: "/images/p4.png",
-      description: "Symbol of revolutionary change and solidarity, representing the courage to challenge established systems. His spirit drives our innovative AI solutions.",
+      title: "Future Mind",
+      image: "/images2/trietAI2.png",
+      description:
+        "Đại diện cho tương lai của tư duy, nơi con người và AI cùng phát triển trong hài hòa.",
     },
     {
       id: 5,
-      title: "Antonio Gramsci",
-      image: "/images/p5.png",
-      description: "Philosopher of cultural hegemony and collective consciousness, his ideas inform how our AI understands and serves the people's needs.",
+      title: "Philosophy 4.0",
+      image: "/images2/Triet4.0.png",
+      description:
+        "Biểu tượng của cuộc cách mạng triết học trong kỷ nguyên số, kết nối quá khứ với tương lai.",
     },
     {
       id: 6,
-      title: "Angela Davis",
-      image: "/images/p6.png",
-      description: "Modern revolutionary fighting for social justice and equality, her activism inspires our commitment to bias-free AI technology.",
+      title: "Neural Thinker",
+      image: "/images2/TrietAI3.png",
+      description:
+        "Đại diện cho sự tiến hóa của tư duy thông qua mạng lưới neural và deep learning.",
     },
     {
       id: 7,
-      title: "Thomas Sankara",
-      image: "/images/p7.png",
-      description: "Visionary leader who prioritized self-reliance and empowerment, embodying the principles of community-first innovation we champion.",
+      title: "Edge Intelligence",
+      image: "/images2/TrietAI4.png",
+      description:
+        "Tiên phong trong việc ứng dụng AI edge vào triết học, tạo ra những breakthrough trong nhận thức.",
     },
     {
       id: 8,
-      title: "Fidel Castro",
-      image: "/images/p1.png",
-      description: "Architect of sustainable revolution and social transformation, demonstrating how collective will can reshape society's future.",
+      title: "Wisdom Architect",
+      image: "/images2/TrietAI5.png",
+      description:
+        "Kiến trúc sư của trí tuệ tương lai, thiết kế những hệ thống tư duy mới cho nhân loại.",
     },
     {
       id: 9,
-      title: "Ho Chi Minh",
-      image: "/images/p2.png",
-      description: "Leader who united people for independence and self-determination, inspiring our mission to democratize AI for all.",
+      title: "Digital Sage",
+      image: "/images2/Triet1.png",
+      description:
+        "Hiền nhân số hóa, kết hợp giữa trí tuệ cổ xưa và công nghệ tiên tiến nhất.",
     },
     {
       id: 10,
-      title: "Salvador Allende",
-      image: "/images/p3.png",
-      description: "Democratic socialist who proved peaceful revolution is possible, reflecting our ethical approach to technological advancement.",
+      title: "AI Consciousness",
+      image: "/images2/Triet3.png",
+      description:
+        "Đại diện cho ý thức AI, nơi mà máy móc bắt đầu thấu hiểu và phản ánh về chính mình.",
     },
   ];
 
@@ -79,14 +89,38 @@ const CardSwiper = () => {
         <div className="relative isolate">
           {/* Custom Navigation Buttons */}
           <button className="swiper-button-prev-custom absolute left-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M15 18L9 12L15 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M15 18L9 12L15 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </button>
-          
+
           <button className="swiper-button-next-custom absolute right-0 top-1/2 -translate-y-1/2 z-20 w-12 h-12 flex items-center justify-center rounded-full bg-white/10 backdrop-blur-sm hover:bg-white/20 transition-all">
-            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-              <path d="M9 18L15 12L9 6" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+            <svg
+              width="24"
+              height="24"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M9 18L15 12L9 6"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+              />
             </svg>
           </button>
 
@@ -95,8 +129,8 @@ const CardSwiper = () => {
             spaceBetween={30}
             slidesPerView={1}
             navigation={{
-              prevEl: '.swiper-button-prev-custom',
-              nextEl: '.swiper-button-next-custom',
+              prevEl: ".swiper-button-prev-custom",
+              nextEl: ".swiper-button-next-custom",
             }}
             onSlideChange={(swiper) => setCurrentSlide(swiper.activeIndex + 1)}
             className="card-swiper"
@@ -109,18 +143,18 @@ const CardSwiper = () => {
                   <div className="relative isolate">
                     <div className="absolute inset-0 bg-[#d9d0c3] rounded-3xl transform translate-x-3 translate-y-3 -z-10"></div>
                     <div className="absolute inset-0 bg-[#e5ddd0] rounded-3xl transform translate-x-6 translate-y-6 -z-20"></div>
-                    
+
                     {/* Main Card Content - Flex Row Layout */}
                     <div className="relative bg-[#f5f0e8] rounded-3xl p-8 min-h-[400px] flex flex-row items-center gap-8 z-10">
                       {/* Left Side - Image (Bigger) */}
                       <div className="flex-shrink-0 w-80 h-80 flex items-center justify-center">
-                        <img 
-                          src={card.image} 
+                        <img
+                          src={card.image}
                           alt={card.title}
                           className="w-full h-full object-contain"
                         />
                       </div>
-                      
+
                       {/* Right Side - Title and Description */}
                       <div className="flex-1 flex flex-col justify-center pr-4">
                         <h3 className="text-3xl font-bold text-gray-800 mb-4">
@@ -130,7 +164,7 @@ const CardSwiper = () => {
                           {card.description}
                         </p>
                       </div>
-                      
+
                       {/* Counter at bottom */}
                       <div className="absolute bottom-8 left-1/2 -translate-x-1/2">
                         <p className="text-2xl font-bold text-gray-800">
@@ -152,17 +186,17 @@ const CardSwiper = () => {
           position: relative;
           z-index: 1;
         }
-        
+
         .card-swiper-container {
           position: relative;
           z-index: 1;
         }
-        
+
         .swiper-button-prev-custom,
         .swiper-button-next-custom {
           color: #fff;
         }
-        
+
         .swiper-button-disabled {
           opacity: 0.3;
           cursor: not-allowed;

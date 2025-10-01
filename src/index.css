@@ -32,26 +32,26 @@
   /* Communist-AI Theme Colors */
   --color-black: #050001;
   --color-main-bg: #050001;
-  --color-white: #FFF8DC;
+  --color-white: #fff8dc;
   --color-communist-red: #993140;
-  --color-revolutionary-gold: #FFD700;
-  --color-soviet-amber: #FFA500;
-  --color-cyber-blue: #00D4FF;
-  --color-neural-green: #00FF88;
-  --color-digital-silver: #C0C0C0;
-  --color-data-purple: #8A2BE2;
-  --color-steel-gray: #2F4F4F;
+  --color-revolutionary-gold: #ffd700;
+  --color-soviet-amber: #ffa500;
+  --color-cyber-blue: #00d4ff;
+  --color-neural-green: #00ff88;
+  --color-digital-silver: #c0c0c0;
+  --color-data-purple: #8a2be2;
+  --color-steel-gray: #2f4f4f;
   --color-dark-crimson: #660000;
-  --color-cream-white: #FFF8DC;
+  --color-cream-white: #fff8dc;
   /* Legacy color mappings for compatibility */
   --color-dark-brown: #993140;
-  --color-mid-brown: #FFD700;
-  --color-light-brown: #FFA500;
+  --color-mid-brown: #ffd700;
+  --color-light-brown: #ffa500;
   --color-red-brown: #660000;
-  --color-yellow-brown: #FFD700;
-  --color-milk-yellow: #FFF8DC;
+  --color-yellow-brown: #ffd700;
+  --color-milk-yellow: #fff8dc;
   --color-red: #993140;
-  --color-milk: #FFF8DC;
+  --color-milk: #fff8dc;
   --font-sans: "Antonio", sans-serif;
   --font-paragraph: "ProximaNova, sans-serif";
 }
@@ -62,7 +62,7 @@ body {
   padding: 0;
   box-sizing: border-box;
   background-color: #050001;
-  color: #FFF8DC;
+  color: #fff8dc;
   font-family: "Antonio", sans-serif;
   overflow-x: hidden;
   scroll-behavior: smooth;
@@ -96,7 +96,7 @@ body::-webkit-scrollbar {
 
   .hero-container {
     @apply relative w-screen h-dvh overflow-hidden;
-    background-color: #FFF8DC; /* cream-white */
+    background-color: #fff8dc; /* cream-white */
 
     .hero-content {
       @apply relative z-10 w-full h-full flex flex-col 2xl:justify-center items-center translate-y-10 2xl:pt-0 md:pt-32 pt-24;
@@ -108,7 +108,7 @@ body::-webkit-scrollbar {
 
       .hero-text-scroll {
         @apply rotate-[-3deg] mb-8 border-[.5vw];
-        border-color: #FFF8DC; /* cream-white */
+        border-color: #fff8dc; /* cream-white */
 
         .hero-subtitle {
           background-color: #993140; /* communist-red */
@@ -116,24 +116,24 @@ body::-webkit-scrollbar {
 
         h1 {
           @apply uppercase 2xl:text-[8.5rem] md:text-[6.5rem] text-[3.3rem] font-bold leading-[9vw] tracking-[-.35vw] 2xl:px-[1.2vw] px-3 2xl:pb-[1vw] pb-5 2xl:py-0 py-3;
-          color: #FFD700; /* revolutionary-gold */
+          color: #ffd700; /* revolutionary-gold */
         }
       }
 
       h2 {
         @apply font-paragraph text-center md:max-w-lg max-w-sm px-5 md:text-lg leading-[115%] mt-3;
-        color: #00D4FF; /* cyber-blue for better contrast on cream background */
+        color: #00d4ff; /* cyber-blue for better contrast on cream background */
       }
 
       .hero-button {
         @apply md:mt-16 mt-10 uppercase font-bold text-lg rounded-full md:p-5 p-3 md:px-16 px-10;
-        background-color: #00D4FF; /* cyber-blue */
+        background-color: #00d4ff; /* cyber-blue */
         color: #993140; /* deep-black */
         transition: all 0.3s ease;
       }
 
       .hero-button:hover {
-        background-color: #FFD700; /* revolutionary-gold */
+        background-color: #ffd700; /* revolutionary-gold */
         color: #993140; /* communist-red */
       }
     }
@@ -142,7 +142,7 @@ body::-webkit-scrollbar {
   .message-content {
     @apply min-h-dvh overflow-hidden flex justify-center items-center relative z-20;
     background-color: #050001; /* deep-black */
-    color: #FFD700; /* revolutionary-gold */
+    color: #ffd700; /* revolutionary-gold */
 
     .msg-wrapper {
       @apply 2xl:text-[8.5rem] md:text-8xl text-5xl font-bold uppercase leading-[9vw] tracking-[-.35vw] flex flex-col justify-center items-center md:gap-24 gap-14;
@@ -172,7 +172,7 @@ body::-webkit-scrollbar {
   }
 
   .flavor-section {
-    background-color: #2F4F4F; /* steel-gray */
+    background-color: #2f4f4f; /* steel-gray */
     min-height: 100vh;
     position: relative;
     isolation: isolate;
@@ -181,17 +181,17 @@ body::-webkit-scrollbar {
 
     .flavor-text-scroll {
       @apply rotate-[-3deg] md:translate-y-5 absolute z-10 border-[.5vw];
-      border-color: #2F4F4F; /* steel-gray */
+      border-color: #2f4f4f; /* steel-gray */
     }
 
     .first-text-split h1 {
       @apply md:text-center;
-      color: #00D4FF; /* cyber-blue */
+      color: #00d4ff; /* cyber-blue */
     }
 
     .second-text-split h1 {
       @apply md:text-center;
-      color: #00FF88; /* neural-green */
+      color: #00ff88; /* neural-green */
     }
 
     .slider-wrapper {
@@ -224,12 +224,12 @@ body::-webkit-scrollbar {
 
     .nutrition-title {
       @apply 2xl:max-w-4xl xl:max-w-2xl md:py-0 py-3 md:pb-5 pb-0 lg:pb-0 md:text-center;
-      color: #00D4FF; /* cyber-blue */
+      color: #00d4ff; /* cyber-blue */
     }
 
     .nutrition-text-scroll {
       @apply rotate-[-3deg] text-nowrap opacity-0 md:-mt-32 -mt-24 border-[.5vw];
-      border-color: #FFD700; /* revolutionary-gold */
+      border-color: #ffd700; /* revolutionary-gold */
     }
 
     .nutrition-box {
@@ -238,10 +238,10 @@ body::-webkit-scrollbar {
       .list-wrapper {
         @apply rounded-full mx-auto max-w-7xl md:py-8 py-5 md:px-0 px-5 flex justify-between items-center border-[.5vw];
         background-color: #050001; /* deep-black */
-        border-color: #FFD700; /* revolutionary-gold */
+        border-color: #ffd700; /* revolutionary-gold */
 
         p {
-          color: #00FF88; /* neural-green */
+          color: #00ff88; /* neural-green */
         }
       }
 
@@ -258,7 +258,7 @@ body::-webkit-scrollbar {
 
     p {
       @apply font-paragraph text-center text-lg;
-      color: #FFF8DC; /* cream-white */
+      color: #fff8dc; /* cream-white */
     }
 
     .first-title {
@@ -286,7 +286,12 @@ body::-webkit-scrollbar {
 
       .play-btn {
         @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 size-[9vw] flex justify-center items-center backdrop-blur-xl rounded-full;
-        background-color: rgba(153, 49, 64, 0.7); /* communist-red with transparency */
+        background-color: rgba(
+          153,
+          49,
+          64,
+          0.7
+        ); /* communist-red with transparency */
       }
 
       img:first-of-type {
@@ -297,7 +302,7 @@ body::-webkit-scrollbar {
 
   .testimonials-section {
     @apply relative w-full h-[120dvh];
-    background-color: #FFF8DC; /* cream-white */
+    background-color: #fff8dc; /* cream-white */
 
     .pin-box {
       @apply flex items-center justify-center w-full ps-52 absolute 2xl:bottom-32 bottom-[50vh];
@@ -319,12 +324,12 @@ body::-webkit-scrollbar {
 
     .social-btn {
       @apply md:size-[5vw] size-14 md:p-0 p-3 flex justify-center items-center rounded-full transition-colors cursor-pointer;
-      border: 1px solid #FFD700; /* revolutionary-gold */
-      color: #FFF8DC; /* cream-white */
+      border: 1px solid #ffd700; /* revolutionary-gold */
+      color: #fff8dc; /* cream-white */
     }
 
     .social-btn:hover {
-      background-color: #00D4FF; /* cyber-blue */
+      background-color: #00d4ff; /* cyber-blue */
       color: #050001; /* deep-black */
     }
 
@@ -334,7 +339,7 @@ body::-webkit-scrollbar {
 
     .copyright-box {
       @apply 2xl:absolute w-full md:px-10 px-5 py-7 bottom-0 opacity-50 md:text-lg font-paragraph flex gap-7 md:flex-row flex-col-reverse md:justify-between justify-center items-center;
-      color: #FFD700; /* revolutionary-gold */
+      color: #ffd700; /* revolutionary-gold */
 
       p {
         @apply text-center;
@@ -344,8 +349,8 @@ body::-webkit-scrollbar {
 }
 
 .nutrition-section {
-  background-color: #2F4F4F; /* steel-gray base */
-  background-image: radial-gradient(circle, #2F4F4F, #050001);
+  background-color: #2f4f4f; /* steel-gray base */
+  background-image: radial-gradient(circle, #2f4f4f, #050001);
 }
 
 .spin-circle {
@@ -363,16 +368,18 @@ body::-webkit-scrollbar {
 
 /* AI-themed animations and effects */
 @keyframes matrix-glow {
-  0%, 100% {
-    text-shadow: 0 0 5px #00FF88, 0 0 10px #00FF88, 0 0 15px #00FF88;
+  0%,
+  100% {
+    text-shadow: 0 0 5px #00ff88, 0 0 10px #00ff88, 0 0 15px #00ff88;
   }
   50% {
-    text-shadow: 0 0 10px #00FF88, 0 0 20px #00FF88, 0 0 30px #00FF88;
+    text-shadow: 0 0 10px #00ff88, 0 0 20px #00ff88, 0 0 30px #00ff88;
   }
 }
 
 @keyframes communist-pulse {
-  0%, 100% {
+  0%,
+  100% {
     box-shadow: 0 0 5px #993140, 0 0 10px #993140;
   }
   50% {
@@ -402,7 +409,7 @@ body::-webkit-scrollbar {
 }
 
 .cyber-gradient {
-  background: linear-gradient(45deg, #993140, #00D4FF, #FFD700, #00FF88);
+  background: linear-gradient(45deg, #993140, #00d4ff, #ffd700, #00ff88);
   background-size: 400% 400%;
   animation: cyber-scan 4s ease infinite;
   -webkit-background-clip: text;
@@ -412,7 +419,7 @@ body::-webkit-scrollbar {
 
 /* Data stream effect for backgrounds */
 .data-stream::before {
-  content: '';
+  content: "";
   position: absolute;
   top: 0;
   left: 0;
@@ -428,19 +435,19 @@ body::-webkit-scrollbar {
   pointer-events: none;
 }
 
-  .hall-section {
-    position: relative;
-    isolation: isolate;
-    z-index: 1;
-  }
+.hall-section {
+  position: relative;
+  isolation: isolate;
+  z-index: 1;
+}
 
-  #timeline {
-    position: relative;
-    isolation: isolate;
-    will-change: transform;
-    z-index: 3;
-    background: linear-gradient(to bottom right, #f5f5f4, #fef3c7, #e7e5e4);
-  }
+#timeline {
+  position: relative;
+  isolation: isolate;
+  will-change: transform;
+  z-index: 3;
+  background: linear-gradient(to bottom right, #f5f5f4, #fef3c7, #e7e5e4);
+}
 
 @keyframes data-flow {
   0% {

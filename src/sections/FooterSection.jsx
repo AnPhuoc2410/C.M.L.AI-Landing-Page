@@ -6,7 +6,7 @@ const FooterSection = () => {
   });
 
   return (
-    <section className="footer-section">
+    <section id="footer-section" className="footer-section">
       <img
         src="/images/footer-dip.png"
         alt=""
@@ -16,13 +16,13 @@ const FooterSection = () => {
       <div className="2xl:h-[110dvh] relative md:pt-[20vh] pt-[10vh]">
         <div className="overflow-hidden z-10">
           <h1 className="general-title text-center text-milk py-5">
-            #REVOLUTIONRESPONSIBLY
+            #PHILOSOPHY4.0
           </h1>
         </div>
 
         {isMobile ? (
           <img
-            src="/images/footer-drink.png"
+            src="/images2/Triet7.png"
             className="absolute top-0 object-contain"
           />
         ) : (
@@ -50,29 +50,30 @@ const FooterSection = () => {
         <div className="mt-40 md:px-10 px-5 flex gap-10 md:flex-row flex-col justify-between text-milk font-paragraph md:text-lg font-medium">
           <div className="flex items-center md:gap-16 gap-5">
             <div>
-              <p>Revolutionary AI</p>
+              <p>Philosophy 4.0</p>
             </div>
             <div>
-              <p>Red Club</p>
-              <p>Worker Education</p>
-              <p>Collective Leaders</p>
+              <p>AI Club</p>
+              <p>Triết học AI</p>
+              <p>Tư duy 4.0</p>
             </div>
             <div>
-              <p>Movement</p>
-              <p>Contacts</p>
-              <p>Revolutionary Talk</p>
+              <p>Cộng đồng</p>
+              <p>Liên hệ</p>
+              <p>Philosophy Talk</p>
             </div>
           </div>
 
           <div className="md:max-w-lg">
             <p>
-              Get Exclusive Early Access and Stay Informed About Revolutionary Updates, 
-              Digital Liberation Events, and More!
+              Tham gia cộng đồng Philosophy 4.0 để được cập nhật những
+              breakthrough mới nhất về AI edge và triết học, cùng các sự kiện
+              học tập thú vị!
             </p>
             <div className="flex justify-between items-center border-b border-[#D9D9D9] py-5 md:mt-10">
               <input
                 type="email"
-                placeholder="Enter your comrade email"
+                placeholder="Nhập email của bạn"
                 className="w-full placeholder:font-sans placeholder:text-[#999999]"
               />
               <img src="/images/arrow.svg" alt="arrow" />
@@ -81,10 +82,10 @@ const FooterSection = () => {
         </div>
 
         <div className="copyright-box">
-          <p>Copyright © 2025 Communist AI Revolution - All Rights Reserved</p>
+          <p>Copyright © 2025 Philosophy 4.0 - All Rights Reserved</p>
           <div className="flex items-center gap-7">
-            <p>Privacy Policy</p>
-            <p>Terms of Service</p>
+            <p>Chính sách bảo mật</p>
+            <p>Điều khoản sử dụng</p>
           </div>
         </div>
       </div>

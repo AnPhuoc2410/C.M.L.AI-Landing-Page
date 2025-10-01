@@ -1,49 +1,26 @@
-import HeroSection from "./sections/HeroSection";
-import { ScrollSmoother, ScrollTrigger } from "gsap/all";
-import gsap from "gsap";
-import MessageSection from "./sections/MessageSection";
-import FlavorSection from "./sections/FlavorSection";
-import { useGSAP } from "@gsap/react";
-import NutritionSection from "./sections/NutritionSection";
-import BenefitSection from "./sections/BenefitSection";
-import TestimonialSection from "./sections/TestimonialSection";
-import FooterSection from "./sections/FooterSection";
-import NavBar from "./components/Navbar";
-import TimelineSection from "./sections/TimelineSection";
-import HallSection from "./sections/HallSection";
-
-gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { AudioProvider } from "./contexts/AudioContext";
+import HomePage from "./components/HomePage";
+import WhyThisProjectPage from "./pages/WhyThisProjectPage";
+import GoalsPage from "./pages/GoalsPage";
+import ActivitiesPage from "./pages/ActivitiesPage";
+import ExperiencePage from "./pages/ExperiencePage";
 
 const App = () => {
-  useGSAP(() => {
-    ScrollSmoother.create({
-      smooth: 3,
-      effects: true,
-    });
-  });
-
   return (
-    <main>
-      <NavBar />
-      <div id="smooth-wrapper">
-        <div id="smooth-content">
-          <HeroSection />
-          <MessageSection />
-          <FlavorSection />
-          <TimelineSection />
-          <NutritionSection />
-          <HallSection />
-
-          <div>
-            <BenefitSection />
-            <TestimonialSection />
-          </div>
-
-
-          <FooterSection />
-        </div>
-      </div>
-    </main>
+    <AudioProvider>
+      <Router>
+        <main>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/why-project" element={<WhyThisProjectPage />} />
+            <Route path="/goals" element={<GoalsPage />} />
+            <Route path="/activities" element={<ActivitiesPage />} />
+            <Route path="/experience" element={<ExperiencePage />} />
+          </Routes>
+        </main>
+      </Router>
+    </AudioProvider>
   );
 };
 
