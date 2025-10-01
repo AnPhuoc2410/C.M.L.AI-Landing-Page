@@ -42,51 +42,62 @@ const TimelineSection = () => {
   ];
 
   useEffect(() => {
-    const items = timelineRef.current.querySelectorAll('.timeline-item');
-    
-    // Animate timeline items
-    items.forEach((item, index) => {
-      gsap.fromTo(item,
-        {
-          opacity: 0,
-          y: 50,
-        },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: item,
-            start: "top 80%",
-            end: "top 50%",
-            toggleActions: "play none none reverse",
-          }
-        }
-      );
-    });
+    // Wait a bit to ensure FlavorSection is fully initialized
+    const timer = setTimeout(() => {
+      const ctx = gsap.context(() => {
+        const items = timelineRef.current.querySelectorAll('.timeline-item');
+        
+        // Animate timeline items
+        items.forEach((item, index) => {
+          gsap.fromTo(item,
+            {
+              opacity: 0,
+              y: 50,
+            },
+            {
+              opacity: 1,
+              y: 0,
+              duration: 1,
+              ease: "power3.out",
+              scrollTrigger: {
+                trigger: item,
+                start: "top 85%",
+                end: "top 50%",
+                toggleActions: "play none none reverse",
+                invalidateOnRefresh: true,
+              }
+            }
+          );
+        });
 
-    // Animate the progress line (glowing effect that follows scroll)
-    if (progressLineRef.current && lineRef.current) {
-      gsap.fromTo(progressLineRef.current,
-        {
-          height: "0%",
-        },
-        {
-          height: "100%",
-          ease: "none",
-          scrollTrigger: {
-            trigger: timelineRef.current,
-            start: "top center",
-            end: "bottom center",
-            scrub: 1,
-          }
+        // Animate the progress line (glowing effect that follows scroll)
+        if (progressLineRef.current && lineRef.current) {
+          gsap.fromTo(progressLineRef.current,
+            {
+              height: "0%",
+            },
+            {
+              height: "100%",
+              ease: "none",
+              scrollTrigger: {
+                trigger: timelineRef.current,
+                start: "top center",
+                end: "bottom center",
+                scrub: 1,
+                invalidateOnRefresh: true,
+              }
+            }
+          );
         }
-      );
-    }
+      }, sectionRef);
+      
+      return () => {
+        ctx.revert(); // Clean up properly
+      };
+    }, 100);
 
     return () => {
-      ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      clearTimeout(timer);
     };
   }, []);
 
@@ -94,10 +105,18 @@ const TimelineSection = () => {
     <section
       ref={sectionRef}
       id="timeline"
-      className="min-h-screen w-full bg-gradient-to-br from-stone-100 via-amber-50 to-stone-200 py-20 px-4 md:px-8 lg:px-16 relative overflow-hidden"
+      className="min-h-screen w-full py-32 px-4 md:px-8 lg:px-16 relative mt-20"
+      style={{
+        background: 'linear-gradient(to bottom right, #f5f5f4, #fef3c7, #e7e5e4)',
+        zIndex: 3,
+        isolation: 'isolate',
+        marginTop: '0',
+        clear: 'both'
+      }}
+      data-speed="1"
     >
       {/* Background decoration */}
-      <div className="absolute inset-0 opacity-10">
+      <div className="absolute inset-0 opacity-10" data-speed="0.8">
         <div className="absolute top-1/4 left-1/4 w-96 h-96 rounded-full blur-[128px]" style={{ backgroundColor: '#993140' }}></div>
         <div className="absolute bottom-1/4 right-1/4 w-96 h-96 rounded-full blur-[128px]" style={{ backgroundColor: '#d4a574' }}></div>
       </div>

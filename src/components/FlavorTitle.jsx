@@ -18,6 +18,7 @@ const FlavorTitle = () => {
       scrollTrigger: {
         trigger: ".flavor-section",
         start: "top 30%",
+        invalidateOnRefresh: true,
       },
     });
 
@@ -27,6 +28,7 @@ const FlavorTitle = () => {
       scrollTrigger: {
         trigger: ".flavor-section",
         start: "top 10%",
+        invalidateOnRefresh: true,
       },
     });
 
@@ -37,6 +39,7 @@ const FlavorTitle = () => {
       scrollTrigger: {
         trigger: ".flavor-section",
         start: "top 1%",
+        invalidateOnRefresh: true,
       },
     });
   });

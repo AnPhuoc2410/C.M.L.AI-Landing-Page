@@ -2,12 +2,12 @@ import CardSwiper from "../components/CardSwiper";
 
 const HallSection = () => {
   return (
-    <section className="weirdos-section bg-[#2e2e2e] min-h-screen py-20">
-      <div className="container mx-auto flex">
+    <section className="hall-section bg-[#2e2e2e] min-h-screen py-20">
+      <div className="container mx-auto">
         {/* Header */}
         <div className="text-center mb-12 px-4">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            <br/> Hall of Fame
+            Hall of Fame
           </h1>
           
           <div className="max-w-3xl mx-auto space-y-4 text-gray-300">
