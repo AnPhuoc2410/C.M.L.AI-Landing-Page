@@ -3,20 +3,20 @@
 
 /*
  * COMMUNISM – MARXISM – LENINISM – AI THEME
- * 
+ *
  * Color Palette:
  * Primary Colors:
  * - Communist Red: #993140 (main brand color, represents revolution)
  * - Deep Black: #050001 (backgrounds, strong contrast)
  * - Revolutionary Gold: #FFD700 (communist symbolism, accent)
  * - Soviet Amber: #FFA500 (warm complement)
- * 
+ *
  * AI Theme Colors:
  * - Cyber Blue: #00D4FF (futuristic AI accent)
  * - Neural Green: #00FF88 (AI processing/matrix theme)
  * - Digital Silver: #C0C0C0 (metallic tech accent)
  * - Data Purple: #8A2BE2 (deep learning/neural networks)
- * 
+ *
  * Supporting Colors:
  * - Cream White: #FFF8DC (softer than pure white)
  * - Steel Gray: #2F4F4F (industrial/tech background)
@@ -131,7 +131,7 @@ body::-webkit-scrollbar {
         color: #993140; /* deep-black */
         transition: all 0.3s ease;
       }
-      
+
       .hero-button:hover {
         background-color: #FFD700; /* revolutionary-gold */
         color: #993140; /* communist-red */
@@ -318,7 +318,7 @@ body::-webkit-scrollbar {
       border: 1px solid #FFD700; /* revolutionary-gold */
       color: #FFF8DC; /* cream-white */
     }
-    
+
     .social-btn:hover {
       background-color: #00D4FF; /* cyber-blue */
       color: #050001; /* deep-black */
