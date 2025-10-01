@@ -70,30 +70,40 @@ const FlavorSlider = () => {
   return (
     <div ref={sliderRef} className="slider-wrapper">
       <div className="flavors">
-        {flavorlists.map((flavor) => (
+        {flavorlists.map((flavor, index) => (
           <div
             key={flavor.name}
             className={`relative z-30 lg:w-[50vw] w-96 lg:h-[70vh] md:w-[90vw] md:h-[50vh] h-80 flex-none ${flavor.rotation}`}
           >
-            <img
-              src={`/images/${flavor.color}-bg.svg`}
-              alt=""
-              className="absolute bottom-0"
-            />
+            {/* Background từ images2 */}
+            <div className="absolute inset-0 bg-gradient-to-br from-revolutionary-gold/20 to-cyber-blue/20 rounded-xl">
+              <img
+                src={`/images2/TrietAI${index === 0 ? "" : index}.png`}
+                alt={flavor.name}
+                className="w-full h-full object-cover rounded-xl opacity-80"
+                onError={(e) => {
+                  e.target.src = "/images2/TrietAI.png"; // Fallback image
+                }}
+              />
+            </div>
 
-            <img
-              src={`/images/${flavor.color}-drink.webp`}
-              alt=""
-              className="drinks"
-            />
+            {/* Overlay gradient */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent rounded-xl"></div>
 
-            <img
-              src={`/images/${flavor.color}-elements.webp`}
-              alt=""
-              className="elements"
-            />
-
-            <h1>{flavor.name}</h1>
+            {/* Content */}
+            <div className="relative z-10 p-8 h-full flex flex-col justify-end">
+              <h1 className="text-white text-2xl font-bold mb-4">
+                {flavor.name}
+              </h1>
+              <p className="text-gray-200 text-sm">
+                {index === 0 && "Khởi nguồn của triết học trong kỷ nguyên số"}
+                {index === 1 && "Ý thức nhân tạo và tự nhận thức"}
+                {index === 2 && "Trí tuệ số hoá cho tương lai"}
+                {index === 3 && "Triết học thông qua mạng neural"}
+                {index === 4 && "Tính toán biên cho tư duy nhanh"}
+                {index === 5 && "Tư duy tiên phong cho thế hệ mới"}
+              </p>
+            </div>
           </div>
         ))}
       </div>

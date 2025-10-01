@@ -3,7 +3,7 @@ import gsap from "gsap";
 import { SplitText } from "gsap/all";
 import { useMediaQuery } from "react-responsive";
 
-const HeroSection = () => {
+const HeroSection = ({ onStartAudioTour }) => {
   const isMobile = useMediaQuery({
     query: "(max-width: 768px)",
   });
@@ -62,18 +62,18 @@ const HeroSection = () => {
   });
 
   return (
-    <section className="bg-main-bg">
+    <section id="hero-section" className="bg-main-bg">
       <div className="hero-container">
         {isTablet ? (
           <>
             {isMobile && (
               <img
-                src="/images/hero-bg.png"
+                src="/images2/Triet.png"
                 className="absolute bottom-40 size-full object-cover"
               />
             )}
             <img
-              src="/images/hero-img.png"
+              src="/images2/TrietAI.png"
               className="absolute bottom-0 left-1/2 -translate-x-1/2 object-auto"
             />
           </>
@@ -88,7 +88,7 @@ const HeroSection = () => {
         )}
         <div className="hero-content opacity-0">
           <div className="overflow-hidden">
-            <h1 className="hero-title">Revolutionary Intelligence</h1>
+            <h1 className="hero-title">Philosophy 4.0</h1>
           </div>
           <div
             style={{
@@ -97,17 +97,21 @@ const HeroSection = () => {
             className="hero-text-scroll"
           >
             <div className="hero-subtitle">
-              <h1>Marxism + AI</h1>
+              <h1>AI Edge Thinking</h1>
             </div>
           </div>
 
           <h2>
-            Join the digital revolution where communist ideals meet artificial intelligence. 
-            Unite workers and machines for a collective future of technological equality.
+            Khám phá tương lai của triết học trong kỷ nguyên AI. Nơi trí tuệ
+            nhân tạo gặp gỡ tư duy triết học cho một thế giới thông minh hơn.
           </h2>
 
-          <div className="hero-button">
-            <p>Join the Revolution</p>
+          <div
+            className="hero-button"
+            onClick={onStartAudioTour}
+            style={{ cursor: "pointer" }}
+          >
+            <p>Khám Phá Triết 4.0</p>
           </div>
         </div>
       </div>
