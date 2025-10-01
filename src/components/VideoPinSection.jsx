@@ -12,8 +12,8 @@ const VideoPinSection = () => {
       const tl = gsap.timeline({
         scrollTrigger: {
           trigger: ".vd-pin-section",
-          start: "-15% top",
-          end: "200% top",
+          start: "top top",
+          end: "+=180%",
           scrub: 1.5,
           pin: true,
         },
@@ -21,7 +21,8 @@ const VideoPinSection = () => {
 
       tl.to(".video-box", {
         clipPath: "circle(100% at 50% 50%)",
-        ease: "power1.inOut",
+        ease: "power2.inOut",
+        duration: 1,
       });
     }
   });
