@@ -12,64 +12,88 @@ const FlavorSlider = () => {
   });
 
   useGSAP(() => {
-    const scrollAmount = sliderRef.current.scrollWidth - window.innerWidth;
+    let sliderTl = null;
+    
+    // Đợi một chút để DOM và images sẵn sàng
+    const initTimer = setTimeout(() => {
+      let scrollAmount = 0;
+      
+      // Slider horizontal scroll animation (chỉ cho desktop)
+      if (!isTablet && sliderRef.current) {
+        // Force browser reflow để đảm bảo tính toán chính xác
+        sliderRef.current.offsetHeight;
+        
+        const totalWidth = sliderRef.current.scrollWidth;
+        const viewportWidth = window.innerWidth;
+        scrollAmount = totalWidth - viewportWidth;
+        
+        // Tính toán extraScrollSpace dựa trên số lượng items
+        const itemCount = flavorlists.length;
+        const extraScrollSpace = Math.max(scrollAmount * 0.8, itemCount * 500);
+        
+        sliderTl = gsap.timeline({
+          scrollTrigger: {
+            trigger: ".flavor-section",
+            start: "top top",
+            end: `+=${scrollAmount + extraScrollSpace}`,
+            scrub: 1.5,
+            pin: true,
+            pinSpacing: true,
+            anticipatePin: 1,
+            invalidateOnRefresh: true,
+            markers: false, // Set true để debug
+            onRefresh: (self) => {
+              // Recalculate khi refresh
+              const newTotalWidth = sliderRef.current?.scrollWidth || totalWidth;
+              const newScrollAmount = newTotalWidth - window.innerWidth;
+              self.vars.end = `+=${newScrollAmount + extraScrollSpace}`;
+            },
+          },
+        });
 
-    if (!isTablet) {
-      const tl = gsap.timeline({
+        sliderTl.to(".flavors", {
+          x: () => -scrollAmount,
+          ease: "power1.inOut",
+        });
+      }
+
+      // Title animation - tất cả title texts fade out cùng nhau
+      titleTl = gsap.timeline({
         scrollTrigger: {
           trigger: ".flavor-section",
           start: "top top",
-          end: `+=${scrollAmount + 1000}px`,
-          scrub: true,
-          pin: true,
-          pinSpacing: true,
-          anticipatePin: 1,
+          end: !isTablet ? `+=${scrollAmount * 0.3}` : "bottom 80%",
+          scrub: 1,
           invalidateOnRefresh: true,
         },
       });
 
-      tl.to(".flavor-section", {
-        x: `-${scrollAmount + 1000}px`,
+      titleTl.to([".first-text-split", ".flavor-text-scroll", ".second-text-split"], {
+        opacity: 0,
+        x: -200,
         ease: "power1.inOut",
       });
-    }
-
-    const titleTl = gsap.timeline({
-      scrollTrigger: {
-        trigger: ".flavor-section",
-        start: "top top",
-        end: "bottom 80%",
-        scrub: true,
-        invalidateOnRefresh: true,
-      },
-    });
-
-    titleTl
-      .to(".first-text-split", {
-        xPercent: -30,
-        ease: "power1.inOut",
-      })
-      .to(
-        ".flavor-text-scroll",
-        {
-          xPercent: -22,
-          ease: "power1.inOut",
-        },
-        "<"
-      )
-      .to(
-        ".second-text-split",
-        {
-          xPercent: -10,
-          ease: "power1.inOut",
-        },
-        "<"
-      );
-  });
+      
+      requestAnimationFrame(() => {
+        gsap.ScrollTrigger.refresh();
+      });
+    }, 100);
+    
+    return () => {
+      clearTimeout(initTimer);
+      
+      if (sliderTl) {
+        if (sliderTl.scrollTrigger) {
+          sliderTl.scrollTrigger.kill(true);
+        }
+        sliderTl.kill();
+      }
+    };
+  }, [isTablet]);
 
   return (
-    <div ref={sliderRef} className="slider-wrapper">
-      <div className="flavors">
+    <div ref={sliderRef} className="slider-wrapper" style={{ backgroundColor: '#2f4f4f' }}>
+      <div className="flavors" style={{ backgroundColor: '#993140' }}>
         {flavorlists.map((flavor, index) => (
           <div
             key={flavor.name}

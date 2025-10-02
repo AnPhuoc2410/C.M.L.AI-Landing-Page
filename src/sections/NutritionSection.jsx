@@ -67,12 +67,12 @@ const NutritionSection = () => {
   return (
     <section className="nutrition-section">
       <img
-        src="/images/slider-dip.png"
+        src="/images/Triet2.png"
         alt=""
         className="w-full object-cover"
       />
 
-      <img src="/images/big-img.png" alt="" className="big-img" />
+      <img src="/images2/Triet7.png" alt="" className="big-img" />
 
       <div className="flex md:flex-row flex-col justify-between md:px-10 px-5 mt-14 md:mt-0">
         <div className="relative inline-block md:translate-y-20">

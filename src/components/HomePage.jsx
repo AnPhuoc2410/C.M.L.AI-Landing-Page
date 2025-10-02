@@ -12,18 +12,28 @@ import { useGSAP } from "@gsap/react";
 import { ScrollSmoother, ScrollTrigger } from "gsap/all";
 import gsap from "gsap";
 import { useAudio } from "../contexts/AudioContext";
+import { useEffect } from "react";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
 const HomePage = () => {
   const { startGlobalTour } = useAudio();
 
+  
   useGSAP(() => {
-    ScrollSmoother.create({
+    // Chỉ tạo ScrollSmoother, không kill ScrollTriggers của sections
+    const smoother = ScrollSmoother.create({
       smooth: 3,
       effects: true,
+      normalizeScroll: true,
+      ignoreMobileResize: true,
     });
-  });
+    
+    // Cleanup chỉ ScrollSmoother
+    return () => {
+      if (smoother) smoother.kill();
+    };
+  }, []);
 
   return (
     <>
