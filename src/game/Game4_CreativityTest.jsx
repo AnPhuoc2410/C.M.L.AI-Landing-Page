@@ -297,15 +297,20 @@ const Game4_CreativityTest = () => {
 
   const handleAnswer = (clickedRight) => {
     const aiIsOnRight = aiPositions[currentQuestion];
-
-    // User clicked right side (B), check if AI is actually on right
-    const correct = clickedRight === aiIsOnRight;
+    
+    // Question asks: "Which is HUMAN creativity?"
+    // User clicks A or B to choose where they think HUMAN content is
+    // Human is on the OPPOSITE side of AI
+    const humanIsOnRight = !aiIsOnRight;
+    
+    // User is correct if they clicked the side where HUMAN actually is
+    const correct = clickedRight === humanIsOnRight;
 
     if (correct) {
       setScore(score + 1);
     }
 
-    setShowResult({ correct, aiIsOnRight });
+    setShowResult({ correct, aiIsOnRight, humanIsOnRight });
     setTimeout(() => {
       setShowResult(false);
       if (currentQuestion < selectedQuestions.length - 1) {
@@ -570,17 +575,16 @@ const Game4_CreativityTest = () => {
             </p>
             <div className="bg-black/60 border border-cyber-blue/50 rounded-xl p-6 max-w-xl mx-auto">
               <p className="text-lg text-cream-white/80">
-                Đáp án đúng:{" "}
+                <strong className="text-neural-green">
+                  {showResult.humanIsOnRight ? "B" : "A"}
+                </strong>{" "}
+                là Con người
+              </p>
+              <p className="text-lg text-cream-white/80 mt-2">
                 <strong className="text-revolutionary-gold">
                   {showResult.aiIsOnRight ? "B" : "A"}
                 </strong>{" "}
                 là AI
-              </p>
-              <p className="text-lg text-cream-white/80 mt-2">
-                <strong className="text-neural-green">
-                  {showResult.aiIsOnRight ? "A" : "B"}
-                </strong>{" "}
-                là Con người
               </p>
             </div>
           </motion.div>
