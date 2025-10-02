@@ -426,79 +426,81 @@ const Game4_CreativityTest = () => {
 
   return (
     <div className="max-w-5xl mx-auto">
-      {/* Progress */}
-      <div className="mb-6">
-        <div className="flex justify-between items-center mb-2">
-          <span className="text-sm text-cream-white/60">
-            Câu {currentQuestion + 1}/{selectedQuestions.length}
-          </span>
-          <span className="text-sm text-cyber-blue font-bold">
-            Điểm: {score}
-          </span>
-        </div>
-        <div className="w-full bg-steel-gray/30 rounded-full h-2">
+      {loading ? (
+        // Loading screen - hide everything
+        <div className="text-center py-20">
           <motion.div
-            initial={{ width: 0 }}
-            animate={{
-              width: `${
-                ((currentQuestion + 1) / selectedQuestions.length) * 100
-              }%`,
-            }}
-            className="bg-gradient-to-r from-cyber-blue to-neural-green h-2 rounded-full"
-          />
-        </div>
-      </div>
-
-      {/* Turing Assistant */}
-      <div className="bg-neural-green/10 border border-neural-green/30 rounded-xl p-4 mb-6 flex items-start gap-3">
-        <div className="text-3xl">🧙‍♂️</div>
-        <div>
-          <p className="text-sm font-bold text-neural-green mb-1">
-            Trợ lý Turing:
-          </p>
-          <p className="text-sm text-cream-white/80 italic">
-            {question?.type === "poem" &&
-              "Thơ AI thường dùng cấu trúc đều đặn, thiếu chút cảm xúc sâu lắng..."}
-            {question?.type === "story" &&
-              "Văn xuôi AI thường có câu văn đơn giản, ít hình ảnh ẩn dụ..."}
-            {question?.type === "code" &&
-              "Code AI thường là giải pháp cơ bản, thiếu tối ưu hóa sáng tạo..."}
-            {question?.type === "philosophy" &&
-              "Triết lý AI thường liệt kê, thiếu chiều sâu suy tư..."}
-          </p>
-        </div>
-      </div>
-
-      <AnimatePresence mode="wait">
-        {!showResult ? (
-          <motion.div
-            key={currentQuestion}
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
+            animate={{ rotate: 360 }}
+            transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
+            className="text-6xl mb-4 inline-block"
           >
-            <h3 className="text-2xl font-bold text-center text-cyber-blue mb-6">
-              {question?.category}: Đâu là sáng tạo của Con người? 🤔
-            </h3>
+            ⚙️
+          </motion.div>
+          <p className="text-cream-white/80 text-xl font-bold mb-2">
+            AI đang tạo nội dung cho tất cả câu hỏi...
+          </p>
+          <p className="text-cream-white/60 text-sm">
+            Đợi chút nhé, đang generate 5 câu 🤖
+          </p>
+        </div>
+      ) : (
+        <>
+          {/* Progress */}
+          <div className="mb-6">
+            <div className="flex justify-between items-center mb-2">
+              <span className="text-sm text-cream-white/60">
+                Câu {currentQuestion + 1}/{selectedQuestions.length}
+              </span>
+              <span className="text-sm text-cyber-blue font-bold">
+                Điểm: {score}
+              </span>
+            </div>
+            <div className="w-full bg-steel-gray/30 rounded-full h-2">
+              <motion.div
+                initial={{ width: 0 }}
+                animate={{
+                  width: `${
+                    ((currentQuestion + 1) / selectedQuestions.length) * 100
+                  }%`,
+                }}
+                className="bg-gradient-to-r from-cyber-blue to-neural-green h-2 rounded-full"
+              />
+            </div>
+          </div>
 
-            {loading ? (
-              <div className="text-center py-20">
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-                  className="text-6xl mb-4 inline-block"
-                >
-                  ⚙️
-                </motion.div>
-                <p className="text-cream-white/80">
-                  AI đang tạo nội dung cho tất cả câu hỏi...
-                </p>
-                <p className="text-cream-white/60 text-sm mt-2">
-                  Đợi chút nhé, đang generate 5 câu 🤖
-                </p>
-              </div>
-            ) : (
-              <div className="grid md:grid-cols-2 gap-6 mb-6">
+          {/* Turing Assistant */}
+          <div className="bg-neural-green/10 border border-neural-green/30 rounded-xl p-4 mb-6 flex items-start gap-3">
+            <div className="text-3xl">🧙‍♂️</div>
+            <div>
+              <p className="text-sm font-bold text-neural-green mb-1">
+                Trợ lý Turing:
+              </p>
+              <p className="text-sm text-cream-white/80 italic">
+                {question?.type === "poem" &&
+                  "Thơ AI thường dùng cấu trúc đều đặn, thiếu chút cảm xúc sâu lắng..."}
+                {question?.type === "story" &&
+                  "Văn xuôi AI thường có câu văn đơn giản, ít hình ảnh ẩn dụ..."}
+                {question?.type === "code" &&
+                  "Code AI thường là giải pháp cơ bản, thiếu tối ưu hóa sáng tạo..."}
+                {question?.type === "philosophy" &&
+                  "Triết lý AI thường liệt kê, thiếu chiều sâu suy tư..."}
+              </p>
+            </div>
+          </div>
+
+          <AnimatePresence mode="wait">
+            {!showResult ? (
+              <motion.div
+                key={currentQuestion}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+              >
+                <h3 className="text-2xl font-bold text-center text-cyber-blue mb-6">
+                  {question?.category}: Đâu là sáng tạo của Con người? 🤔
+                </h3>
+
+                <div className="grid md:grid-cols-2 gap-6 mb-6">
                 {/* Option A (Left) */}
                 <motion.button
                   whileHover={{ scale: 1.02 }}
@@ -543,13 +545,12 @@ const Game4_CreativityTest = () => {
                   </div>
                 </motion.button>
               </div>
-            )}
 
-            <div className="text-center text-sm text-cream-white/60">
-              Bạn có 15 giây để quyết định...
-            </div>
-          </motion.div>
-        ) : (
+              <div className="text-center text-sm text-cream-white/60">
+                Bạn có 15 giây để quyết định...
+              </div>
+            </motion.div>
+          ) : (
           <motion.div
             key="result"
             initial={{ opacity: 0, scale: 0.8 }}
@@ -585,6 +586,8 @@ const Game4_CreativityTest = () => {
           </motion.div>
         )}
       </AnimatePresence>
+        </>
+      )}
     </div>
   );
 };
