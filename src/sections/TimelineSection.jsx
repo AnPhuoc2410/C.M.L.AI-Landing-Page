@@ -1,6 +1,7 @@
 import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
+import { image } from "framer-motion/client";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -12,36 +13,64 @@ const TimelineSection = () => {
 
   const timelineData = [
     {
-      year: "2025",
-      title: "Triết 4.0 Ra Mắt",
+      period: "Tiền Sử",
+      title: "Công Cụ Thô Sơ",
+      subtitle: "Lao động thủ công",
       description:
-        "Nền tảng triết học AI đầu tiên kết hợp tư duy con người với trí tuệ nhân tạo, mở ra kỷ nguyên mới của tư duy.",
-      image: "/images2/Triet4.0.png",
+        "Bàn tay con người cầm cuốc, đào đất. Năng suất lao động: Rất thấp, phụ thuộc hoàn toàn vào sức người. Tác động xã hội: Cộng đồng bộ lạc, tự cung tự cấp.",
+      icon: "🪓",
+      image: "/images2/AncientMan.png",
+      productivity: "Rất thấp",
+      impact: "Cộng đồng bộ lạc",
       side: "left",
     },
     {
-      year: "2024",
-      title: "Phát Triển AI Edge",
+      period: "1760-1840",
+      title: "Cách Mạng Công Nghiệp 1.0",
+      subtitle: "Máy móc cơ khí",
       description:
-        "Hoàn thiện công nghệ AI Edge cho triết học, tạo ra những breakthrough trong tư duy và nhận thức.",
-      image: "/images2/TrietAI.png",
+        "Máy hơi nước, máy dệt cơ khí. Năng suất lao động: Tăng 10-20 lần so với thủ công. Tác động xã hội: Hình thành giai cấp công nhân, đô thị hóa bùng nổ, xã hội chuyển từ nông nghiệp sang công nghiệp.",
+      icon: "⚙️",
+      image: "/images2/IndustrialRevolution1.png",
+      productivity: "Tăng 10-20 lần",
+      impact: "Đô thị hóa, giai cấp công nhân",
       side: "right",
     },
     {
-      year: "2023",
-      title: "Khởi Tạo Dự Án",
+      period: "1870-1914",
+      title: "Cách Mạng Công Nghiệp 2.0",
+      subtitle: "Dây chuyền điện khí hóa",
       description:
-        "Bắt đầu hành trình xây dựng tương lai của triết học trong kỷ nguyên số với Philosophy 4.0.",
-      image: "/images2/TrietAI1.png",
+        "Dây chuyền sản xuất hàng loạt, động cơ điện. Năng suất lao động: Tăng gấp đôi so với 1.0 nhờ chuyên môn hóa. Tác động xã hội: Sản xuất hàng loạt, tiêu chuẩn hóa sản phẩm, tăng trưởng kinh tế nhanh chóng.",
+      icon: "⚡",
+      image: "/images2/IndustrialRevolution2.png",
+      productivity: "Tăng gấp đôi",
+      impact: "Sản xuất hàng loạt",
       side: "left",
     },
     {
-      year: "2022",
-      title: "Nghiên Cứu & Đổi Mới",
+      period: "1969-Nay",
+      title: "Cách Mạng Công Nghiệp 3.0",
+      subtitle: "Máy tính & Tự động hóa",
       description:
-        "Kết hợp triết học cổ điển với công nghệ AI tiên tiến, tạo nền móng cho cuộc cách mạng tư duy.",
-      image: "/images2/trietAI2.png",
+        "Máy tính, robot công nghiệp, internet. Năng suất lao động: Tăng 50-100 lần nhờ tự động hóa quy trình. Tác động xã hội: Toàn cầu hóa, kinh tế tri thức, giảm việc làm sản xuất.",
+      icon: "💻",
+      image: "/images2/IndustrialRevolution3.png",
+      productivity: "Tăng 50-100 lần",
+      impact: "Toàn cầu hóa, kinh tế tri thức",
       side: "right",
+    },
+    {
+      period: "2010-Tương Lai",
+      title: "Cách Mạng Công Nghiệp 4.0",
+      subtitle: "AI, Robot, Big Data",
+      description:
+        "Trí tuệ nhân tạo, IoT, robot thông minh, phân tích dữ liệu lớn. Năng suất lao động: Tăng đột biến, gấp hàng trăm lần trong một số ngành. Tác động xã hội: Nguy cơ thất nghiệp công nghệ cao, tái cấu trúc lao động, xuất hiện nghề nghiệp mới.",
+      icon: "🤖",
+      image: "/images2/IndustrialRevolution4.png",
+      productivity: "Tăng đột biến (x100-1000)",
+      impact: "⚠️ Thất nghiệp công nghệ",
+      side: "left",
     },
   ];
 
@@ -141,10 +170,11 @@ const TimelineSection = () => {
             className="text-5xl md:text-7xl font-bold mb-4"
             style={{ color: "#993140" }}
           >
-            Mục Tiêu Triết 4.0
+            Sự Phát Triển Lực Lượng Sản Xuất
           </h2>
           <p className="text-xl md:text-2xl text-stone-700">
-            Hành trình tiến hóa của triết học trong kỷ nguyên AI
+            Từ công cụ thô sơ đến trí tuệ nhân tạo - Hành trình tiến hóa của
+            nhân loại
           </p>
         </div>
 
@@ -172,15 +202,13 @@ const TimelineSection = () => {
             {timelineData.map((item, index) => (
               <div
                 key={index}
-                className={`timeline-item flex flex-col md:flex-row items-center gap-8 ${
-                  item.side === "right" ? "md:flex-row-reverse" : ""
-                }`}
+                className={`timeline-item flex flex-col md:flex-row items-center gap-8 ${item.side === "right" ? "md:flex-row-reverse" : ""
+                  }`}
               >
                 {/* Content */}
                 <div
-                  className={`w-full md:w-5/12 ${
-                    item.side === "right" ? "md:text-left" : "md:text-right"
-                  }`}
+                  className={`w-full md:w-5/12 ${item.side === "right" ? "md:text-left" : "md:text-right"
+                    }`}
                 >
                   <div
                     className="bg-gradient-to-br from-amber-50 to-stone-50 p-6 md:p-8 rounded-2xl border-2 transition-all duration-300 hover:shadow-[0_10px_40px_rgba(153,49,64,0.25)] shadow-lg"
@@ -199,30 +227,56 @@ const TimelineSection = () => {
                           "linear-gradient(to right, #993140, #c43d50)",
                       }}
                     >
-                      {item.year}
+                      {item.period}
                     </div>
                     <h3
-                      className="text-2xl md:text-3xl font-bold mb-3"
+                      className="text-2xl md:text-3xl font-bold mb-2"
                       style={{ color: "#993140" }}
                     >
                       {item.title}
                     </h3>
-                    <p className="text-stone-700 text-base md:text-lg leading-relaxed">
+                    <h4 className="text-lg md:text-xl font-semibold mb-3 text-stone-600">
+                      {item.subtitle}
+                    </h4>
+                    <p className="text-stone-700 text-base md:text-lg leading-relaxed mb-4">
                       {item.description}
                     </p>
+
+                    {/* Productivity & Impact badges */}
+                    <div className="flex flex-wrap gap-3 mt-4">
+                      <div
+                        className="px-3 py-1.5 rounded-lg text-sm font-medium"
+                        style={{
+                          backgroundColor: "#fef3c7",
+                          color: "#78350f",
+                        }}
+                      >
+                        📈 {item.productivity}
+                      </div>
+                      <div
+                        className="px-3 py-1.5 rounded-lg text-sm font-medium"
+                        style={{
+                          backgroundColor: "#e7e5e4",
+                          color: "#44403c",
+                        }}
+                      >
+                        🌍 {item.impact}
+                      </div>
+                    </div>
                   </div>
                 </div>
 
-                {/* Center Dot */}
+                {/* Center Dot with Icon */}
                 <div className="hidden md:flex w-2/12 justify-center items-center relative">
                   <div
-                    className="w-6 h-6 rounded-full border-4 border-amber-50 z-10 relative"
+                    className="w-16 h-16 rounded-full border-4 border-amber-50 z-10 relative flex items-center justify-center text-3xl"
                     style={{
                       background:
                         "linear-gradient(to bottom right, #993140, #c43d50)",
                       boxShadow: "0 0 20px rgba(153, 49, 64, 0.8)",
                     }}
                   >
+                    {item.icon}
                     {/* Pulsing ring effect */}
                     <div
                       className="absolute inset-0 rounded-full animate-ping opacity-75"
@@ -231,7 +285,7 @@ const TimelineSection = () => {
                   </div>
                 </div>
 
-                {/* Image */}
+                {/* Visual Representation */}
                 <div className="w-full md:w-5/12">
                   <div className="relative group">
                     <div
@@ -242,7 +296,7 @@ const TimelineSection = () => {
                       }}
                     ></div>
                     <div
-                      className="relative overflow-hidden rounded-2xl border-2 transition-all duration-300 shadow-lg"
+                      className="relative overflow-hidden rounded-2xl border-2 transition-all duration-300 shadow-lg bg-gradient-to-br from-stone-50 to-amber-50 p-8"
                       style={{ borderColor: "#d4a574" }}
                       onMouseEnter={(e) =>
                         (e.currentTarget.style.borderColor = "#993140")
@@ -251,11 +305,27 @@ const TimelineSection = () => {
                         (e.currentTarget.style.borderColor = "#d4a574")
                       }
                     >
-                      <img
-                        src={item.image}
-                        alt={item.title}
-                        className="w-full h-64 object-cover transform group-hover:scale-110 transition-transform duration-500"
-                      />
+                      {/* Large Icon Display */}
+                      <div className="flex items-center justify-center h-48 transform group-hover:scale-105 transition-transform duration-500">
+                        <img
+                          src={item.image}
+                          alt={item.title}
+                          className="w-full h-full object-cover rounded-2xl"
+                        />
+                      </div>
+
+                      {/* Period Label */}
+                      <div className="mt-4 text-center">
+                        <div
+                          className="inline-block px-4 py-2 rounded-lg font-bold text-lg"
+                          style={{
+                            backgroundColor: "#993140",
+                            color: "#fef3c7",
+                          }}
+                        >
+                          {item.period}
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -266,9 +336,22 @@ const TimelineSection = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-20">
-          <p className="text-xl md:text-2xl text-stone-700 mb-6 font-medium">
-            Cùng nhau xây dựng tương lai triết học. Trải nghiệm Philosophy 4.0.
-          </p>
+          <div
+            className="inline-block bg-gradient-to-r from-red-50 to-amber-50 border-2 rounded-2xl p-8 shadow-xl max-w-3xl"
+            style={{ borderColor: "#993140" }}
+          >
+            <p className="text-xl md:text-2xl text-stone-800 mb-4 font-bold">
+              ⚠️ Thách Thức Của Kỷ Nguyên 4.0
+            </p>
+            <p className="text-lg md:text-xl text-stone-700 mb-2">
+              Năng suất tăng đột biến, nhưng đi kèm là nguy cơ thất nghiệp công
+              nghệ.
+            </p>
+            <p className="text-base md:text-lg text-stone-600">
+              Triết học 4.0 giúp chúng ta tái định nghĩa vai trò con người
+              trong xã hội mới.
+            </p>
+          </div>
         </div>
       </div>
     </section>
