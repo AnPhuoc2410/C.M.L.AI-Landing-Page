@@ -541,6 +541,42 @@ const Game2_SurplusValue = () => {
           </div>
         </div>
 
+        {/* Action Button - Improved UX - MOVED TO TOP */}
+        <div className="flex justify-center mb-6">
+          <motion.button
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+            whileHover={{ scale: 1.08, boxShadow: "0 0 30px rgba(59, 130, 246, 0.6)" }}
+            whileTap={{ scale: 0.95 }}
+            onClick={resetGame}
+            className="relative overflow-hidden bg-gradient-to-r from-cyber-blue to-neural-green text-black px-10 py-4 rounded-xl font-bold text-lg shadow-lg hover:shadow-cyber-blue/50 transition-all group"
+          >
+            {/* Shine effect */}
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent -translate-x-full group-hover:translate-x-full transition-transform duration-700" />
+            
+            <span className="relative flex items-center gap-2">
+              <span className="text-2xl">🔄</span>
+              <span>Chơi Lại</span>
+            </span>
+          </motion.button>
+        </div>
+
+        {/* Load Leaderboard Button - For both success and fail */}
+        {!showLeaderboard && (
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={fetchLeaderboard}
+            disabled={isLoadingLeaderboard}
+            className="bg-revolutionary-gold/20 border-2 border-revolutionary-gold text-revolutionary-gold px-8 py-3 rounded-lg font-bold mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoadingLeaderboard ? "⏳ Đang tải..." : "🏆 Xem Bảng Xếp Hạng"}
+          </motion.button>
+        )}
+
         {/* Leaderboard Section */}
         {showLeaderboard && (
           <motion.div
@@ -628,46 +664,10 @@ const Game2_SurplusValue = () => {
                 <p>Chưa có dữ liệu bảng xếp hạng</p>
               </div>
             )}
-
-            {/* View Full Leaderboard Button */}
-            {leaderboardData.length > 0 && (
-              <motion.a
-                href={import.meta.env.VITE_SHEET_URL.replace('/exec', '')}
-                target="_blank"
-                rel="noopener noreferrer"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="mt-6 block text-center bg-cyber-blue/20 border border-cyber-blue text-cyber-blue px-6 py-3 rounded-lg font-bold hover:bg-cyber-blue/30 transition-colors"
-              >
-                📊 Xem Bảng Xếp Hạng Đầy Đủ
-              </motion.a>
-            )}
           </motion.div>
         )}
 
-        {/* Load Leaderboard Button */}
-        {!showLeaderboard && success && (
-          <motion.button
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={fetchLeaderboard}
-            disabled={isLoadingLeaderboard}
-            className="bg-revolutionary-gold/20 border-2 border-revolutionary-gold text-revolutionary-gold px-8 py-3 rounded-lg font-bold mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
-          >
-            {isLoadingLeaderboard ? "⏳ Đang tải..." : "🏆 Xem Bảng Xếp Hạng"}
-          </motion.button>
-        )}
 
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={resetGame}
-          className="bg-cyber-blue text-black px-8 py-3 rounded-lg font-bold"
-        >
-          Chơi Lại
-        </motion.button>
       </motion.div>
     );
   }
