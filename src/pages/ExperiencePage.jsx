@@ -104,26 +104,26 @@ const ExperiencePage = () => {
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-revolutionary-gold/30">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link to="/" className="text-revolutionary-gold font-bold text-xl">
+          <Link to="/" className="text-revolutionary-gold font-bold text-xl hover:text-cyber-blue transition-colors">
             ← Về Trang Chủ
           </Link>
 
           <div className="flex gap-4">
             <Link
               to="/why-project"
-              className="text-cyber-blue hover:text-revolutionary-gold transition-colors"
+              className="text-cyber-blue hover:text-revolutionary-gold transition-colors font-semibold"
             >
               Vì Sao
             </Link>
             <Link
               to="/goals"
-              className="text-cyber-blue hover:text-revolutionary-gold transition-colors"
+              className="text-cyber-blue hover:text-revolutionary-gold transition-colors font-semibold"
             >
               Mục Tiêu
             </Link>
             <Link
               to="/activities"
-              className="text-cyber-blue hover:text-revolutionary-gold transition-colors"
+              className="text-cyber-blue hover:text-revolutionary-gold transition-colors font-semibold"
             >
               Hoạt Động
             </Link>
@@ -132,29 +132,29 @@ const ExperiencePage = () => {
       </nav>
 
       {/* Hero Section */}
-      <section className="pt-24 pb-12 px-4">
-        <div className="container mx-auto max-w-4xl text-center">
-          <h1 className="text-6xl md:text-8xl font-bold mb-8 cyber-gradient">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream-white">
+        <img
+          src="/images2/Triet6.png"
+          alt="Experience and Expectations"
+          className="absolute inset-0 w-full h-full object-cover opacity-40"
+        />
+        
+        <div className="absolute inset-0 bg-gradient-to-b from-cream-white/60 via-transparent to-cream-white/60"></div>
+        
+        <div className="container mx-auto max-w-4xl text-center relative z-10 px-4 pt-24 pb-12">
+          <h1 className="text-6xl md:text-8xl font-bold mb-8 text-communist-red uppercase tracking-tight">
             Kỳ Vọng & Trải Nghiệm
           </h1>
 
-          <div className="mb-8">
-            <img
-              src="/images2/Triet6.png"
-              alt="Experience and Expectations"
-              className="mx-auto max-w-lg rounded-2xl shadow-2xl border border-revolutionary-gold/30"
-            />
-          </div>
-
           <div className="max-w-md mx-auto mb-8">
-            <div className="text-center p-4 bg-black/30 rounded-lg border border-revolutionary-gold/30">
-              <p className="text-revolutionary-gold text-sm">
+            <div className="text-center p-4 bg-revolutionary-gold/20 rounded-lg border-4 border-communist-red">
+              <p className="text-communist-red text-base font-bold">
                 🎵 Audio tour available on main page
               </p>
             </div>
           </div>
 
-          <p className="text-xl mb-8 text-cream-white/80 max-w-3xl mx-auto">
+          <p className="text-xl mb-8 text-steel-gray max-w-3xl mx-auto">
             Khám phá những trải nghiệm thực tế từ cộng đồng người dùng và hiểu
             rõ những gì bạn có thể kỳ vọng khi tham gia vào hệ sinh thái
             Philosophy 4.0.
@@ -163,12 +163,18 @@ const ExperiencePage = () => {
       </section>
 
       {/* Learning Expectations */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <h2 className="text-5xl font-bold text-center mb-4 text-cyber-blue">
+      <section className="relative py-20 px-4 bg-communist-red">
+        <img
+          src="/images2/TrietAI.png"
+          alt="Expectations Background"
+          className="absolute inset-0 w-full h-full object-cover opacity-10"
+        />
+        
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <h2 className="text-5xl font-bold text-center mb-4 text-cream-white uppercase">
             Những Gì Bạn Sẽ Đạt Được
           </h2>
-          <p className="text-center text-xl mb-12 text-cream-white/80">
+          <p className="text-center text-xl mb-12 text-cream-white/90">
             Kỹ năng và kiến thức cụ thể sau khi hoàn thành chương trình
           </p>
 
@@ -176,15 +182,15 @@ const ExperiencePage = () => {
             {expectations.map((expectation, index) => (
               <div
                 key={index}
-                className="bg-steel-gray/20 p-6 rounded-xl border border-cyber-blue/30"
+                className="bg-cream-white p-6 rounded-xl border-4 border-revolutionary-gold"
               >
                 <div className="flex items-center mb-4">
                   <span className="text-3xl mr-4">{expectation.icon}</span>
                   <div className="flex-1">
-                    <h3 className="text-xl font-bold text-cyber-blue">
+                    <h3 className="text-xl font-bold text-communist-red uppercase">
                       {expectation.title}
                     </h3>
-                    <p className="text-cream-white/80 text-sm">
+                    <p className="text-steel-gray text-sm">
                       {expectation.description}
                     </p>
                   </div>
@@ -192,14 +198,14 @@ const ExperiencePage = () => {
 
                 <div className="mb-2">
                   <div className="flex justify-between text-sm">
-                    <span>Độ thành thạo trung bình</span>
-                    <span className="text-revolutionary-gold font-bold">
+                    <span className="text-steel-gray">Độ thành thạo trung bình</span>
+                    <span className="text-communist-red font-bold">
                       {expectation.progress}%
                     </span>
                   </div>
                   <div className="w-full bg-steel-gray rounded-full h-2">
                     <div
-                      className="bg-gradient-to-r from-cyber-blue to-revolutionary-gold h-2 rounded-full transition-all duration-1000"
+                      className="bg-communist-red h-2 rounded-full transition-all duration-1000"
                       style={{ width: `${expectation.progress}%` }}
                     ></div>
                   </div>
@@ -211,82 +217,78 @@ const ExperiencePage = () => {
       </section>
 
       {/* Learning Path */}
-      <section className="py-16 px-4 bg-gradient-to-r from-revolutionary-gold/5 to-neural-green/5">
-        <div className="container mx-auto max-w-6xl">
-          <h2 className="text-5xl font-bold text-center mb-4 text-revolutionary-gold">
+      <section className="relative py-20 px-4 bg-cream-white">
+        <img
+          src="/images2/Triet7.png"
+          alt="Learning Path Background"
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
+        />
+        
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <h2 className="text-5xl font-bold text-center mb-4 text-communist-red uppercase">
             Lộ Trình Học Tập
           </h2>
-          <p className="text-center text-xl mb-12 text-cream-white/80">
+          <p className="text-center text-xl mb-12 text-steel-gray">
             Hành trình từ người mới bắt đầu đến chuyên gia Philosophy 4.0
           </p>
 
-          <div className="relative">
-            <div className="absolute left-1/2 transform -translate-x-1/2 w-1 h-full bg-gradient-to-b from-revolutionary-gold to-neural-green hidden md:block"></div>
-
-            <div className="space-y-12">
-              {learningPath.map((phase, index) => (
-                <div
-                  key={index}
-                  className={`flex items-center gap-8 ${
-                    index % 2 === 1 ? "md:flex-row-reverse" : ""
-                  }`}
-                >
-                  <div className="w-full md:w-5/12">
-                    <div className="bg-black/50 p-6 rounded-xl border border-revolutionary-gold/30">
-                      <div className="flex items-center mb-4">
-                        <div className="w-12 h-12 bg-revolutionary-gold/20 rounded-full flex items-center justify-center mr-4">
-                          <span className="text-revolutionary-gold font-bold">
-                            {index + 1}
-                          </span>
-                        </div>
-                        <div>
-                          <h3 className="text-2xl font-bold text-revolutionary-gold">
-                            {phase.phase}
-                          </h3>
-                          <p className="text-cyber-blue font-semibold">
-                            {phase.duration}
-                          </p>
-                        </div>
-                      </div>
-                      <p className="text-cream-white/80 mb-4">
-                        {phase.description}
-                      </p>
-                      <div className="space-y-2">
-                        <p className="text-sm font-semibold text-neural-green">
-                          Hoạt động chính:
-                        </p>
-                        {phase.activities.map((activity, actIndex) => (
-                          <div
-                            key={actIndex}
-                            className="flex items-center text-sm"
-                          >
-                            <span className="w-2 h-2 bg-cyber-blue rounded-full mr-2"></span>
-                            <span>{activity}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
+          <div className="space-y-12">
+            {learningPath.map((phase, index) => (
+              <div
+                key={index}
+                className="bg-revolutionary-gold p-6 rounded-xl border-4 border-communist-red"
+              >
+                <div className="flex items-center mb-4">
+                  <div className="w-12 h-12 bg-communist-red rounded-full flex items-center justify-center mr-4">
+                    <span className="text-cream-white font-bold text-xl">
+                      {index + 1}
+                    </span>
                   </div>
-
-                  <div className="hidden md:flex w-2/12 justify-center">
-                    <div className="w-8 h-8 bg-revolutionary-gold rounded-full border-4 border-black shadow-lg"></div>
+                  <div>
+                    <h3 className="text-2xl font-bold text-communist-red uppercase">
+                      {phase.phase}
+                    </h3>
+                    <p className="text-cyber-blue font-semibold">
+                      {phase.duration}
+                    </p>
                   </div>
-
-                  <div className="w-full md:w-5/12"></div>
                 </div>
-              ))}
-            </div>
+                <p className="text-steel-gray mb-4">
+                  {phase.description}
+                </p>
+                <div className="space-y-2">
+                  <p className="text-sm font-semibold text-communist-red uppercase">
+                    Hoạt động chính:
+                  </p>
+                  {phase.activities.map((activity, actIndex) => (
+                    <div
+                      key={actIndex}
+                      className="flex items-center text-sm"
+                    >
+                      <span className="w-2 h-2 bg-communist-red rounded-full mr-2"></span>
+                      <span className="text-steel-gray">{activity}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            ))}
           </div>
         </div>
       </section>
 
       {/* User Testimonials */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto max-w-6xl">
-          <h2 className="text-5xl font-bold text-center mb-4 text-neural-green">
+      <section className="relative py-20 px-4 bg-communist-red">
+        <img
+          src="/images2/TrietAI3.png"
+          alt="Testimonials Background"
+          className="absolute inset-0 w-full h-full object-cover opacity-10"
+        />
+        
+        <div className="container mx-auto max-w-6xl relative z-10">
+          <h2 className="text-5xl font-bold text-center mb-4 text-cream-white uppercase">
             Trải Nghiệm Người Dùng
           </h2>
-          <p className="text-center text-xl mb-12 text-cream-white/80">
+          <p className="text-center text-xl mb-12 text-cream-white/90">
             Những chia sẻ thật từ cộng đồng Philosophy 4.0
           </p>
 
@@ -294,98 +296,67 @@ const ExperiencePage = () => {
             {experiences.map((experience, index) => (
               <div
                 key={index}
-                className="bg-steel-gray/20 p-6 rounded-xl border border-neural-green/30"
+                className="bg-cream-white p-6 rounded-xl border-4 border-revolutionary-gold"
               >
                 <div className="flex items-center mb-4">
                   <img
                     src={experience.avatar}
                     alt={experience.name}
-                    className="w-16 h-16 rounded-full border-2 border-neural-green/50 mr-4"
+                    className="w-16 h-16 rounded-full border-4 border-communist-red mr-4 object-cover"
                   />
-                  <div className="flex-1">
-                    <h3 className="text-lg font-bold text-neural-green">
-                      {experience.name}
-                    </h3>
-                    <p className="text-sm text-cream-white/70">
-                      {experience.role}
-                    </p>
-                    <div className="flex items-center mt-1">
-                      <div className="flex text-revolutionary-gold mr-2">
-                        {[...Array(experience.rating)].map((_, i) => (
-                          <span key={i}>⭐</span>
-                        ))}
-                      </div>
-                      <span className="text-xs text-cream-white/50">
-                        ({experience.experience})
-                      </span>
-                    </div>
+                  <div>
+                    <h3 className="text-xl font-bold text-communist-red">{experience.name}</h3>
+                    <p className="text-cyber-blue text-sm">{experience.role}</p>
                   </div>
                 </div>
-                <blockquote className="text-cream-white/80 italic border-l-4 border-neural-green/50 pl-4">
-                  "{experience.quote}"
-                </blockquote>
+                <p className="text-steel-gray italic mb-4">"{experience.quote}"</p>
+                <div className="flex justify-between items-center">
+                  <div className="flex">
+                    {[...Array(experience.rating)].map((_, i) => (
+                      <span key={i} className="text-revolutionary-gold">★</span>
+                    ))}
+                  </div>
+                  <span className="text-sm text-steel-gray">Kinh nghiệm: {experience.experience}</span>
+                </div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Success Metrics */}
-      <section className="py-16 px-4 bg-gradient-to-r from-cyber-blue/5 to-data-purple/5">
-        <div className="container mx-auto max-w-6xl">
-          <h2 className="text-4xl font-bold text-center mb-12 text-data-purple">
-            Thành Tựu Cộng Đồng
-          </h2>
-
-          <div className="grid md:grid-cols-4 gap-8 text-center">
-            <div className="bg-black/50 p-6 rounded-xl border border-cyber-blue/30">
-              <div className="text-4xl font-bold text-cyber-blue mb-2">
-                2,500+
-              </div>
-              <p className="text-cream-white/80">Học viên tích cực</p>
-            </div>
-            <div className="bg-black/50 p-6 rounded-xl border border-revolutionary-gold/30">
-              <div className="text-4xl font-bold text-revolutionary-gold mb-2">
-                450+
-              </div>
-              <p className="text-cream-white/80">Hoạt động hoàn thành</p>
-            </div>
-            <div className="bg-black/50 p-6 rounded-xl border border-neural-green/30">
-              <div className="text-4xl font-bold text-neural-green mb-2">
-                95%
-              </div>
-              <p className="text-cream-white/80">Tỷ lệ hài lòng</p>
-            </div>
-            <div className="bg-black/50 p-6 rounded-xl border border-data-purple/30">
-              <div className="text-4xl font-bold text-data-purple mb-2">12</div>
-              <p className="text-cream-white/80">Tháng phát triển</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
       {/* Call to Action */}
-      <section className="py-16 px-4">
-        <div className="container mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-6">
-            Bắt Đầu Trải Nghiệm Của Bạn
+      <section className="relative py-32 px-4 bg-cream-white">
+        <img
+          src="/images2/Triet1.png"
+          alt="CTA Background"
+          className="absolute inset-0 w-full h-full object-cover opacity-20"
+        />
+        
+        <div className="container mx-auto text-center relative z-10">
+          <h2 className="text-4xl md:text-6xl font-bold mb-8 text-communist-red uppercase">
+            Bắt Đầu Hành Trình Của Bạn
           </h2>
-          <p className="text-xl mb-8 text-cream-white/80 max-w-2xl mx-auto">
-            Tham gia cộng đồng Philosophy 4.0 và khám phá tiềm năng tư duy của
-            bạn
+          <p className="text-xl md:text-2xl text-steel-gray mb-12 max-w-2xl mx-auto">
+            Tham gia cộng đồng Philosophy 4.0 và khám phá tương lai của triết học
           </p>
-          <div className="flex gap-4 justify-center">
-            <Link
-              to="/"
-              className="bg-neural-green text-black px-8 py-3 rounded-lg font-bold hover:bg-neural-green/80 transition-colors"
-            >
-              Đăng Ký Ngay
-            </Link>
+          <div className="flex gap-6 justify-center flex-wrap">
             <Link
               to="/activities"
-              className="border border-cyber-blue text-cyber-blue px-8 py-3 rounded-lg font-bold hover:bg-cyber-blue hover:text-black transition-colors"
+              className="bg-revolutionary-gold text-communist-red border-4 border-communist-red px-10 py-4 rounded-xl font-bold text-lg uppercase hover:bg-communist-red hover:text-cream-white hover:scale-105 transition-all duration-300"
             >
-              Xem Hoạt Động
+              Khám Phá Hoạt Động
+            </Link>
+            <Link
+              to="/goals"
+              className="bg-cyber-blue text-communist-red border-4 border-communist-red px-10 py-4 rounded-xl font-bold text-lg uppercase hover:bg-communist-red hover:text-cream-white hover:scale-105 transition-all duration-300"
+            >
+              Xem Mục Tiêu
+            </Link>
+            <Link
+              to="/"
+              className="bg-cream-white text-communist-red border-4 border-revolutionary-gold px-10 py-4 rounded-xl font-bold text-lg uppercase hover:bg-revolutionary-gold hover:scale-105 transition-all duration-300"
+            >
+              Về Trang Chủ
             </Link>
           </div>
         </div>
