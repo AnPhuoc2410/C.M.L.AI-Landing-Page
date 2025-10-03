@@ -3,12 +3,16 @@ import { motion, AnimatePresence } from "framer-motion";
 import Confetti from "react-confetti";
 
 const Game2_SurplusValue = () => {
-  const [workers, setWorkers] = useState([
-    { id: 1, health: 100, productivity: PRODUCTIVITY, position: 0 },
-    { id: 2, health: 100, productivity: PRODUCTIVITY, position: 1 },
-    { id: 3, health: 100, productivity: PRODUCTIVITY, position: 2 },
-    { id: 4, health: 100, productivity: PRODUCTIVITY, position: 3 },
-  ]);
+
+  const ROBOT_COST = 50;
+  const ROBOT_REPAIR_COST = 30;
+  const MAX_ROBOTS = 6;
+  const WORKER_HIRE_COST = 40;
+  const TARGET_VALUE = 300;
+  const STRIKE_THRESHOLD = 30; // Worker health below this triggers strike
+  const CRITICAL_WORKERS_THRESHOLD = 3; // Number of critical health workers to trigger strike
+  const PRODUCTIVITY = 20; // productivity per worker
+
   const [nextWorkerId, setNextWorkerId] = useState(5);
   const [robots, setRobots] = useState([]);
   const [surplusValue, setSurplusValue] = useState(0);
@@ -27,15 +31,12 @@ const Game2_SurplusValue = () => {
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [isLoadingLeaderboard, setIsLoadingLeaderboard] = useState(false);
   const [currentPlayerData, setCurrentPlayerData] = useState(null); // Lưu data của người chơi hiện tại
-
-  const ROBOT_COST = 50;
-  const ROBOT_REPAIR_COST = 30;
-  const MAX_ROBOTS = 6;
-  const WORKER_HIRE_COST = 40;
-  const TARGET_VALUE = 300;
-  const STRIKE_THRESHOLD = 30; // Worker health below this triggers strike
-  const CRITICAL_WORKERS_THRESHOLD = 3; // Number of critical health workers to trigger strike
-  const PRODUCTIVITY = 20; // productivity per worker
+  const [workers, setWorkers] = useState([
+    { id: 1, health: 100, productivity: PRODUCTIVITY, position: 0 },
+    { id: 2, health: 100, productivity: PRODUCTIVITY, position: 1 },
+    { id: 3, health: 100, productivity: PRODUCTIVITY, position: 2 },
+    { id: 4, health: 100, productivity: PRODUCTIVITY, position: 3 },
+  ]);
 
   useEffect(() => {
     if (!isPlaying || gameOver) return;
