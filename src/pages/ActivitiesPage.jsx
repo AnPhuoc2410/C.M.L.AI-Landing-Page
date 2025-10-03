@@ -5,6 +5,7 @@ import Game1_Contradiction from "../game/Game1_Contradiction";
 import Game2_SurplusValue from "../game/Game2_SurplusValue";
 import Game3_ClassStruggle from "../game/Game3_ClassStruggle";
 import Game4_CreativityTest from "../game/Game4_CreativityTest";
+import Game5_MemoryMatch from "../game/Game5_MemoryMatch";
 
 const ActivitiesPage = () => {
   const [activeGame, setActiveGame] = useState(null);
@@ -19,7 +20,7 @@ const ActivitiesPage = () => {
       type: "Chiến lược",
       features: ["Lựa chọn tương tác", "Nhiều kết cục", "Mentor Mác hướng dẫn"],
       difficulty: "Trung bình",
-      component: Game1_Contradiction,
+      component: Game5_MemoryMatch,
     },
     {
       id: 2,
