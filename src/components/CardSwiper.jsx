@@ -44,13 +44,14 @@ const CardSwiper = () => {
       title: "Immanuel Kant",
       image: "/Philosophy/Immanuel_Kant.jpg",
       description:
-        "Immanuel Kant (1724 – 1804) là một trong những nhà triết học vĩ đại nhất của thế kỷ 18, nổi bật với những đóng góp sâu sắc vào triết học đạo đức và nhận thức luận. Ông đã phát triển thuyết duy nghiệm và lý thuyết về đạo đức dựa trên nguyên tắc phổ quát, ảnh hưởng lớn đến triết học hiện đại và các lĩnh vực khác như chính trị và nghệ thuật.",},
+        "Immanuel Kant (1724 – 1804) là một trong những nhà triết học vĩ đại nhất của thế kỷ 18, nổi bật với những đóng góp sâu sắc vào triết học đạo đức và nhận thức luận. Ông đã phát triển thuyết duy nghiệm và lý thuyết về đạo đức dựa trên nguyên tắc phổ quát, ảnh hưởng lớn đến triết học hiện đại và các lĩnh vực khác như chính trị và nghệ thuật.",
+    },
     {
       id: 6,
-      title: "Friedrich Nietzsche",
-      image: "/Philosophy/Friedrich_Nietzsche.jpg",
+      title: "Pythagoras Philosophiæ",
+      image: "/Philosophy/Pythagoras.jpg",
       description:
-        "Friedrich Nietzsche (1844 – 1900) là một trong những nhà triết học vĩ đại nhất của thế kỷ 19, nổi bật với những tư tưởng về siêu nhân, ý chí mạnh mẽ và sự phản kháng đối với các giá trị truyền thống. Ông đã đặt ra những câu hỏi sâu sắc về bản chất của con người, đạo đức và sự tồn tại.",
+        "Pythagoras (c. 570 – c. 495 TCN) là một trong những nhà triết học và nhà toán học vĩ đại nhất của thế giới cổ đại, nổi tiếng với những đóng góp quan trọng cho hình học và triết học. Ông đã sáng lập ra một trường phái triết học dựa trên các nguyên tắc toán học và âm nhạc, ảnh hưởng lớn đến tư tưởng phương Tây.",
     },
     {
       id: 7,
@@ -68,10 +69,10 @@ const CardSwiper = () => {
     },
     {
       id: 9,
-      title: "John Locke",
-      image: "/Philosophy/John_Locke.jpg",
+      title: "Friedrich Nietzsche",
+      image: "/Philosophy/Friedrich_Nietzsche.jpg",
       description:
-        "John Locke (1632 – 1704) là một trong những nhà triết học và nhà tư tưởng chính trị vĩ đại nhất của thế kỷ 17, được biết đến với những đóng góp quan trọng cho triết học về quyền tự nhiên và chính phủ. Ông đã phát triển lý thuyết về hợp đồng xã hội và quyền con người, ảnh hưởng lớn đến tư tưởng chính trị hiện đại.",
+        "Friedrich Nietzsche (1844 – 1900) là một trong những nhà triết học vĩ đại nhất của thế kỷ 19, nổi bật với những tư tưởng về siêu nhân, ý chí mạnh mẽ và sự phản kháng đối với các giá trị truyền thống. Ông đã đặt ra những câu hỏi sâu sắc về bản chất của con người, đạo đức và sự tồn tại.",
     },
     {
       id: 10,

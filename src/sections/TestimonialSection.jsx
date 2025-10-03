@@ -15,7 +15,7 @@ const TestimonialSection = () => {
       scrollTrigger: {
         trigger: ".testimonials-section",
         start: "top bottom",
-        end: "200% top",
+        end: "150% top",
         scrub: true,
       },
     });
@@ -42,7 +42,7 @@ const TestimonialSection = () => {
       scrollTrigger: {
         trigger: ".testimonials-section",
         start: "10% top",
-        end: "200% top",
+        end: "150% top",
         scrub: 1.5,
         pin: true,
       },
