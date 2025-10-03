@@ -27,9 +27,9 @@ const NavBar = () => {
           scale: 1,
           opacity: 1,
           rotation: 0,
-          duration: 0.5,
+          duration: 0.1,
           stagger: 0.1,
-          ease: "back.out(1.7)",
+          // ease: "back.out(1.7)",
         }
       );
     }
