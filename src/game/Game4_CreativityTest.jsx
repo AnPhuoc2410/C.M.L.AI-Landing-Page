@@ -508,10 +508,10 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
         </div>
       ) : (
         <>
-          {/* Progress Bar with Timer */}
-          <div className="mb-6">
+          {/* Progress Bar with Timer - Compact */}
+          <div className="mb-4">
             <div className="flex justify-between items-center mb-2">
-              <div className="flex items-center gap-4">
+              <div className="flex items-center gap-3">
                 <span className="text-sm text-cream-white/60">
                   Câu {currentQuestion + 1}/{selectedQuestions.length}
                 </span>
@@ -527,8 +527,8 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                 }}
                 transition={{ duration: 0.5, repeat: timeLeft <= 5 ? Infinity : 0 }}
               >
-                {/* Circular Progress */}
-                <div className="relative w-12 h-12">
+                {/* Circular Progress - Smaller */}
+                <div className="relative w-10 h-10">
                   <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
                     <circle
                       cx="18"
@@ -561,7 +561,7 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                     />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className={`text-sm font-bold ${
+                    <span className={`text-xs font-bold ${
                       timeLeft <= 5 
                         ? "text-red-500" 
                         : timeLeft <= 10 
@@ -575,7 +575,7 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
               </motion.div>
             </div>
             
-            <div className="w-full bg-steel-gray/30 rounded-full h-2">
+            <div className="w-full bg-steel-gray/30 rounded-full h-1.5">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{
@@ -583,26 +583,21 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                     ((currentQuestion + 1) / selectedQuestions.length) * 100
                   }%`,
                 }}
-                className="bg-gradient-to-r from-cyber-blue to-neural-green h-2 rounded-full"
+                className="bg-gradient-to-r from-cyber-blue to-neural-green h-1.5 rounded-full"
               />
             </div>
           </div>
 
-          {/* Turing Assistant */}
-          <div className="bg-neural-green/10 border border-neural-green/30 rounded-xl p-4 mb-6 flex items-start gap-3">
-            <div className="text-3xl">🧙‍♂️</div>
+          {/* Turing Assistant - Compact version */}
+          <div className="bg-neural-green/10 border border-neural-green/30 rounded-lg p-3 mb-4 flex items-center gap-2">
+            <div className="text-2xl">🧙‍♂️</div>
             <div>
-              <p className="text-sm font-bold text-neural-green mb-1">
-                Trợ lý Turing:
-              </p>
-              <p className="text-sm text-cream-white/80 italic">
-                {question?.type === "poem" &&
-                  "Thơ AI thường dùng cấu trúc đều đặn, thiếu chút cảm xúc sâu lắng..."}
-                {question?.type === "story" &&
-                  "Văn xuôi AI thường có câu văn đơn giản, ít hình ảnh ẩn dụ..."}
-                {question?.type === "philosophy" &&
-                  "Triết lý AI thường liệt kê, thiếu chiều sâu suy tư..."}
-              </p>
+              <span className="text-xs font-bold text-neural-green">Trợ lý Turing: </span>
+              <span className="text-xs text-cream-white/70 italic">
+                {question?.type === "poem" && "Thơ AI thường dùng cấu trúc đều đặn..."}
+                {question?.type === "story" && "Văn xuôi AI có câu văn đơn giản..."}
+                {question?.type === "philosophy" && "Triết lý AI thường liệt kê..."}
+              </span>
             </div>
           </div>
 
@@ -614,28 +609,26 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -20 }}
               >
-                <h3 className="text-2xl font-bold text-center text-cyber-blue mb-6">
+                <h3 className="text-2xl font-bold text-center text-cyber-blue mb-4">
                   {question?.category}: Đâu là sáng tạo của Con người? 🤔
                 </h3>
 
-                <div className="grid md:grid-cols-2 gap-6 mb-6">
+                <div className="grid md:grid-cols-2 gap-4">
                   {/* Option A (Left) */}
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleAnswer(false)} // false = clicked left/A
-                    className="bg-gradient-to-br from-revolutionary-gold/10 to-steel-gray/20 border-2 border-revolutionary-gold/30 hover:border-revolutionary-gold rounded-xl p-6 text-left transition-all group"
+                    className="bg-gradient-to-br from-revolutionary-gold/10 to-steel-gray/20 border-2 border-revolutionary-gold/30 hover:border-revolutionary-gold rounded-xl p-4 text-left transition-all group"
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-2xl font-bold text-revolutionary-gold">
-                        A
-                      </span>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xl font-bold text-revolutionary-gold">A</span>
                       <span className="text-sm text-cream-white/60 group-hover:text-revolutionary-gold transition-colors">
                         Con người
                       </span>
                     </div>
-                    <div className="bg-black/40 rounded-lg p-4 min-h-[150px] flex items-center">
-                      <pre className="text-cream-white/90 text-sm whitespace-pre-wrap font-mono">
+                    <div className="bg-black/40 rounded-lg p-4 max-h-[300px] overflow-y-auto">
+                      <pre className="text-cream-white/90 text-sm whitespace-pre-wrap font-mono leading-relaxed">
                         {getContentForSide(false)}
                       </pre>
                     </div>
@@ -645,18 +638,16 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                     onClick={() => handleAnswer(true)} // true = clicked right/B
-                    className="bg-gradient-to-br from-cyber-blue/10 to-steel-gray/20 border-2 border-cyber-blue/30 hover:border-cyber-blue rounded-xl p-6 text-left transition-all group"
+                    className="bg-gradient-to-br from-cyber-blue/10 to-steel-gray/20 border-2 border-cyber-blue/30 hover:border-cyber-blue rounded-xl p-4 text-left transition-all group"
                   >
-                    <div className="flex items-center justify-between mb-4">
-                      <span className="text-2xl font-bold text-cyber-blue">
-                        B
-                      </span>
+                    <div className="flex items-center justify-between mb-3">
+                      <span className="text-xl font-bold text-cyber-blue">B</span>
                       <span className="text-sm text-cream-white/60 group-hover:text-cyber-blue transition-colors">
                         Con người
                       </span>
                     </div>
-                    <div className="bg-black/40 rounded-lg p-4 min-h-[150px] flex items-center">
-                      <pre className="text-cream-white/90 text-sm whitespace-pre-wrap font-mono">
+                    <div className="bg-black/40 rounded-lg p-4 max-h-[300px] overflow-y-auto">
+                      <pre className="text-cream-white/90 text-sm whitespace-pre-wrap font-mono leading-relaxed">
                         {getContentForSide(true)}
                       </pre>
                     </div>
