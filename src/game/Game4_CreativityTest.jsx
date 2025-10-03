@@ -353,85 +353,87 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        className="text-center py-8"
+        className="py-4"
       >
         {percentage >= 60 && <Confetti recycle={false} numberOfPieces={200} />}
-        <h2 className="text-4xl font-bold text-neural-green mb-4">
-          🎨 Kết Quả
-        </h2>
-        <div className="bg-black/60 border border-cyber-blue rounded-xl p-6 max-w-2xl mx-auto mb-6">
-          <p className="text-5xl font-bold text-cyber-blue mb-4">
-            {score}/{selectedQuestions.length}
-          </p>
-          <p className="text-xl text-cream-white/80 mb-6">
-            Độ chính xác: {percentage}%
-          </p>
+        
+        {/* Compact Result Layout */}
+        <div className="grid md:grid-cols-2 gap-4 max-w-6xl mx-auto">
+          {/* Left Column - Score & Feedback */}
+          <div className="space-y-4">
+            {/* Score Card */}
+            <div className="bg-black/60 border border-cyber-blue rounded-xl p-5 text-center">
+              <h2 className="text-2xl font-bold text-neural-green mb-3">
+                🎨 Kết Quả
+              </h2>
+              <p className="text-5xl font-bold text-cyber-blue mb-2">
+                {score}/{selectedQuestions.length}
+              </p>
+              <p className="text-lg text-cream-white/80">
+                Độ chính xác: <span className="font-bold text-neural-green">{percentage}%</span>
+              </p>
+            </div>
 
-          <div className="bg-revolutionary-gold/10 border border-revolutionary-gold/30 rounded-lg p-5 mb-4">
-            <p className="text-cream-white/90 leading-relaxed">
-              {percentage >= 80 ? (
-                <>
-                  🌟 <strong>Xuất sắc!</strong> Bạn có con mắt tinh tường phân
-                  biệt sáng tạo của con người và AI. Rõ ràng sáng tạo nhân văn
-                  có những dấu ấn đặc biệt!
-                </>
-              ) : percentage >= 60 ? (
-                <>
-                  👍 <strong>Tốt!</strong> Bạn nhận biết được một số đặc điểm.
-                  AI đang ngày càng tiến bộ nhưng vẫn còn khoảng cách với con
-                  người.
-                </>
-              ) : (
-                <>
-                  🤔 <strong>AI đã cải trang rất khéo!</strong> Không dễ phân
-                  biệt chút nào. Điều này cho thấy AI có thể bắt chước khá tốt
-                  bề mặt của sáng tạo.
-                </>
-              )}
-            </p>
+            {/* Feedback Card */}
+            <div className="bg-revolutionary-gold/10 border border-revolutionary-gold/30 rounded-lg p-4">
+              <p className="text-sm text-cream-white/90 leading-relaxed">
+                {percentage >= 80 ? (
+                  <>
+                    🌟 <strong>Xuất sắc!</strong> Bạn có con mắt tinh tường phân biệt sáng tạo của con người và AI!
+                  </>
+                ) : percentage >= 60 ? (
+                  <>
+                    👍 <strong>Tốt!</strong> Bạn nhận biết được một số đặc điểm. AI đang tiến bộ nhưng vẫn còn khoảng cách.
+                  </>
+                ) : (
+                  <>
+                    🤔 <strong>AI đã cải trang rất khéo!</strong> Điều này cho thấy AI có thể bắt chước khá tốt bề mặt của sáng tạo.
+                  </>
+                )}
+              </p>
+            </div>
+
+            {/* Play Again Button */}
+            <motion.button
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              onClick={() => {
+                setCurrentQuestion(0);
+                setScore(0);
+                setGameComplete(false);
+                setGameInitialized(false);
+              }}
+              className="w-full bg-cyber-blue text-black py-3 rounded-lg font-bold text-lg hover:bg-cyber-blue/90 transition-colors"
+            >
+              🔄 Chơi Lại
+            </motion.button>
           </div>
 
-          <div className="bg-cyber-blue/10 border border-cyber-blue/30 rounded-lg p-4">
-            <h3 className="text-lg font-bold text-cyber-blue mb-2">
-              💭 Câu Hỏi Suy Ngẫm
-            </h3>
-            <p className="text-sm text-cream-white/80 italic">
-              {percentage < 50
-                ? '"Nếu con người không còn phân biệt nổi đâu là sáng tạo của mình, thì ý nghĩa của sự sáng tạo sẽ ra sao?"'
-                : '"Vẫn có điều gì đó trong sáng tạo con người mà máy chưa đạt được. Đó là gì? Trí tưởng tượng? Cảm xúc? Ý thức?"'}
-            </p>
+          {/* Right Column - Reflection & Message */}
+          <div className="space-y-4">
+            {/* Reflection Question */}
+            <div className="bg-cyber-blue/10 border border-cyber-blue/30 rounded-lg p-4">
+              <h3 className="text-base font-bold text-cyber-blue mb-2 flex items-center gap-2">
+                💭 Câu Hỏi Suy Ngẫm
+              </h3>
+              <p className="text-sm text-cream-white/80 italic leading-relaxed">
+                {percentage < 50
+                  ? '"Nếu con người không còn phân biệt nổi đâu là sáng tạo của mình, thì ý nghĩa của sự sáng tạo sẽ ra sao?"'
+                  : '"Vẫn có điều gì đó trong sáng tạo con người mà máy chưa đạt được. Đó là gì? Trí tưởng tượng? Cảm xúc? Ý thức?"'}
+              </p>
+            </div>
+
+            {/* Turing Assistant Message */}
+            <div className="bg-neural-green/10 border border-neural-green/30 rounded-lg p-4">
+              <p className="text-sm text-cream-white/90 leading-relaxed">
+                <span className="text-neural-green font-bold">🧙‍♂️ Trợ lý Turing:</span>
+                {" "}"Con người sáng tạo không ngừng – và nay có AI đồng hành. Hãy nhớ lời Marx:{" "}
+                <em className="text-revolutionary-gold">sáng tạo là biểu hiện cao quý của bản chất con người có ý thức.</em>
+                {" "}Dù công nghệ tiến đến đâu, ý nghĩa của sáng tạo vẫn nằm trong tay chúng ta."
+              </p>
+            </div>
           </div>
         </div>
-
-        <div className="bg-neural-green/10 border border-neural-green/30 rounded-xl p-5 max-w-2xl mx-auto mb-6">
-          <p className="text-sm text-cream-white/90 leading-relaxed">
-            <span className="text-neural-green font-bold">
-              🧙‍♂️ Trợ lý Turing:
-            </span>{" "}
-            "Con người sáng tạo không ngừng – và nay có AI đồng hành. Hãy nhớ
-            lời Marx:
-            <em className="text-revolutionary-gold">
-              {" "}
-              sáng tạo là biểu hiện cao quý của bản chất con người có ý thức.
-            </em>{" "}
-            Dù công nghệ tiên tiến đến đâu, ý nghĩa và mục đích của sáng tạo vẫn
-            nằm trong tay chúng ta."
-          </p>
-        </div>
-
-        <motion.button
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
-          onClick={() => {
-            setCurrentQuestion(0);
-            setScore(0);
-            setGameComplete(false);
-            setGameInitialized(false); // Trigger re-initialization
-          }}
-          className="bg-cyber-blue text-black px-8 py-3 rounded-lg font-bold"
-        >
-          Chơi Lại
-        </motion.button>
       </motion.div>
     );
   }
