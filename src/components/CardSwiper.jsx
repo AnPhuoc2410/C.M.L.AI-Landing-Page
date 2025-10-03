@@ -13,73 +13,72 @@ const CardSwiper = () => {
   const cards = [
     {
       id: 1,
-      title: "Dr. Triết",
-      image: "/images2/Triet.png",
+      title: "Socrates Philosophiæ",
+      image: "/Philosophy/Socrates.jpg",
       description:
-        "Nhà triết học tiên phong trong việc kết hợp tư duy cổ điển với công nghệ AI hiện đại, tạo nên Philosophy 4.0.",
+        "Socrates (470 TCN – 399 TCN) được xem là một trong những nhà triết học vĩ đại và có ảnh hưởng nhất trong lịch sử triết học phương Tây. Ông không để lại bất kỳ tác phẩm viết nào, nhưng qua những ghi chép từ các học trò như Plato và Xenophon, tư tưởng và phương pháp của Socrates đã trở thành nền tảng cho triết học hiện đại.",
     },
     {
       id: 2,
-      title: "AI Philosopher",
-      image: "/images2/TrietAI.png",
+      title: "Plato Philosophiæ",
+      image: "/Philosophy/Plato.jpg",
       description:
-        "Đại diện cho sự hợp nhất giữa trí tuệ nhân tạo và triết học, mở ra những khả năng vô hạn trong tư duy.",
+        "Plato (427 TCN – 347 TCN) là một trong những nhà triết học vĩ đại nhất của lịch sử phương Tây, nổi bật với những đóng góp sâu sắc vào nền triết học lý tưởng và chính trị học. Ông là học trò của Socrates và thầy của Aristotle, góp phần định hình hệ tư tưởng triết học qua các tác phẩm mang tầm ảnh hưởng suốt hàng ngàn năm.",
     },
     {
       id: 3,
-      title: "Digital Wisdom",
-      image: "/images2/TrietAI1.png",
+      title: "Aristotles Philosophiæ",
+      image: "/Philosophy/Aristotles.jpg",
       description:
-        "Biểu tượng của trí tuệ số, nơi mà kiến thức truyền thống gặp gỡ với công nghệ edge computing.",
+        "Aristotles (384 TCN – 322 TCN) là một trong những nhà triết học vĩ đại nhất trong lịch sử nhân loại, nổi bật với tư duy toàn diện và hệ thống tri thức sâu rộng. Là học trò xuất sắc của Plato, ông không chỉ kế thừa mà còn phát triển triết học theo hướng thực tế và khoa học, tạo nên nền móng cho nhiều lĩnh vực từ logic, đạo đức, chính trị đến khoa học tự nhiên.",
     },
     {
       id: 4,
-      title: "Future Mind",
-      image: "/images2/trietAI2.png",
+      title: "Khổng Tử",
+      image: "/Philosophy/Khong_Tu.jpg",
       description:
-        "Đại diện cho tương lai của tư duy, nơi con người và AI cùng phát triển trong hài hòa.",
+        "Khổng Tử (551 TCN – 479 TCN) là một trong những nhà triết học vĩ đại nhất của Trung Quốc, nổi bật với những tư tưởng về đạo đức, chính trị và giáo dục. Ông đã sáng lập ra Nho giáo, một hệ thống tư tưởng có ảnh hưởng sâu rộng đến văn hóa và xã hội Trung Quốc cũng như nhiều nước châu Á khác.",
     },
     {
       id: 5,
-      title: "Philosophy 4.0",
-      image: "/images2/Triet4.0.png",
+      title: "Immanuel Kant",
+      image: "/Philosophy/Immanuel_Kant.jpg",
       description:
-        "Biểu tượng của cuộc cách mạng triết học trong kỷ nguyên số, kết nối quá khứ với tương lai.",
-    },
+        "Immanuel Kant (1724 – 1804) là một trong những nhà triết học vĩ đại nhất của thế kỷ 18, nổi bật với những đóng góp sâu sắc vào triết học đạo đức và nhận thức luận. Ông đã phát triển thuyết duy nghiệm và lý thuyết về đạo đức dựa trên nguyên tắc phổ quát, ảnh hưởng lớn đến triết học hiện đại và các lĩnh vực khác như chính trị và nghệ thuật.",},
     {
       id: 6,
-      title: "Neural Thinker",
-      image: "/images2/TrietAI3.png",
+      title: "Friedrich Nietzsche",
+      image: "/Philosophy/Friedrich_Nietzsche.jpg",
       description:
-        "Đại diện cho sự tiến hóa của tư duy thông qua mạng lưới neural và deep learning.",
+        "Friedrich Nietzsche (1844 – 1900) là một trong những nhà triết học vĩ đại nhất của thế kỷ 19, nổi bật với những tư tưởng về siêu nhân, ý chí mạnh mẽ và sự phản kháng đối với các giá trị truyền thống. Ông đã đặt ra những câu hỏi sâu sắc về bản chất của con người, đạo đức và sự tồn tại.",
     },
     {
       id: 7,
-      title: "Edge Intelligence",
-      image: "/images2/TrietAI4.png",
+      title: "René Descartes",
+      image: "/Philosophy/Rene_Descartes.jpg",
       description:
-        "Tiên phong trong việc ứng dụng AI edge vào triết học, tạo ra những breakthrough trong nhận thức.",
+        "René Descartes (1596 – 1650) là một trong những nhà triết học và toán học vĩ đại nhất của thời kỳ Khai sáng, nổi tiếng với câu nói 'Tôi tư duy, vậy tôi tồn tại'. Ông đã đặt nền móng cho triết học hiện đại thông qua phương pháp hoài nghi và phân tích.",
     },
     {
       id: 8,
-      title: "Wisdom Architect",
-      image: "/images2/TrietAI5.png",
+      title: "Simone de Beauvoir",
+      image: "/Philosophy/Simone_de_Beauvoir.png",
       description:
-        "Kiến trúc sư của trí tuệ tương lai, thiết kế những hệ thống tư duy mới cho nhân loại.",
+        "Simone de Beauvoir (1908 – 1986) là một trong những nhà triết học và nhà văn nổi bật của thế kỷ 20, được biết đến với những đóng góp quan trọng cho triết học hiện sinh và nữ quyền. Tác phẩm nổi tiếng nhất của bà, 'The Second Sex', đã đặt ra những câu hỏi sâu sắc về bản chất của giới tính và vai trò của phụ nữ trong xã hội.",
     },
     {
       id: 9,
-      title: "Digital Sage",
-      image: "/images2/Triet1.png",
+      title: "John Locke",
+      image: "/Philosophy/John_Locke.jpg",
       description:
-        "Hiền nhân số hóa, kết hợp giữa trí tuệ cổ xưa và công nghệ tiên tiến nhất.",
+        "John Locke (1632 – 1704) là một trong những nhà triết học và nhà tư tưởng chính trị vĩ đại nhất của thế kỷ 17, được biết đến với những đóng góp quan trọng cho triết học về quyền tự nhiên và chính phủ. Ông đã phát triển lý thuyết về hợp đồng xã hội và quyền con người, ảnh hưởng lớn đến tư tưởng chính trị hiện đại.",
     },
     {
       id: 10,
-      title: "AI Consciousness",
-      image: "/images2/Triet3.png",
+      title: "Karl Marx",
+      image: "/Philosophy/Karl_Marx.jpg",
       description:
-        "Đại diện cho ý thức AI, nơi mà máy móc bắt đầu thấu hiểu và phản ánh về chính mình.",
+        "Karl Marx (1818 – 1883) là một trong những nhà triết học và nhà kinh tế học vĩ đại nhất của thế kỷ 19, nổi tiếng với những phân tích sâu sắc về xã hội, kinh tế và chính trị. Ông đã phát triển lý thuyết về chủ nghĩa duy vật biện chứng và phê phán chủ nghĩa tư bản, ảnh hưởng lớn đến nhiều phong trào chính trị và xã hội trên toàn thế giới.",
     },
   ];
 
