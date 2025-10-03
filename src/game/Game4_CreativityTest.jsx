@@ -349,27 +349,23 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
     initializeGame();
   }, [gameInitialized]); // Fixed: use stable boolean instead of array length
 
-  const handleAnswer = (clickedRight) => {
+  const handleAnswer = (clickedRight, isTimeout = false) => {
     const aiIsOnRight = aiPositions[currentQuestion];
-
-    // Question asks: "Which is HUMAN creativity?"
-    // User clicks A or B to choose where they think HUMAN content is
-    // Human is on the OPPOSITE side of AI
+    
     const humanIsOnRight = !aiIsOnRight;
 
-    // User is correct if they clicked the side where HUMAN actually is
     const correct = clickedRight === humanIsOnRight;
 
-    if (correct) {
+    if (correct && !isTimeout) {
       setScore(score + 1);
     }
 
-    setShowResult({ correct, aiIsOnRight, humanIsOnRight });
+    setShowResult({ correct, aiIsOnRight, humanIsOnRight, isTimeout });
     setTimeout(() => {
       setShowResult(false);
       if (currentQuestion < selectedQuestions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
-        setTimeLeft(15); // Reset timer for next question
+        setTimeLeft(15);
       } else {
         setGameComplete(true);
       }
@@ -378,7 +374,6 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
 
   // Countdown timer effect
   React.useEffect(() => {
-    // Only run timer when game is active (not loading, not showing result, not complete)
     if (!loading && !showResult && !gameComplete && gameInitialized && timeLeft > 0) {
       const timer = setInterval(() => {
         setTimeLeft((prev) => prev - 1);
@@ -387,14 +382,11 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
       return () => clearInterval(timer);
     }
 
-    // Auto-submit when time runs out
     if (timeLeft === 0 && !showResult && !gameComplete) {
-      // Random guess when time's up
-      handleAnswer(Math.random() > 0.5);
+      handleAnswer(false, true); // Mark as timeout, always wrong
     }
   }, [timeLeft, loading, showResult, gameComplete, gameInitialized]);
 
-  // Reset timer when question changes
   React.useEffect(() => {
     if (!showResult && !loading && gameInitialized) {
       setTimeLeft(15);
@@ -494,14 +486,11 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
   const aiIsOnRight = aiPositions[currentQuestion];
   const aiGeneratedContent = aiGeneratedContents[currentQuestion];
 
-  // Get the content for left (A) and right (B) based on AI position
   const getContentForSide = (isRightSide) => {
-    // If AI content not ready or no question selected, return loading indicator
     if (!aiGeneratedContent || !question) {
       return "Đang tải...";
     }
 
-    // AI is always the generated content, Human is always humanContent
     if (aiIsOnRight) {
       return isRightSide ? aiGeneratedContent : question.humanContent;
     } else {
@@ -512,15 +501,13 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
   return (
     <div className="max-w-5xl mx-auto">
       {loading ? (
-        // Loading screen - centered vertically and horizontally
         <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
-          <DotLottieReact src="eve.json" loop autoplay />
+          <DotLottieReact src="/lottie/eve.json" loop autoplay />
           <p className="text-cream-white/80 text-xl font-bold mb-2">
             AI đang tạo nội dung cho tất cả câu hỏi...
           </p>
         </div>
       ) : error ? (
-        // Error screen - show error and retry button
         <div className="text-center py-10">
           <div className="text-6xl mb-4">⚠️</div>
           <h2 className="text-2xl font-bold text-red-500 mb-4">Lỗi Kết Nối</h2>
@@ -579,7 +566,6 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                 </span>
               </div>
               
-              {/* Timer - Floating on the right */}
               <motion.div
                 className="flex items-center gap-2"
                 animate={{ 
@@ -703,7 +689,6 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                     </div>
                   </motion.button>
 
-                  {/* Option B (Right) */}
                   <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
@@ -734,16 +719,30 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                 exit={{ opacity: 0 }}
                 className="text-center py-16"
               >
-                <motion.div
-                  animate={{ scale: [1, 1.2, 1] }}
-                  transition={{ repeat: 2, duration: 0.5 }}
-                  className="text-8xl mb-6"
-                >
-                  {showResult.correct ? "✅" : "❌"}
-                </motion.div>
+                {/* Lottie Animation based on result */}
+                <div className="w-48 h-48 mx-auto mb-4">
+                  <DotLottieReact
+                    src={showResult.isTimeout ? "/lottie/timesUp.json" : showResult.correct ? "/lottie/checkmark.json" : "/lottie/bouncyFail.json"}
+                    loop
+                    autoplay
+                  />
+                </div>
                 <p className="text-2xl text-cream-white/90 mb-4">
-                  {showResult.correct ? "Chính xác!" : "Chưa đúng!"}
+                  {showResult.isTimeout 
+                    ? "Hết giờ rồi!" 
+                    : showResult.correct 
+                    ? "Chính xác!" 
+                    : "Chưa đúng!"}
                 </p>
+                {showResult.isTimeout && (
+                  <motion.p 
+                    initial={{ opacity: 0, y: 10 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    className="text-base text-yellow-400/90 mb-4 font-medium"
+                  >
+                    💭 Ngần ngại quá lâu mất điểm rồi!
+                  </motion.p>
+                )}
                 <div className="bg-black/60 border border-cyber-blue/50 rounded-xl p-6 max-w-xl mx-auto">
                   <p className="text-lg text-cream-white/80">
                     <strong className="text-neural-green">
