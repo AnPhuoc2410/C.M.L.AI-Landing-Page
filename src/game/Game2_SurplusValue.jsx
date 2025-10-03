@@ -9,6 +9,7 @@ const Game2_SurplusValue = () => {
     { id: 3, health: 100, productivity: 10, position: 2 },
     { id: 4, health: 100, productivity: 10, position: 3 },
   ]);
+  const [nextWorkerId, setNextWorkerId] = useState(5);
   const [robots, setRobots] = useState([]);
   const [surplusValue, setSurplusValue] = useState(0);
   const [money, setMoney] = useState(100);
@@ -19,6 +20,9 @@ const Game2_SurplusValue = () => {
   const [showStrike, setShowStrike] = useState(false);
 
   const ROBOT_COST = 50;
+  const ROBOT_REPAIR_COST = 30;
+  const MAX_ROBOTS = 6;
+  const WORKER_HIRE_COST = 40;
   const TARGET_VALUE = 500;
   const STRIKE_THRESHOLD = 30; // Worker health below this triggers strike
 
@@ -35,15 +39,37 @@ const Game2_SurplusValue = () => {
       });
 
       // Auto production from robots
-      setRobots((prevRobots) =>
-        prevRobots.map((robot) => {
+      setRobots((prevRobots) => {
+        return prevRobots.map((robot) => {
+          if (robot.isBroken) {
+            // Check if 5 seconds passed since breakdown
+            if (Date.now() - robot.brokenTime >= 5000) {
+              setMessage("💥 Robot bị hỏng hoàn toàn và biến mất!");
+              setTimeout(() => setMessage(""), 2000);
+              return null; // Will be filtered out
+            }
+            return robot;
+          }
+          
           if (robot.condition > 0) {
             setSurplusValue((prev) => prev + 5);
-            return { ...robot, condition: robot.condition - 1 };
+            const newCondition = robot.condition - 1;
+            
+            // Random breakdown chance (5% if condition < 80, 2% otherwise)
+            const breakdownChance = robot.condition < 80 ? 0.05 : 0.02;
+            const randomBreakdown = Math.random() < breakdownChance;
+            
+            if (randomBreakdown) {
+              setMessage("⚠️ Robot bị hỏng đột ngột! Sửa ngay hoặc mất sau 5s!");
+              setTimeout(() => setMessage(""), 2000);
+              return { ...robot, condition: newCondition, isBroken: true, brokenTime: Date.now() };
+            }
+            
+            return { ...robot, condition: newCondition };
           }
           return robot;
-        })
-      );
+        }).filter(r => r !== null); // Remove destroyed robots
+      });
 
       // Worker recovery
       setWorkers((prevWorkers) =>
@@ -84,15 +110,72 @@ const Game2_SurplusValue = () => {
   };
 
   const buyRobot = () => {
+    if (robots.length >= MAX_ROBOTS) {
+      setMessage("⚠️ Đã đạt giới hạn tối đa 6 robot!");
+      setTimeout(() => setMessage(""), 2000);
+      return;
+    }
+    
     if (money >= ROBOT_COST) {
       setMoney(money - ROBOT_COST);
       setRobots([
         ...robots,
-        { id: Date.now(), condition: 100, productivity: 5 },
+        { id: Date.now(), condition: 100, productivity: 5, isBroken: false, brokenTime: null },
       ]);
       setMessage("🤖 Đã mua Robot AI! Tự động sản xuất giá trị thặng dư.");
       setTimeout(() => setMessage(""), 2000);
+    } else {
+      setMessage("💰 Không đủ tiền mua robot!");
+      setTimeout(() => setMessage(""), 2000);
     }
+  };
+
+  const repairRobot = (robotId) => {
+    if (money >= ROBOT_REPAIR_COST) {
+      setMoney(money - ROBOT_REPAIR_COST);
+      setRobots(prevRobots =>
+        prevRobots.map(robot =>
+          robot.id === robotId
+            ? { ...robot, condition: 100, isBroken: false, brokenTime: null }
+            : robot
+        )
+      );
+      setMessage("🔧 Đã sửa chữa robot!");
+      setTimeout(() => setMessage(""), 2000);
+    } else {
+      setMessage(`💰 Không đủ tiền! Cần $${ROBOT_REPAIR_COST}`);
+      setTimeout(() => setMessage(""), 2000);
+    }
+  };
+
+  const hireWorker = () => {
+    if (money >= WORKER_HIRE_COST) {
+      setMoney(money - WORKER_HIRE_COST);
+      setWorkers([
+        ...workers,
+        { id: nextWorkerId, health: 100, productivity: 10, position: workers.length },
+      ]);
+      setNextWorkerId(nextWorkerId + 1);
+      setMessage("👷 Đã thuê công nhân mới!");
+      setTimeout(() => setMessage(""), 2000);
+    } else {
+      setMessage(`💰 Không đủ tiền! Cần $${WORKER_HIRE_COST}`);
+      setTimeout(() => setMessage(""), 2000);
+    }
+  };
+
+  const fireWorker = (workerId) => {
+    if (workers.length <= 1) {
+      setMessage("⚠️ Phải giữ ít nhất 1 công nhân!");
+      setTimeout(() => setMessage(""), 2000);
+      return;
+    }
+    
+    const refund = Math.floor(WORKER_HIRE_COST / 2); // Thu hồi 1/2 giá thuê
+    setWorkers(workers.filter(w => w.id !== workerId));
+    setMoney(money + refund);
+    setMessage(`❌ Đã sa thải! Thu về $${refund}`);
+    setTimeout(() => setMessage(""), 2000);
   };
 
   const convertToMoney = () => {
@@ -121,6 +204,7 @@ const Game2_SurplusValue = () => {
       { id: 3, health: 100, productivity: 10, position: 2 },
       { id: 4, health: 100, productivity: 10, position: 3 },
     ]);
+    setNextWorkerId(5);
     setRobots([]);
     setSurplusValue(0);
     setMoney(100);
@@ -293,61 +377,105 @@ const Game2_SurplusValue = () => {
               <div className="text-sm text-cream-white/60 mb-2">Công nhân (Click để bóc lột):</div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
                 {workers.map((worker) => (
-                  <motion.button
+                  <div
                     key={worker.id}
-                    whileHover={{ scale: 1.05 }}
-                    whileTap={{ scale: 0.95 }}
-                    onClick={() => exploitWorker(worker.id)}
-                    disabled={worker.health < 10}
-                    className={`p-4 rounded-lg border-2 transition-all ${
+                    className={`relative p-4 rounded-lg border-2 transition-all ${
                       worker.health > 60
                         ? "bg-neural-green/20 border-neural-green/50"
                         : worker.health > 30
                         ? "bg-revolutionary-gold/20 border-revolutionary-gold/50"
                         : "bg-red-500/20 border-red-500/50"
-                    } ${worker.health < 10 ? "opacity-50 cursor-not-allowed" : ""}`}
+                    } ${worker.health < 10 ? "opacity-50" : ""}`}
                   >
-                    <div className="text-3xl mb-2">👷</div>
-                    <div className="text-xs text-cream-white/60 mb-1">Công nhân {worker.id}</div>
-                    <div className="w-full bg-black/40 rounded-full h-2 mb-1">
-                      <div
-                        className={`h-2 rounded-full transition-all ${
-                          worker.health > 60
-                            ? "bg-neural-green"
-                            : worker.health > 30
-                            ? "bg-revolutionary-gold"
-                            : "bg-red-500"
-                        }`}
-                        style={{ width: `${worker.health}%` }}
-                      />
-                    </div>
-                    <div className="text-xs font-bold">HP: {worker.health}%</div>
-                  </motion.button>
+                    {/* Fire button - top right corner */}
+                    {workers.length > 1 && (
+                      <button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          fireWorker(worker.id);
+                        }}
+                        className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold shadow-lg transition-all hover:scale-110 z-10"
+                        title="Sa thải (Thu về $20)"
+                      >
+                        ✕
+                      </button>
+                    )}
+                    
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={() => exploitWorker(worker.id)}
+                      disabled={worker.health < 10}
+                      className="w-full"
+                    >
+                      <div className="text-3xl mb-2">👷</div>
+                      <div className="text-xs text-cream-white/60 mb-1">Công nhân {worker.id}</div>
+                      <div className="w-full bg-black/40 rounded-full h-2 mb-1">
+                        <div
+                          className={`h-2 rounded-full transition-all ${
+                            worker.health > 60
+                              ? "bg-neural-green"
+                              : worker.health > 30
+                              ? "bg-revolutionary-gold"
+                              : "bg-red-500"
+                          }`}
+                          style={{ width: `${worker.health}%` }}
+                        />
+                      </div>
+                      <div className="text-xs font-bold">HP: {worker.health}%</div>
+                    </motion.button>
+                  </div>
                 ))}
               </div>
             </div>
 
             {/* Robots */}
             <div>
-              <div className="text-sm text-cream-white/60 mb-2">Robot AI (Tự động):</div>
+              <div className="text-sm text-cream-white/60 mb-2">Robot AI (Tự động) - Tối đa {MAX_ROBOTS}:</div>
               <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-3">
-                {robots.map((robot) => (
-                  <div
-                    key={robot.id}
-                    className="p-4 rounded-lg border-2 bg-cyber-blue/20 border-cyber-blue/50"
-                  >
-                    <div className="text-3xl mb-2">🤖</div>
-                    <div className="text-xs text-cream-white/60 mb-1">Robot AI</div>
-                    <div className="w-full bg-black/40 rounded-full h-2 mb-1">
-                      <div
-                        className="h-2 rounded-full bg-cyber-blue transition-all"
-                        style={{ width: `${robot.condition}%` }}
-                      />
+                {robots.map((robot) => {
+                  const timeLeft = robot.isBroken ? Math.max(0, 5 - Math.floor((Date.now() - robot.brokenTime) / 1000)) : null;
+                  
+                  return (
+                    <div
+                      key={robot.id}
+                      className={`p-4 rounded-lg border-2 transition-all ${
+                        robot.isBroken 
+                          ? "bg-red-500/20 border-red-500/50 animate-pulse" 
+                          : "bg-cyber-blue/20 border-cyber-blue/50"
+                      }`}
+                    >
+                      <div className="text-3xl mb-2">{robot.isBroken ? "💥🤖" : "🤖"}</div>
+                      <div className="text-xs text-cream-white/60 mb-1">
+                        {robot.isBroken ? `⚠️ HỎng (${timeLeft}s)` : "Robot AI"}
+                      </div>
+                      <div className="w-full bg-black/40 rounded-full h-2 mb-1">
+                        <div
+                          className={`h-2 rounded-full transition-all ${
+                            robot.isBroken ? "bg-red-500" : "bg-cyber-blue"
+                          }`}
+                          style={{ width: `${robot.condition}%` }}
+                        />
+                      </div>
+                      <div className="text-xs font-bold mb-2">Độ bền: {robot.condition}%</div>
+                      {robot.isBroken && (
+                        <motion.button
+                          whileHover={{ scale: 1.05 }}
+                          whileTap={{ scale: 0.95 }}
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            repairRobot(robot.id);
+                          }}
+                          disabled={money < ROBOT_REPAIR_COST}
+                          className="w-full bg-red-500 hover:bg-red-600 text-white text-xs px-2 py-1.5 rounded font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-colors"
+                        >
+                          🔧 Sửa (${ROBOT_REPAIR_COST})
+                        </motion.button>
+                      )}
                     </div>
-                    <div className="text-xs font-bold">Độ bền: {robot.condition}%</div>
-                  </div>
-                ))}
-                {robots.length < 4 && (
+                  );
+                })}
+                {robots.length < MAX_ROBOTS && (
                   <motion.button
                     whileHover={{ scale: 1.05 }}
                     whileTap={{ scale: 0.95 }}
@@ -358,6 +486,7 @@ const Game2_SurplusValue = () => {
                     <div className="text-3xl mb-2">➕</div>
                     <div className="text-xs text-cream-white/80">Mua Robot</div>
                     <div className="text-xs font-bold text-cyber-blue">${ROBOT_COST}</div>
+                    <div className="text-xs text-cream-white/50 mt-1">{robots.length}/{MAX_ROBOTS}</div>
                   </motion.button>
                 )}
               </div>
@@ -365,7 +494,17 @@ const Game2_SurplusValue = () => {
           </div>
 
           {/* Actions */}
-          <div className="flex gap-3 justify-center">
+          <div className="grid md:grid-cols-3 gap-3">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={hireWorker}
+              disabled={money < WORKER_HIRE_COST}
+              className="bg-neural-green/20 border-2 border-neural-green text-neural-green px-6 py-3 rounded-lg font-bold hover:bg-neural-green hover:text-black transition-all disabled:opacity-50 disabled:cursor-not-allowed"
+            >
+              👷 Thuê CN (${WORKER_HIRE_COST})
+            </motion.button>
+            
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
@@ -375,6 +514,7 @@ const Game2_SurplusValue = () => {
             >
               💰 Bán GTTD (10💧 = $1)
             </motion.button>
+            
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
