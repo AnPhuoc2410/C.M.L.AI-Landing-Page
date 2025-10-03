@@ -13,19 +13,90 @@ const Game5_MemoryMatch = () => {
   const [gameCompleted, setGameCompleted] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [difficulty, setDifficulty] = useState("medium");
+  const [gamePhilosophers, setGamePhilosophers] = useState([]);
 
   // Dữ liệu các nhà triết học
   const philosophers = [
-    { id: 1, name: "Aristotle", image: "/Philosophy/Aristotles.jpg", displayName: "Aristotle" },
-    { id: 2, name: "Nietzsche", image: "/Philosophy/Friedrich_Nietzsche.jpg", displayName: "Friedrich Nietzsche" },
-    { id: 3, name: "Kant", image: "/Philosophy/Immanuel_Kant.jpg", displayName: "Immanuel Kant" },
-    { id: 4, name: "Marx", image: "/Philosophy/Karl_Marx.jpg", displayName: "Karl Marx" },
-    { id: 5, name: "Confucius", image: "/Philosophy/Khong_Tu_2.jpg", displayName: "Khổng Tử (Confucius)" },
-    { id: 6, name: "Plato", image: "/Philosophy/Plato.jpg", displayName: "Plato" },
-    { id: 7, name: "Pythagoras", image: "/Philosophy/Pythagoras.jpg", displayName: "Pythagoras" },
-    { id: 8, name: "Descartes", image: "/Philosophy/Rene_Descartes.jpg", displayName: "René Descartes" },
-    { id: 9, name: "Beauvoir", image: "/Philosophy/Simone_de_Beauvoir.png", displayName: "Simone de Beauvoir" },
-    { id: 10, name: "Socrates", image: "/Philosophy/Socrates.jpg", displayName: "Socrates" }
+    { 
+      id: 1, 
+      name: "Aristotle", 
+      image: "/Philosophy/Aristotles.jpg", 
+      displayName: "Aristotle",
+      school: "Trường phái Kinh việm",
+      quote: "\"Tri thức là sức mạnh cao nhất của con người.\""
+    },
+    { 
+      id: 2, 
+      name: "Nietzsche", 
+      image: "/Philosophy/Friedrich_Nietzsche.jpg", 
+      displayName: "Friedrich Nietzsche",
+      school: "Triết học Thực tại",
+      quote: "\"Những gì không giết chết ta sẽ làm ta mạnh mẽ hơn.\""
+    },
+    { 
+      id: 3, 
+      name: "Kant", 
+      image: "/Philosophy/Immanuel_Kant.jpg", 
+      displayName: "Immanuel Kant",
+      school: "Triết học Phê phán",
+      quote: "\"Hãy hành động sao cho người khác có thể làm theo.\""
+    },
+    { 
+      id: 4, 
+      name: "Marx", 
+      image: "/Philosophy/Karl_Marx.jpg", 
+      displayName: "Karl Marx",
+      school: "Chủ nghĩa Mác-xơ",
+      quote: "\"Các triết gia chỉ giải thích thế giới, vấn đề là thay đổi nó.\""
+    },
+    { 
+      id: 5, 
+      name: "Confucius", 
+      image: "/Philosophy/Khong_Tu_2.jpg", 
+      displayName: "Khổng Tử (Confucius)",
+      school: "Nho giáo",
+      quote: "\"Học mà không tư thì vô ích, tư mà không học thì nguy hiểm.\""
+    },
+    { 
+      id: 6, 
+      name: "Plato", 
+      image: "/Philosophy/Plato.jpg", 
+      displayName: "Plato",
+      school: "Học viện Athens",
+      quote: "\"Tri thức thực sự là biết rằng mình không biết gì.\""
+    },
+    { 
+      id: 7, 
+      name: "Pythagoras", 
+      image: "/Philosophy/Pythagoras.jpg", 
+      displayName: "Pythagoras",
+      school: "Trường phái Pythagoras",
+      quote: "\"Số là cơ sở của mọi thứ trong vũ trụ.\""
+    },
+    { 
+      id: 8, 
+      name: "Descartes", 
+      image: "/Philosophy/Rene_Descartes.jpg", 
+      displayName: "René Descartes",
+      school: "Lý tính luận",
+      quote: "\"Tôi tư duy, vậy nên tôi tồn tại.\""
+    },
+    { 
+      id: 9, 
+      name: "Beauvoir", 
+      image: "/Philosophy/Simone_de_Beauvoir.png", 
+      displayName: "Simone de Beauvoir",
+      school: "Thực tại luận Nữ quyền",
+      quote: "\"Người ta không sinh ra là phụ nữ, mà trở thành phụ nữ.\""
+    },
+    { 
+      id: 10, 
+      name: "Socrates", 
+      image: "/Philosophy/Socrates.jpg", 
+      displayName: "Socrates",
+      school: "Triết học cổ điển Hy Lạp",
+      quote: "\"Cuộc sống không được thẩm tra thì không đáng sống.\""
+    }
   ];
 
   const difficultySettings = {
@@ -37,6 +108,7 @@ const Game5_MemoryMatch = () => {
   // Tạo và xáo trộn thẻ
   const shuffleCards = useCallback(() => {
     const selectedPhilosophers = philosophers.slice(0, difficultySettings[difficulty].pairs);
+    setGamePhilosophers(selectedPhilosophers); // Lưu danh sách nhà triết học đang chơi
     const gameCards = [];
     
     // Tạo cặp thẻ: ảnh và tên
@@ -306,24 +378,73 @@ const Game5_MemoryMatch = () => {
                   initial={{ opacity: 0, scale: 0.8 }}
                   animate={{ opacity: 1, scale: 1 }}
                   exit={{ opacity: 0, scale: 0.8 }}
-                  className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
+                  className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4"
                 >
-                  <div className="bg-white rounded-2xl p-8 text-center max-w-md">
+                  <div className="bg-white rounded-2xl p-6 text-center max-w-4xl max-h-[90vh] overflow-y-auto">
                     <div className="text-6xl mb-4">🎉</div>
                     <h2 className="text-3xl font-bold text-green-600 mb-4">
                       Chúc Mừng!
                     </h2>
-                    <div className="space-y-2 mb-6">
-                      <p className="text-lg">
-                        <span className="font-semibold">Điểm số:</span> {score}
-                      </p>
-                      <p className="text-lg">
-                        <span className="font-semibold">Thời gian:</span> {formatTime(timeElapsed)}
-                      </p>
-                      <p className="text-lg">
-                        <span className="font-semibold">Số lượt:</span> {moves}
-                      </p>
+                    <div className="grid md:grid-cols-2 gap-6 mb-6">
+                      {/* Thống kê game */}
+                      <div className="bg-gray-50 rounded-lg p-4">
+                        <h3 className="text-xl font-bold mb-3 text-gray-800">Kết quả game</h3>
+                        <div className="space-y-2">
+                          <p className="text-lg">
+                            <span className="font-semibold">Điểm số:</span> {score}
+                          </p>
+                          <p className="text-lg">
+                            <span className="font-semibold">Thời gian:</span> {formatTime(timeElapsed)}
+                          </p>
+                          <p className="text-lg">
+                            <span className="font-semibold">Số lượt:</span> {moves}
+                          </p>
+                          <p className="text-lg">
+                            <span className="font-semibold">Độ khó:</span> 
+                            {difficulty === 'easy' && ' Dễ (6 cặp)'}
+                            {difficulty === 'medium' && ' Trung bình (8 cặp)'}
+                            {difficulty === 'hard' && ' Khó (10 cặp)'}
+                          </p>
+                        </div>
+                      </div>
+
+                      {/* Danh sách nhà triết học */}
+                      <div className="bg-amber-50 rounded-lg p-4">
+                        <h3 className="text-xl font-bold mb-3 text-amber-800">Các nhà triết học đã gặp</h3>
+                        <div className="grid gap-2 max-h-64 overflow-y-auto">
+                          {gamePhilosophers.map((philosopher) => (
+                            <div key={philosopher.id} className="flex items-center gap-3 bg-white rounded-lg p-2 shadow-sm">
+                              <img 
+                                src={philosopher.image} 
+                                alt={philosopher.displayName}
+                                className="w-12 h-12 rounded-full object-cover flex-shrink-0"
+                                onError={(e) => {
+                                  e.target.src = '/images/placeholder.jpg';
+                                }}
+                              />
+                              <div className="text-left flex-grow min-w-0">
+                                <p className="font-semibold text-sm text-gray-800 truncate">{philosopher.displayName}</p>
+                                <p className="text-xs text-blue-600 font-medium">{philosopher.school}</p>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
                     </div>
+
+                    {/* Câu nói nổi tiếng */}
+                    <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-lg p-4 mb-6">
+                      <h3 className="text-xl font-bold mb-3 text-purple-800">Câu nói nổi tiếng</h3>
+                      <div className="grid gap-3 max-h-48 overflow-y-auto">
+                        {gamePhilosophers.map((philosopher) => (
+                          <div key={`quote_${philosopher.id}`} className="bg-white rounded-lg p-3 shadow-sm border-l-4 border-purple-400">
+                            <p className="text-sm italic text-gray-700 mb-2">{philosopher.quote}</p>
+                            <p className="text-xs font-semibold text-purple-600">- {philosopher.displayName}</p>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+
                     <div className="flex gap-4 justify-center">
                       <button
                         onClick={restartGame}

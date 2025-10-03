@@ -6,19 +6,22 @@ import Game2_SurplusValue from "../game/Game2_SurplusValue";
 import Game3_ClassStruggle from "../game/Game3_ClassStruggle";
 import Game4_CreativityTest from "../game/Game4_CreativityTest";
 import Game5_MemoryMatch from "../game/Game5_MemoryMatch";
+import Game6_TheCave from "../game/Game6_TheCave";
 
 const ActivitiesPage = () => {
   const [activeGame, setActiveGame] = useState(null);
   const minigames = [
     {
-      id: 1,
-      name: "Mâu thuẫn 4.0",
-      subtitle: "Xung đột Lực lượng Sản xuất AI và Quan hệ Sản xuất",
+      name: "Trí Nhớ Biện Chứng",
+      subtitle: "Ghép triết gia với tư tưởng bất hủ",
       description:
-        "Nhập vai nhà cố vấn thời gian du hành qua các giai đoạn lịch sử. Điều chỉnh quan hệ sản xuất cho phù hợp với sự xuất hiện của AI để tránh cách mạng xã hội.",
-      image: "/game/Game_Mauthuan.png",
-      type: "Chiến lược",
-      features: ["Lựa chọn tương tác", "Nhiều kết cục", "Mentor Mác hướng dẫn"],
+        "Một mini game lật thẻ nơi bạn thử thách trí nhớ bằng cách ghép hình ảnh các triết gia với tên của họ. Càng nhớ đúng nhiều cặp, bạn càng hiểu rõ hơn về họ.",
+      image: "/game/Game_MemoryMatch.png",
+      type: "Trí nhớ",
+      features: [
+        "Ghép ảnh - tên triết gia",
+        "Đếm điểm và thời gian",
+      ],
       difficulty: "Trung bình",
       component: Game5_MemoryMatch,
     },
@@ -36,15 +39,15 @@ const ActivitiesPage = () => {
     },
     {
       id: 3,
-      name: "AI và Đấu tranh Giai cấp 4.0",
-      subtitle: "Lợi ích Tư bản Công nghệ vs. Lao động Số",
+      name: "The Cave - Thuyết Ẩn Dụ Hang Động",
+      subtitle: "Hành trình từ Bóng tối đến Ánh sáng",
       description:
-        "Trải nghiệm cả hai góc nhìn giai cấp: Tư bản công nghệ và Lao động số. Hiểu rõ sự khác biệt về lợi ích kinh tế trong thời đại AI.",
-      image: "/game/Game_Dautranh.png",
+        "Nhập vai một tù nhân bị giam trong hang động của Plato. Khởi đầu bạn chỉ thấy những chiếc bóng, nhưng qua từng bước bạn sẽ khám phá ngọn lửa, thoát khỏi xiềng xích, và cuối cùng bước ra ánh sáng chân lý. Một trải nghiệm triết học tương tác, nơi bạn trực tiếp cảm nhận hành trình nhận thức từ ảo tưởng đến sự thật.",
+      image: "/game/Game_TheCave.png",
       type: "Nhập vai",
       features: ["Hai chế độ chơi", "Sự kiện ngẫu nhiên", "So sánh kết quả"],
-      difficulty: "Khó",
-      component: Game3_ClassStruggle,
+      difficulty: "Dễ",
+      component: Game6_TheCave,
     },
     {
       id: 4,
@@ -65,7 +68,10 @@ const ActivitiesPage = () => {
       {/* Navigation */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-revolutionary-gold/30">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link to="/" className="text-revolutionary-gold font-bold text-xl hover:text-cyber-blue transition-colors">
+          <Link
+            to="/"
+            className="text-revolutionary-gold font-bold text-xl hover:text-cyber-blue transition-colors"
+          >
             ← Về Trang Chủ
           </Link>
 
@@ -116,10 +122,10 @@ const ActivitiesPage = () => {
           </div>
 
           <p className="text-lg mb-6 text-steel-gray max-w-3xl mx-auto leading-relaxed">
-            Trải nghiệm bốn mini-game tương tác được thiết kế dựa trên các chủ đề
-            lý thuyết chính của Triết học Mác-Lênin trong kỷ nguyên AI. Mỗi trò
-            chơi kết hợp nhập vai, mô phỏng và câu đố để giúp bạn hiểu sâu hơn về
-            các khái niệm triết học thông qua thực hành.
+            Trải nghiệm bốn mini-game tương tác được thiết kế dựa trên các chủ
+            đề lý thuyết chính của Triết học Mác-Lênin trong kỷ nguyên AI. Mỗi
+            trò chơi kết hợp nhập vai, mô phỏng và câu đố để giúp bạn hiểu sâu
+            hơn về các khái niệm triết học thông qua thực hành.
           </p>
         </div>
       </section>
@@ -156,12 +162,15 @@ const ActivitiesPage = () => {
 
                   {/* Badges on image */}
                   <div className="absolute top-3 left-3 flex gap-2">
-                    <span className={`px-2.5 py-1 rounded-md text-xs font-bold backdrop-blur-sm ${game.difficulty === "Dễ"
-                      ? "bg-neural-green/90 text-black"
-                      : game.difficulty === "Trung bình"
-                        ? "bg-cyber-blue/90 text-black"
-                        : "bg-revolutionary-gold/90 text-black"
-                      }`}>
+                    <span
+                      className={`px-2.5 py-1 rounded-md text-xs font-bold backdrop-blur-sm ${
+                        game.difficulty === "Dễ"
+                          ? "bg-neural-green/90 text-black"
+                          : game.difficulty === "Trung bình"
+                          ? "bg-cyber-blue/90 text-black"
+                          : "bg-revolutionary-gold/90 text-black"
+                      }`}
+                    >
                       {game.difficulty}
                     </span>
                   </div>
@@ -235,19 +244,27 @@ const ActivitiesPage = () => {
               </h3>
               <ul className="space-y-2 text-steel-gray group-hover:text-cream-white text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">✓</span>
+                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">
+                    ✓
+                  </span>
                   <span>Nhập vai và trải nghiệm tình huống lịch sử</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">✓</span>
+                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">
+                    ✓
+                  </span>
                   <span>Mô phỏng mâu thuẫn kinh tế-xã hội AI</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">✓</span>
+                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">
+                    ✓
+                  </span>
                   <span>Quyết định và thấy hệ quả trực tiếp</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">✓</span>
+                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">
+                    ✓
+                  </span>
                   <span>Phản hồi tức thì với giải thích lý thuyết</span>
                 </li>
               </ul>
@@ -260,19 +277,27 @@ const ActivitiesPage = () => {
               </h3>
               <ul className="space-y-2 text-steel-gray group-hover:text-cream-white text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">•</span>
+                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">
+                    •
+                  </span>
                   <span>Lực lượng sản xuất - Quan hệ sản xuất</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">•</span>
+                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">
+                    •
+                  </span>
                   <span>Giá trị thặng dư & bóc lột lao động</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">•</span>
+                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">
+                    •
+                  </span>
                   <span>Đấu tranh giai cấp thời đại số</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">•</span>
+                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">
+                    •
+                  </span>
                   <span>Sáng tạo nhân văn vs. Trí tuệ nhân tạo</span>
                 </li>
               </ul>
@@ -281,10 +306,10 @@ const ActivitiesPage = () => {
 
           <div className="mt-6 bg-neural-green rounded-xl p-5 border-4 border-communist-red">
             <p className="text-center text-sm text-steel-gray leading-relaxed">
-              <span className="text-communist-red font-bold">💡</span> Mỗi mini-game
-              được thiết kế dựa trên nội dung học thuật Triết học Mác-Lênin,
-              kết hợp bối cảnh AI hiện đại. Vừa giải trí vừa hiểu sâu khái niệm
-              triết học qua trải nghiệm tương tác.
+              <span className="text-communist-red font-bold">💡</span> Mỗi
+              mini-game được thiết kế dựa trên nội dung học thuật Triết học
+              Mác-Lênin, kết hợp bối cảnh AI hiện đại. Vừa giải trí vừa hiểu sâu
+              khái niệm triết học qua trải nghiệm tương tác.
             </p>
           </div>
         </div>
@@ -303,8 +328,8 @@ const ActivitiesPage = () => {
             Sẵn Sàng Khám Phá?
           </h2>
           <p className="text-base md:text-xl mb-6 text-cream-white/90 max-w-2xl mx-auto">
-            Trải nghiệm cách học Triết học Mác-Lênin hoàn toàn mới thông qua
-            các mini-game tương tác với công nghệ AI
+            Trải nghiệm cách học Triết học Mác-Lênin hoàn toàn mới thông qua các
+            mini-game tương tác với công nghệ AI
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link
