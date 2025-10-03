@@ -26,6 +26,7 @@ const Game2_SurplusValue = () => {
   const [showLeaderboard, setShowLeaderboard] = useState(false);
   const [leaderboardData, setLeaderboardData] = useState([]);
   const [isLoadingLeaderboard, setIsLoadingLeaderboard] = useState(false);
+  const [currentPlayerData, setCurrentPlayerData] = useState(null); // Lưu data của người chơi hiện tại
 
   const ROBOT_COST = 50;
   const ROBOT_REPAIR_COST = 30;
@@ -232,6 +233,26 @@ const Game2_SurplusValue = () => {
     return surplusValue + money * 8;
   };
 
+  // Hàm kiểm tra xem player có phải là người chơi hiện tại không
+  const isCurrentPlayer = (player) => {
+    if (!currentPlayerData) return false;
+    
+    // 1. So sánh tên (bắt buộc phải trùng)
+    if (player.name !== currentPlayerData.name) return false;
+    
+    // 2. So sánh thời gian (date string)
+    if (player.date !== currentPlayerData.date) return false;
+    
+    // 3. So sánh điểm
+    if (player.score !== currentPlayerData.score) return false;
+    
+    // 4. So sánh GTTD
+    if (player.surplusValue !== currentPlayerData.surplusValue) return false;
+    
+    // Nếu tất cả đều trùng → Đây là người chơi hiện tại
+    return true;
+  };
+
   const saveResultToSheet = async () => {
     if (!playerName.trim()) {
       setSaveMessage("❌ Vui lòng nhập tên!");
@@ -244,6 +265,7 @@ const Game2_SurplusValue = () => {
 
     try {
       const score = calculateScore();
+      const timestamp = Date.now(); // Timestamp chính xác để so sánh
       const currentDate = new Date().toLocaleString("vi-VN", {
         timeZone: "Asia/Ho_Chi_Minh"
       });
@@ -255,6 +277,16 @@ const Game2_SurplusValue = () => {
         score: score,
         date: currentDate
       };
+
+      // Lưu data của người chơi hiện tại để so sánh sau (bao gồm timestamp)
+      setCurrentPlayerData({
+        name: playerName.trim(),
+        score: score,
+        surplusValue: surplusValue,
+        money: money,
+        date: currentDate,
+        timestamp: timestamp // Lưu timestamp để so sánh chính xác
+      });
 
       const sheetUrl = import.meta.env.VITE_SHEET_URL;
       
@@ -363,6 +395,7 @@ const Game2_SurplusValue = () => {
     setSaveMessage("");
     setShowLeaderboard(false);
     setLeaderboardData([]);
+    setCurrentPlayerData(null); // Clear data người chơi hiện tại
   };
 
   if (gameOver) {
@@ -565,7 +598,8 @@ const Game2_SurplusValue = () => {
                         <p className="text-lg font-bold text-cream-white truncate">
                           {player.name}
                         </p>
-                        {player.name === playerName && (
+                        {/* So sánh theo thứ tự: Tên → Thời gian → Điểm → GTTD */}
+                        {isCurrentPlayer(player) && (
                           <span className="text-xs bg-cyber-blue text-black px-2 py-0.5 rounded-full font-bold">
                             BẠN
                           </span>
