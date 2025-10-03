@@ -137,52 +137,6 @@ const Game4_CreativityTest = () => {
         "Viết một đoạn 3–4 câu gợi hoài niệm tuổi thơ bằng ẩn dụ chuyến tàu, giọng ấm áp, nhẹ nhàng, có chút dí dỏm tinh tế. Chỉ trả về văn.",
     },
 
-    // LẬP TRÌNH (6 câu) - Từ code thực tế của các thư viện nổi tiếng
-    {
-      type: "code",
-      humanContent:
-        "// Lodash debounce implementation\nconst debounce = (func, wait) => {\n  let timeout;\n  return function executedFunction(...args) {\n    const later = () => {\n      clearTimeout(timeout);\n      func(...args);\n    };\n    clearTimeout(timeout);\n    timeout = setTimeout(later, wait);\n  };\n};",
-      category: "Lập trình - Lodash",
-      aiPrompt:
-        "Viết hàm debounce đơn giản trong JavaScript. Chỉ trả về code, không giải thích.",
-    },
-    {
-      type: "code",
-      humanContent:
-        "// React useState hook pattern\nfunction useState(initialValue) {\n  let state = initialValue;\n  function setState(newValue) {\n    state = newValue;\n    render();\n  }\n  return [state, setState];\n}",
-      category: "Lập trình - React",
-      aiPrompt: "Viết hàm useState đơn giản như trong React. Chỉ trả về code.",
-    },
-    {
-      type: "code",
-      humanContent:
-        "// Express middleware pattern\nconst logger = (req, res, next) => {\n  console.log(`${req.method} ${req.url}`);\n  next();\n};",
-      category: "Lập trình - Express.js",
-      aiPrompt:
-        "Viết một middleware logger đơn giản cho Express. Chỉ trả về code.",
-    },
-    {
-      type: "code",
-      humanContent:
-        "// jQuery selector implementation\nconst $ = (selector) => {\n  const elements = document.querySelectorAll(selector);\n  return {\n    elements,\n    on: (event, handler) => elements.forEach(el => el.addEventListener(event, handler)),\n    css: (prop, value) => elements.forEach(el => el.style[prop] = value)\n  };\n};",
-      category: "Lập trình - jQuery Pattern",
-      aiPrompt: "Viết một jQuery selector đơn giản. Chỉ trả về code.",
-    },
-    {
-      type: "code",
-      humanContent:
-        "// Underscore.js map implementation\nconst map = (array, iteratee) => {\n  const result = [];\n  for (let i = 0; i < array.length; i++) {\n    result.push(iteratee(array[i], i, array));\n  }\n  return result;\n};",
-      category: "Lập trình - Underscore.js",
-      aiPrompt: "Viết hàm map đơn giản như Underscore.js. Chỉ trả về code.",
-    },
-    {
-      type: "code",
-      humanContent:
-        "// Promise implementation pattern\nclass MyPromise {\n  constructor(executor) {\n    this.state = 'pending';\n    this.value = undefined;\n    executor(\n      (value) => { this.state = 'fulfilled'; this.value = value; },\n      (error) => { this.state = 'rejected'; this.value = error; }\n    );\n  }\n}",
-      category: "Lập trình - Promise Pattern",
-      aiPrompt: "Viết class Promise đơn giản. Chỉ trả về code.",
-    },
-
     // TRIẾT LÝ (6 câu) - Từ các triết gia, nhà khoa học nổi tiếng
     {
       type: "philosophy",
@@ -369,7 +323,7 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
       } else {
         setGameComplete(true);
       }
-    }, 3000);
+    }, 2000);
   };
 
   // Countdown timer effect
@@ -646,8 +600,6 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                   "Thơ AI thường dùng cấu trúc đều đặn, thiếu chút cảm xúc sâu lắng..."}
                 {question?.type === "story" &&
                   "Văn xuôi AI thường có câu văn đơn giản, ít hình ảnh ẩn dụ..."}
-                {question?.type === "code" &&
-                  "Code AI thường là giải pháp cơ bản, thiếu tối ưu hóa sáng tạo..."}
                 {question?.type === "philosophy" &&
                   "Triết lý AI thường liệt kê, thiếu chiều sâu suy tư..."}
               </p>
@@ -734,7 +686,7 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                     ? "Chính xác!" 
                     : "Chưa đúng!"}
                 </p>
-                {showResult.isTimeout && (
+                {showResult.isTimeut && (
                   <motion.p 
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
