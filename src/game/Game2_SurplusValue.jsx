@@ -221,11 +221,8 @@ const Game2_SurplusValue = () => {
     setIsPlaying(false);
     setGameOver(true);
     
-    // If player wins, show name form to save result
-    const success = surplusValue >= TARGET_VALUE;
-    if (success) {
-      setShowNameForm(true);
-    }
+    
+    setShowNameForm(true);
   };
 
   const calculateScore = () => {
