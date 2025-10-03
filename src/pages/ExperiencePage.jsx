@@ -1,72 +1,32 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 
 const ExperiencePage = () => {
-  const experiences = [
-    {
-      name: "Minh Hoàng",
-      role: "Sinh viên Triết học",
-      avatar: "/images2/Triet1.png",
-      quote:
-        "Philosophy 4.0 đã thay đổi hoàn toàn cách tôi tiếp cận triết học. AI không thay thế tư duy mà giúp tôi tư duy sâu hơn.",
-      rating: 5,
-      experience: "6 tháng",
-    },
-    {
-      name: "Dr. Lan Anh",
-      role: "Giảng viên Đại học",
-      avatar: "/images2/Triet3.png",
-      quote:
-        "Công cụ tuyệt vời cho việc giảng dạy. Sinh viên tôi tham gia tích cực hơn và hiểu sâu hơn về các khái niệm triết học.",
-      rating: 5,
-      experience: "1 năm",
-    },
-    {
-      name: "Tuấn Anh",
-      role: "Kỹ sư AI",
-      avatar: "/images2/Triet5.png",
-      quote:
-        "Kết hợp hoàn hảo giữa công nghệ và nhân văn. Philosophy 4.0 mở ra những góc nhìn mới về AI ethics.",
-      rating: 5,
-      experience: "8 tháng",
-    },
-    {
-      name: "Thảo Vy",
-      role: "Nhà nghiên cứu",
-      avatar: "/images2/Triet7.png",
-      quote:
-        "Nghiên cứu của tôi về AI consciousness đã có nhiều breakthrough nhờ framework Philosophy 4.0.",
-      rating: 5,
-      experience: "2 năm",
-    },
-  ];
+  const { t } = useTranslation();
 
   const expectations = [
     {
-      title: "Tư Duy Phản Biện",
-      description:
-        "Phát triển khả năng phân tích và đánh giá thông tin một cách có hệ thống",
+      title: t("experience.expectations.criticalThinking.title"),
+      description: t("experience.expectations.criticalThinking.description"),
       icon: "🧠",
       progress: 95,
     },
     {
-      title: "Giải Quyết Vấn Đề",
-      description:
-        "Áp dụng các nguyên lý triết học để giải quyết vấn đề thực tế",
+      title: t("experience.expectations.problemSolving.title"),
+      description: t("experience.expectations.problemSolving.description"),
       icon: "🔧",
       progress: 88,
     },
     {
-      title: "Hiểu Biết AI Ethics",
-      description:
-        "Nắm vững các vấn đề đạo đức trong phát triển và ứng dụng AI",
+      title: t("experience.expectations.aiEthics.title"),
+      description: t("experience.expectations.aiEthics.description"),
       icon: "⚖️",
       progress: 92,
     },
     {
-      title: "Kỹ Năng Giao Tiếp",
-      description:
-        "Trình bày và thảo luận các ý tưởng phức tạp một cách rõ ràng",
+      title: t("experience.expectations.communication.title"),
+      description: t("experience.expectations.communication.description"),
       icon: "💬",
       progress: 85,
     },
@@ -74,28 +34,44 @@ const ExperiencePage = () => {
 
   const learningPath = [
     {
-      phase: "Khám Phá",
-      duration: "Tuần 1-2",
-      description: "Làm quen với Philosophy 4.0 và các khái niệm cơ bản",
-      activities: ["Minigame logic", "Video giới thiệu", "Bài test đánh giá"],
+      phase: t("experience.learningPath.explore.phase"),
+      duration: t("experience.learningPath.explore.duration"),
+      description: t("experience.learningPath.explore.description"),
+      activities: [
+        t("experience.learningPath.explore.activities.activity1"),
+        t("experience.learningPath.explore.activities.activity2"),
+        t("experience.learningPath.explore.activities.activity3")
+      ],
     },
     {
-      phase: "Phát Triển",
-      duration: "Tuần 3-8",
-      description: "Phát triển kỹ năng thông qua các hoạt động tương tác",
-      activities: ["Workshop nhóm", "Thảo luận AI ethics", "Dự án cá nhân"],
+      phase: t("experience.learningPath.develop.phase"),
+      duration: t("experience.learningPath.develop.duration"),
+      description: t("experience.learningPath.develop.description"),
+      activities: [
+        t("experience.learningPath.develop.activities.activity1"),
+        t("experience.learningPath.develop.activities.activity2"),
+        t("experience.learningPath.develop.activities.activity3")
+      ],
     },
     {
-      phase: "Ứng Dụng",
-      duration: "Tuần 9-12",
-      description: "Áp dụng kiến thức vào các tình huống thực tế",
-      activities: ["Case study", "Mô phỏng quyết định", "Presentation"],
+      phase: t("experience.learningPath.apply.phase"),
+      duration: t("experience.learningPath.apply.duration"),
+      description: t("experience.learningPath.apply.description"),
+      activities: [
+        t("experience.learningPath.apply.activities.activity1"),
+        t("experience.learningPath.apply.activities.activity2"),
+        t("experience.learningPath.apply.activities.activity3")
+      ],
     },
     {
-      phase: "Thành Thạo",
-      duration: "Tuần 13+",
-      description: "Trở thành mentor và đóng góp cho cộng đồng",
-      activities: ["Hướng dẫn newbie", "Tạo nội dung", "Nghiên cứu"],
+      phase: t("experience.learningPath.master.phase"),
+      duration: t("experience.learningPath.master.duration"),
+      description: t("experience.learningPath.master.description"),
+      activities: [
+        t("experience.learningPath.master.activities.activity1"),
+        t("experience.learningPath.master.activities.activity2"),
+        t("experience.learningPath.master.activities.activity3")
+      ],
     },
   ];
 
@@ -105,7 +81,7 @@ const ExperiencePage = () => {
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-revolutionary-gold/30">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
           <Link to="/" className="text-revolutionary-gold font-bold text-xl hover:text-cyber-blue transition-colors">
-            ← Về Trang Chủ
+            ← {t("experience.backHome")}
           </Link>
 
           <div className="flex gap-4">
@@ -113,19 +89,19 @@ const ExperiencePage = () => {
               to="/why-project"
               className="text-cyber-blue hover:text-revolutionary-gold transition-colors font-semibold"
             >
-              Vì Sao
+              {t("nav.whyProject")}
             </Link>
             <Link
               to="/goals"
               className="text-cyber-blue hover:text-revolutionary-gold transition-colors font-semibold"
             >
-              Mục Tiêu
+              {t("nav.goals")}
             </Link>
             <Link
               to="/activities"
               className="text-cyber-blue hover:text-revolutionary-gold transition-colors font-semibold"
             >
-              Hoạt Động
+              {t("nav.activities")}
             </Link>
           </div>
         </div>
@@ -143,21 +119,19 @@ const ExperiencePage = () => {
         
         <div className="container mx-auto max-w-4xl text-center relative z-10 px-4 pt-24 pb-12">
           <h1 className="text-6xl md:text-8xl font-bold mb-8 text-communist-red uppercase tracking-tight">
-            Kỳ Vọng & Trải Nghiệm
+            {t("experience.pageTitle")}
           </h1>
 
           <div className="max-w-md mx-auto mb-8">
             <div className="text-center p-4 bg-revolutionary-gold/20 rounded-lg border-4 border-communist-red">
               <p className="text-communist-red text-base font-bold">
-                🎵 Audio tour available on main page
+                {t("experience.audioTourNote")}
               </p>
             </div>
           </div>
 
           <p className="text-xl mb-8 text-steel-gray max-w-3xl mx-auto">
-            Khám phá những trải nghiệm thực tế từ cộng đồng người dùng và hiểu
-            rõ những gì bạn có thể kỳ vọng khi tham gia vào hệ sinh thái
-            Philosophy 4.0.
+            {t("experience.introText")}
           </p>
         </div>
       </section>
@@ -172,10 +146,10 @@ const ExperiencePage = () => {
         
         <div className="container mx-auto max-w-6xl relative z-10">
           <h2 className="text-5xl font-bold text-center mb-4 text-cream-white uppercase">
-            Những Gì Bạn Sẽ Đạt Được
+            {t("experience.expectations.title")}
           </h2>
           <p className="text-center text-xl mb-12 text-cream-white/90">
-            Kỹ năng và kiến thức cụ thể sau khi hoàn thành chương trình
+            {t("experience.expectations.subtitle")}
           </p>
 
           <div className="grid md:grid-cols-2 gap-8">
@@ -198,7 +172,7 @@ const ExperiencePage = () => {
 
                 <div className="mb-2">
                   <div className="flex justify-between text-sm">
-                    <span className="text-steel-gray">Độ thành thạo trung bình</span>
+                    <span className="text-steel-gray">{t("experience.expectations.proficiency")}</span>
                     <span className="text-communist-red font-bold">
                       {expectation.progress}%
                     </span>
@@ -226,10 +200,10 @@ const ExperiencePage = () => {
         
         <div className="container mx-auto max-w-6xl relative z-10">
           <h2 className="text-5xl font-bold text-center mb-4 text-communist-red uppercase">
-            Lộ Trình Học Tập
+            {t("experience.learningPath.title")}
           </h2>
           <p className="text-center text-xl mb-12 text-steel-gray">
-            Hành trình từ người mới bắt đầu đến chuyên gia Philosophy 4.0
+            {t("experience.learningPath.subtitle")}
           </p>
 
           <div className="space-y-12">
@@ -258,7 +232,7 @@ const ExperiencePage = () => {
                 </p>
                 <div className="space-y-2">
                   <p className="text-sm font-semibold text-communist-red uppercase">
-                    Hoạt động chính:
+                    {t("experience.learningPath.mainActivities")}
                   </p>
                   {phase.activities.map((activity, actIndex) => (
                     <div
@@ -276,54 +250,6 @@ const ExperiencePage = () => {
         </div>
       </section>
 
-      {/* User Testimonials */}
-      <section className="relative py-20 px-4 bg-communist-red">
-        <img
-          src="/images2/TrietAI3.png"
-          alt="Testimonials Background"
-          className="absolute inset-0 w-full h-full object-cover opacity-10"
-        />
-        
-        <div className="container mx-auto max-w-6xl relative z-10">
-          <h2 className="text-5xl font-bold text-center mb-4 text-cream-white uppercase">
-            Trải Nghiệm Người Dùng
-          </h2>
-          <p className="text-center text-xl mb-12 text-cream-white/90">
-            Những chia sẻ thật từ cộng đồng Philosophy 4.0
-          </p>
-
-          <div className="grid md:grid-cols-2 gap-8">
-            {experiences.map((experience, index) => (
-              <div
-                key={index}
-                className="bg-cream-white p-6 rounded-xl border-4 border-revolutionary-gold"
-              >
-                <div className="flex items-center mb-4">
-                  <img
-                    src={experience.avatar}
-                    alt={experience.name}
-                    className="w-16 h-16 rounded-full border-4 border-communist-red mr-4 object-cover"
-                  />
-                  <div>
-                    <h3 className="text-xl font-bold text-communist-red">{experience.name}</h3>
-                    <p className="text-cyber-blue text-sm">{experience.role}</p>
-                  </div>
-                </div>
-                <p className="text-steel-gray italic mb-4">"{experience.quote}"</p>
-                <div className="flex justify-between items-center">
-                  <div className="flex">
-                    {[...Array(experience.rating)].map((_, i) => (
-                      <span key={i} className="text-revolutionary-gold">★</span>
-                    ))}
-                  </div>
-                  <span className="text-sm text-steel-gray">Kinh nghiệm: {experience.experience}</span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* Call to Action */}
       <section className="relative py-32 px-4 bg-cream-white">
         <img
@@ -334,29 +260,29 @@ const ExperiencePage = () => {
         
         <div className="container mx-auto text-center relative z-10">
           <h2 className="text-4xl md:text-6xl font-bold mb-8 text-communist-red uppercase">
-            Bắt Đầu Hành Trình Của Bạn
+            {t("experience.cta.title")}
           </h2>
           <p className="text-xl md:text-2xl text-steel-gray mb-12 max-w-2xl mx-auto">
-            Tham gia cộng đồng Philosophy 4.0 và khám phá tương lai của triết học
+            {t("experience.cta.subtitle")}
           </p>
           <div className="flex gap-6 justify-center flex-wrap">
             <Link
               to="/activities"
               className="bg-revolutionary-gold text-communist-red border-4 border-communist-red px-10 py-4 rounded-xl font-bold text-lg uppercase hover:bg-communist-red hover:text-cream-white hover:scale-105 transition-all duration-300"
             >
-              Khám Phá Hoạt Động
+              {t("experience.cta.exploreActivities")}
             </Link>
             <Link
               to="/goals"
               className="bg-cyber-blue text-communist-red border-4 border-communist-red px-10 py-4 rounded-xl font-bold text-lg uppercase hover:bg-communist-red hover:text-cream-white hover:scale-105 transition-all duration-300"
             >
-              Xem Mục Tiêu
+              {t("experience.cta.viewGoals")}
             </Link>
             <Link
               to="/"
               className="bg-cream-white text-communist-red border-4 border-revolutionary-gold px-10 py-4 rounded-xl font-bold text-lg uppercase hover:bg-revolutionary-gold hover:scale-105 transition-all duration-300"
             >
-              Về Trang Chủ
+              {t("experience.cta.backHome")}
             </Link>
           </div>
         </div>

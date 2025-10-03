@@ -1,10 +1,12 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { ScrollTrigger, SplitText } from "gsap/all";
+import { useTranslation } from "react-i18next";
 
 gsap.registerPlugin(ScrollTrigger, SplitText);
 
 const FlavorTitle = () => {
+  const { t } = useTranslation();
   useGSAP(() => {
     // Tách chữ cho 2 title
     const firstTextSplit = new SplitText(".first-text-split h1", {
@@ -73,7 +75,7 @@ const FlavorTitle = () => {
     <div className="general-title col-center h-full 2xl:gap-32 xl:gap-24 gap-16" style={{ backgroundColor: '#993140' }}>
       {/* Title 1 */}
       <div className="overflow-hidden 2xl:py-0 py-3 first-text-split">
-        <h1>Philosophy 4.0 có</h1>
+        <h1>{t("flavor.title1")}</h1>
       </div>
 
       {/* Title 2 */}
@@ -84,13 +86,13 @@ const FlavorTitle = () => {
         className="flavor-text-scroll"
       >
         <div className="bg-revolutionary-gold pb-5 2xl:pt-0 pt-3 2xl:px-5 px-3">
-          <h2 className="text-white">6 nguyên tắc</h2>
+          <h2 className="text-white">{t("flavor.title2")}</h2>
         </div>
       </div>
 
       {/* Title 3 */}
       <div className="overflow-hidden 2xl:py-0 py-3 second-text-split">
-        <h1 className="pt-15">cốt lõi AI</h1>
+        <h1 className="pt-15">{t("flavor.title3")}</h1>
       </div>
     </div>
   );

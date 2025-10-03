@@ -2,8 +2,10 @@ import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/all";
 import { useMediaQuery } from "react-responsive";
+import { useTranslation } from "react-i18next";
 
 const HeroSection = ({ onStartAudioTour }) => {
+  const { t } = useTranslation();
   const isMobile = useMediaQuery({
     query: "(max-width: 768px)",
   });
@@ -88,7 +90,7 @@ const HeroSection = ({ onStartAudioTour }) => {
         )}
         <div className="hero-content opacity-0">
           <div className="overflow-hidden">
-            <h1 className="hero-title">Philosophy 4.0</h1>
+            <h1 className="hero-title">{t("hero.title")}</h1>
           </div>
           <div
             style={{
@@ -97,13 +99,12 @@ const HeroSection = ({ onStartAudioTour }) => {
             className="hero-text-scroll"
           >
             <div className="hero-subtitle">
-              <h1>AI Edge Thinking</h1>
+              <h1>{t("hero.subtitle")}</h1>
             </div>
           </div>
 
           <h2>
-            Khám phá tương lai của triết học trong kỷ nguyên AI. Nơi trí tuệ
-            nhân tạo gặp gỡ tư duy triết học cho một thế giới thông minh hơn.
+            {t("hero.description")}
           </h2>
 
           <div
@@ -111,7 +112,7 @@ const HeroSection = ({ onStartAudioTour }) => {
             onClick={onStartAudioTour}
             style={{ cursor: "pointer" }}
           >
-            <p>Khám Phá Triết 4.0</p>
+            <p>{t("hero.startTour")}</p>
           </div>
         </div>
       </div>

@@ -1,31 +1,37 @@
 const flavorlists = [
   {
     name: "Triết học 4.0",
+    key: "philosophy40",
     color: "brown",
     rotation: "md:rotate-[-8deg] rotate-0",
   },
   {
     name: "AI Consciousness",
+    key: "aiConsciousness",
     color: "red",
     rotation: "md:rotate-[8deg] rotate-0",
   },
   {
     name: "Digital Wisdom",
+    key: "digitalWisdom",
     color: "blue",
     rotation: "md:rotate-[-8deg] rotate-0",
   },
   {
     name: "Neural Philosophy",
+    key: "neuralPhilosophy",
     color: "orange",
     rotation: "md:rotate-[8deg] rotate-0",
   },
   {
     name: "Edge Computing",
+    key: "edgeComputing",
     color: "white",
     rotation: "md:rotate-[-8deg] rotate-0",
   },
   {
     name: "Future Thinking",
+    key: "futureThinking",
     color: "black",
     rotation: "md:rotate-[8deg] rotate-0",
   },
