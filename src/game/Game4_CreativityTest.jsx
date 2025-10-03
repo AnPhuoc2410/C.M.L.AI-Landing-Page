@@ -16,6 +16,7 @@ const Game4_CreativityTest = () => {
   const [aiPositions, setAiPositions] = useState([]); // Track which side is AI for each question
   const [gameInitialized, setGameInitialized] = useState(false); // Track if game has been initialized
   const [error, setError] = useState(null); // Track initialization errors
+  const [timeLeft, setTimeLeft] = useState(15); // Countdown timer
 
   // Full question bank - 24 questions (6 per category)
   const questionBank = [
@@ -368,11 +369,37 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
       setShowResult(false);
       if (currentQuestion < selectedQuestions.length - 1) {
         setCurrentQuestion(currentQuestion + 1);
+        setTimeLeft(15); // Reset timer for next question
       } else {
         setGameComplete(true);
       }
     }, 3000);
   };
+
+  // Countdown timer effect
+  React.useEffect(() => {
+    // Only run timer when game is active (not loading, not showing result, not complete)
+    if (!loading && !showResult && !gameComplete && gameInitialized && timeLeft > 0) {
+      const timer = setInterval(() => {
+        setTimeLeft((prev) => prev - 1);
+      }, 1000);
+
+      return () => clearInterval(timer);
+    }
+
+    // Auto-submit when time runs out
+    if (timeLeft === 0 && !showResult && !gameComplete) {
+      // Random guess when time's up
+      handleAnswer(Math.random() > 0.5);
+    }
+  }, [timeLeft, loading, showResult, gameComplete, gameInitialized]);
+
+  // Reset timer when question changes
+  React.useEffect(() => {
+    if (!showResult && !loading && gameInitialized) {
+      setTimeLeft(15);
+    }
+  }, [currentQuestion, showResult, loading, gameInitialized]);
 
   if (gameComplete) {
     const percentage = Math.round((score / selectedQuestions.length) * 100);
@@ -540,16 +567,74 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
         </div>
       ) : (
         <>
-          {/* Progress */}
+          {/* Progress Bar with Timer */}
           <div className="mb-6">
             <div className="flex justify-between items-center mb-2">
-              <span className="text-sm text-cream-white/60">
-                Câu {currentQuestion + 1}/{selectedQuestions.length}
-              </span>
-              <span className="text-sm text-cyber-blue font-bold">
-                Điểm: {score}
-              </span>
+              <div className="flex items-center gap-4">
+                <span className="text-sm text-cream-white/60">
+                  Câu {currentQuestion + 1}/{selectedQuestions.length}
+                </span>
+                <span className="text-sm text-cyber-blue font-bold">
+                  Điểm: {score}
+                </span>
+              </div>
+              
+              {/* Timer - Floating on the right */}
+              <motion.div
+                className="flex items-center gap-2"
+                animate={{ 
+                  scale: timeLeft <= 5 ? [1, 1.05, 1] : 1,
+                }}
+                transition={{ duration: 0.5, repeat: timeLeft <= 5 ? Infinity : 0 }}
+              >
+                {/* Circular Progress */}
+                <div className="relative w-12 h-12">
+                  <svg className="w-full h-full -rotate-90" viewBox="0 0 36 36">
+                    <circle
+                      cx="18"
+                      cy="18"
+                      r="16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      className="text-steel-gray/30"
+                    />
+                    <motion.circle
+                      cx="18"
+                      cy="18"
+                      r="16"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                      strokeDasharray="100"
+                      animate={{ 
+                        strokeDashoffset: 100 - (timeLeft / 15) * 100,
+                      }}
+                      className={
+                        timeLeft <= 5 
+                          ? "text-red-500" 
+                          : timeLeft <= 10 
+                          ? "text-yellow-500" 
+                          : "text-cyber-blue"
+                      }
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <span className={`text-sm font-bold ${
+                      timeLeft <= 5 
+                        ? "text-red-500" 
+                        : timeLeft <= 10 
+                        ? "text-yellow-500" 
+                        : "text-cyber-blue"
+                    }`}>
+                      {timeLeft}s
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
             </div>
+            
             <div className="w-full bg-steel-gray/30 rounded-full h-2">
               <motion.div
                 initial={{ width: 0 }}
@@ -639,10 +724,6 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                       </pre>
                     </div>
                   </motion.button>
-                </div>
-
-                <div className="text-center text-sm text-cream-white/60">
-                  Bạn có 15 giây để quyết định...
                 </div>
               </motion.div>
             ) : (
