@@ -4,10 +4,10 @@ import Confetti from "react-confetti";
 
 const Game2_SurplusValue = () => {
   const [workers, setWorkers] = useState([
-    { id: 1, health: 100, productivity: 10, position: 0 },
-    { id: 2, health: 100, productivity: 10, position: 1 },
-    { id: 3, health: 100, productivity: 10, position: 2 },
-    { id: 4, health: 100, productivity: 10, position: 3 },
+    { id: 1, health: 100, productivity: 20, position: 0 },
+    { id: 2, health: 100, productivity: 20, position: 1 },
+    { id: 3, health: 100, productivity: 20, position: 2 },
+    { id: 4, health: 100, productivity: 20, position: 3 },
   ]);
   const [nextWorkerId, setNextWorkerId] = useState(5);
   const [robots, setRobots] = useState([]);
@@ -18,6 +18,7 @@ const Game2_SurplusValue = () => {
   const [gameOver, setGameOver] = useState(false);
   const [message, setMessage] = useState("");
   const [showStrike, setShowStrike] = useState(false);
+  const [isOnStrike, setIsOnStrike] = useState(false);
 
   const ROBOT_COST = 50;
   const ROBOT_REPAIR_COST = 30;
@@ -25,6 +26,7 @@ const Game2_SurplusValue = () => {
   const WORKER_HIRE_COST = 40;
   const TARGET_VALUE = 500;
   const STRIKE_THRESHOLD = 30; // Worker health below this triggers strike
+  const CRITICAL_WORKERS_THRESHOLD = 3; // Number of critical health workers to trigger strike
 
   useEffect(() => {
     if (!isPlaying || gameOver) return;
@@ -55,8 +57,9 @@ const Game2_SurplusValue = () => {
             setSurplusValue((prev) => prev + 5);
             const newCondition = robot.condition - 1;
             
-            // Random breakdown chance (5% if condition < 80, 2% otherwise)
-            const breakdownChance = robot.condition < 80 ? 0.05 : 0.02;
+            // Random breakdown chance 
+            const breakdownChance = robot.condition < 40 ? 0.08 : 
+                        robot.condition < 75 ? 0.03 : 0.01;  
             const randomBreakdown = Math.random() < breakdownChance;
             
             if (randomBreakdown) {
@@ -83,21 +86,34 @@ const Game2_SurplusValue = () => {
     return () => clearInterval(timer);
   }, [isPlaying, gameOver]);
 
-  // Check for strike
+  // Check for strike - 3 workers with health < 10
   useEffect(() => {
-    const unhappyWorkers = workers.filter((w) => w.health < STRIKE_THRESHOLD);
-    if (unhappyWorkers.length >= 2 && !showStrike) {
-      triggerStrike();
+    if (!isPlaying || gameOver) return;
+    
+    const criticalWorkers = workers.filter((w) => w.health < 10);
+    
+    if (criticalWorkers.length >= CRITICAL_WORKERS_THRESHOLD && !isOnStrike) {
+      // Start strike
+      setIsOnStrike(true);
+      setShowStrike(true);
+      setMessage("🚨 ĐÌNH CÔNG! 3+ công nhân kiệt sức! Tất cả ngừng làm việc!");
+    } else if (criticalWorkers.length < CRITICAL_WORKERS_THRESHOLD && isOnStrike) {
+      // End strike
+      setIsOnStrike(false);
+      setShowStrike(false);
+      setMessage("✅ Đình công kết thúc! Công nhân quay lại làm việc.");
+      setTimeout(() => setMessage(""), 2000);
     }
-  }, [workers]);
-
-  const triggerStrike = () => {
-    setShowStrike(true);
-    setMessage("⚠️ ĐÌNH CÔNG! Công nhân yêu cầu cải thiện điều kiện!");
-    setTimeout(() => setShowStrike(false), 3000);
-  };
+  }, [workers, isPlaying, gameOver, isOnStrike]);
 
   const exploitWorker = (workerId) => {
+    // Cannot exploit during strike
+    if (isOnStrike) {
+      setMessage("✊ Đang đình công! Không thể bóc lột công nhân!");
+      setTimeout(() => setMessage(""), 1500);
+      return;
+    }
+    
     setWorkers((prevWorkers) =>
       prevWorkers.map((worker) => {
         if (worker.id === workerId && worker.health > 10) {
@@ -381,15 +397,19 @@ const Game2_SurplusValue = () => {
                   <div
                     key={worker.id}
                     className={`relative p-4 rounded-lg border-2 transition-all ${
-                      worker.health > 60
-                        ? "bg-neural-green/20 border-neural-green/50"
-                        : worker.health > 30
-                        ? "bg-revolutionary-gold/20 border-revolutionary-gold/50"
-                        : "bg-red-500/20 border-red-500/50"
-                    } ${worker.health < 10 ? "opacity-50" : ""}`}
+                      isOnStrike 
+                        ? "bg-red-600/30 border-red-600 animate-pulse"
+                        : worker.health > 70
+                        ? "bg-green-500/20 border-green-500/60 hover:border-green-400"
+                        : worker.health > 40
+                        ? "bg-yellow-500/20 border-yellow-500/60 hover:border-yellow-400"
+                        : worker.health > 10
+                        ? "bg-orange-500/20 border-orange-500/60 hover:border-orange-400"
+                        : "bg-red-500/30 border-red-500/70 hover:border-red-400"
+                    } ${worker.health < 10 || isOnStrike ? "opacity-70" : ""}`}
                   >
                     {/* Fire button - top right corner */}
-                    {workers.length > 1 && (
+                    {workers.length > 1 && !isOnStrike && (
                       <button
                         onClick={(e) => {
                           e.stopPropagation();
@@ -403,27 +423,40 @@ const Game2_SurplusValue = () => {
                     )}
                     
                     <motion.button
-                      whileHover={{ scale: 1.05 }}
-                      whileTap={{ scale: 0.95 }}
+                      whileHover={{ scale: isOnStrike ? 1 : 1.05 }}
+                      whileTap={{ scale: isOnStrike ? 1 : 0.95 }}
                       onClick={() => exploitWorker(worker.id)}
-                      disabled={worker.health < 10}
-                      className="w-full"
+                      disabled={worker.health < 10 || isOnStrike}
+                      className={`w-full ${isOnStrike ? 'cursor-not-allowed' : ''}`}
                     >
-                      <div className="text-3xl mb-2">👷</div>
-                      <div className="text-xs text-cream-white/60 mb-1">Công nhân {worker.id}</div>
-                      <div className="w-full bg-black/40 rounded-full h-2 mb-1">
+                      <div className="text-3xl mb-2">
+                        {isOnStrike ? '✊😠' : '👷'}
+                      </div>
+                      <div className="text-xs text-cream-white/60 mb-1">
+                        {isOnStrike ? '🚨 ĐÌNH CÔNG!' : `Công nhân ${worker.id}`}
+                      </div>
+                      <div className="w-full bg-black/60 rounded-full h-2.5 mb-1 border border-black/80">
                         <div
-                          className={`h-2 rounded-full transition-all ${
-                            worker.health > 60
-                              ? "bg-neural-green"
-                              : worker.health > 30
-                              ? "bg-revolutionary-gold"
-                              : "bg-red-500"
+                          className={`h-full rounded-full transition-all duration-300 ${
+                            worker.health > 70
+                              ? "bg-gradient-to-r from-green-400 to-green-500 shadow-[0_0_8px_rgba(74,222,128,0.6)]"
+                              : worker.health > 40
+                              ? "bg-gradient-to-r from-yellow-400 to-orange-500 shadow-[0_0_8px_rgba(251,191,36,0.6)]"
+                              : worker.health > 10
+                              ? "bg-gradient-to-r from-orange-500 to-red-500 shadow-[0_0_8px_rgba(239,68,68,0.6)]"
+                              : "bg-gradient-to-r from-red-600 to-red-800 shadow-[0_0_12px_rgba(220,38,38,0.8)] animate-pulse"
                           }`}
                           style={{ width: `${Math.max(0, worker.health)}%` }}
                         />
                       </div>
-                      <div className="text-xs font-bold">HP: {Math.max(0, worker.health)}%</div>
+                      <div className={`text-xs font-bold ${
+                        worker.health > 70 ? 'text-green-400' :
+                        worker.health > 40 ? 'text-yellow-400' :
+                        worker.health > 10 ? 'text-orange-500' :
+                        'text-red-500 animate-pulse'
+                      }`}>
+                        HP: {Math.max(0, worker.health)}%
+                      </div>
                     </motion.button>
                   </div>
                 ))}
