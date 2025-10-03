@@ -23,6 +23,9 @@ const Game2_SurplusValue = () => {
   const [playerName, setPlayerName] = useState("");
   const [isSaving, setIsSaving] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
+  const [showLeaderboard, setShowLeaderboard] = useState(false);
+  const [leaderboardData, setLeaderboardData] = useState([]);
+  const [isLoadingLeaderboard, setIsLoadingLeaderboard] = useState(false);
 
   const ROBOT_COST = 50;
   const ROBOT_REPAIR_COST = 30;
@@ -276,12 +279,62 @@ const Game2_SurplusValue = () => {
       setShowNameForm(false);
       setTimeout(() => setSaveMessage(""), 3000);
       
+      // Fetch leaderboard sau khi lưu thành công
+      setTimeout(() => {
+        fetchLeaderboard();
+      }, 1000);
+      
     } catch (error) {
       console.error("❌ Lỗi khi lưu:", error);
       setSaveMessage("❌ Lỗi khi lưu. Vui lòng thử lại!");
       setTimeout(() => setSaveMessage(""), 3000);
     } finally {
       setIsSaving(false);
+    }
+  };
+
+  const fetchLeaderboard = async () => {
+    setIsLoadingLeaderboard(true);
+    console.log("📊 Đang tải bảng xếp hạng...");
+
+    try {
+      const sheetUrl = import.meta.env.VITE_SHEET_URL;
+      const response = await fetch(sheetUrl, {
+        method: "GET",
+        mode: "cors",
+      });
+
+      if (response.ok) {
+        const result = await response.json();
+        console.log("✅ Leaderboard data:", result);
+
+        if (result.success && result.data) {
+          // data[0] là header, data[1..n] là các dòng dữ liệu
+          const rows = result.data.slice(1); // Bỏ header
+          
+          // Parse và sort theo điểm (cột index 3)
+          const leaderboard = rows
+            .map(row => ({
+              name: row[0] || "Unknown",
+              surplusValue: parseInt(row[1]) || 0,
+              money: parseInt(row[2]) || 0,
+              score: parseInt(row[3]) || 0,
+              date: row[4] || ""
+            }))
+            .sort((a, b) => b.score - a.score) // Sắp xếp giảm dần theo điểm
+            .slice(0, 10); // Lấy top 10
+
+          setLeaderboardData(leaderboard);
+          setShowLeaderboard(true);
+          console.log("🏆 Top 10:", leaderboard);
+        }
+      } else {
+        console.error("❌ Lỗi fetch leaderboard:", response.status);
+      }
+    } catch (error) {
+      console.error("❌ Lỗi khi tải leaderboard:", error);
+    } finally {
+      setIsLoadingLeaderboard(false);
     }
   };
 
@@ -308,6 +361,8 @@ const Game2_SurplusValue = () => {
     setShowNameForm(false);
     setPlayerName("");
     setSaveMessage("");
+    setShowLeaderboard(false);
+    setLeaderboardData([]);
   };
 
   if (gameOver) {
@@ -452,6 +507,125 @@ const Game2_SurplusValue = () => {
             </div>
           </div>
         </div>
+
+        {/* Leaderboard Section */}
+        {showLeaderboard && (
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-gradient-to-br from-revolutionary-gold/10 to-cyber-blue/10 border-2 border-revolutionary-gold rounded-xl p-6 max-w-3xl mx-auto mb-6"
+          >
+            <h3 className="text-3xl font-bold text-center mb-6 text-revolutionary-gold flex items-center justify-center gap-3">
+              <span>🏆</span>
+              <span>BẢNG XẾP HẠNG TOP 10</span>
+              <span>🏆</span>
+            </h3>
+
+            {isLoadingLeaderboard ? (
+              <div className="text-center py-8">
+                <div className="animate-spin text-4xl mb-2">⏳</div>
+                <p className="text-cream-white/60">Đang tải bảng xếp hạng...</p>
+              </div>
+            ) : leaderboardData.length > 0 ? (
+              <div className="space-y-2">
+                {leaderboardData.map((player, index) => (
+                  <motion.div
+                    key={index}
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: index * 0.1 }}
+                    className={`flex items-center gap-4 p-4 rounded-lg ${
+                      index === 0
+                        ? "bg-gradient-to-r from-yellow-500/20 to-yellow-600/20 border-2 border-yellow-500"
+                        : index === 1
+                        ? "bg-gradient-to-r from-gray-400/20 to-gray-500/20 border-2 border-gray-400"
+                        : index === 2
+                        ? "bg-gradient-to-r from-orange-600/20 to-orange-700/20 border-2 border-orange-600"
+                        : "bg-steel-gray/30 border border-cream-white/20"
+                    }`}
+                  >
+                    {/* Rank */}
+                    <div className="flex-shrink-0 w-12 h-12 flex items-center justify-center">
+                      {index === 0 ? (
+                        <span className="text-4xl">🥇</span>
+                      ) : index === 1 ? (
+                        <span className="text-4xl">🥈</span>
+                      ) : index === 2 ? (
+                        <span className="text-4xl">🥉</span>
+                      ) : (
+                        <span className="text-2xl font-bold text-cream-white/60">
+                          #{index + 1}
+                        </span>
+                      )}
+                    </div>
+
+                    {/* Player Info */}
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-baseline gap-2 mb-1">
+                        <p className="text-lg font-bold text-cream-white truncate">
+                          {player.name}
+                        </p>
+                        {player.name === playerName && (
+                          <span className="text-xs bg-cyber-blue text-black px-2 py-0.5 rounded-full font-bold">
+                            BẠN
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex gap-4 text-xs text-cream-white/60">
+                        <span>GTTD: {player.surplusValue}</span>
+                        <span>💰 ${player.money}</span>
+                        <span className="text-cream-white/40">{player.date}</span>
+                      </div>
+                    </div>
+
+                    {/* Score */}
+                    <div className="flex-shrink-0 text-right">
+                      <div className="text-2xl font-bold text-revolutionary-gold">
+                        {player.score.toLocaleString()}
+                      </div>
+                      <div className="text-xs text-cream-white/60">điểm</div>
+                    </div>
+                  </motion.div>
+                ))}
+              </div>
+            ) : (
+              <div className="text-center py-8 text-cream-white/60">
+                <p className="text-xl mb-2">📊</p>
+                <p>Chưa có dữ liệu bảng xếp hạng</p>
+              </div>
+            )}
+
+            {/* View Full Leaderboard Button */}
+            {leaderboardData.length > 0 && (
+              <motion.a
+                href={import.meta.env.VITE_SHEET_URL.replace('/exec', '')}
+                target="_blank"
+                rel="noopener noreferrer"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="mt-6 block text-center bg-cyber-blue/20 border border-cyber-blue text-cyber-blue px-6 py-3 rounded-lg font-bold hover:bg-cyber-blue/30 transition-colors"
+              >
+                📊 Xem Bảng Xếp Hạng Đầy Đủ
+              </motion.a>
+            )}
+          </motion.div>
+        )}
+
+        {/* Load Leaderboard Button */}
+        {!showLeaderboard && success && (
+          <motion.button
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={fetchLeaderboard}
+            disabled={isLoadingLeaderboard}
+            className="bg-revolutionary-gold/20 border-2 border-revolutionary-gold text-revolutionary-gold px-8 py-3 rounded-lg font-bold mb-4 disabled:opacity-50 disabled:cursor-not-allowed"
+          >
+            {isLoadingLeaderboard ? "⏳ Đang tải..." : "🏆 Xem Bảng Xếp Hạng"}
+          </motion.button>
+        )}
+
         <motion.button
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
