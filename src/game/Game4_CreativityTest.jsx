@@ -14,6 +14,7 @@ const Game4_CreativityTest = () => {
   const [aiGeneratedContents, setAiGeneratedContents] = useState([]); // Store AI-generated content for each question
   const [aiPositions, setAiPositions] = useState([]); // Track which side is AI for each question
   const [gameInitialized, setGameInitialized] = useState(false); // Track if game has been initialized
+  const [error, setError] = useState(null); // Track initialization errors
 
   // Full question bank - 24 questions (6 per category)
   const questionBank = [
@@ -230,38 +231,65 @@ const Game4_CreativityTest = () => {
   // Select 5 random questions from the bank
   const [selectedQuestions, setSelectedQuestions] = useState([]);
 
-  const generateAIContent = async (prompt) => {
+  // Generate ALL AI content in ONE API call
+  const generateAllAIContent = async (questions) => {
     try {
-      console.log(
-        "API Key:",
-        import.meta.env.VITE_API_KEY ? "Exists" : "Missing"
-      );
+      // Build a combined prompt for all 5 questions
+      const combinedPrompt = `Bạn là một AI sáng tạo nội dung văn học và thơ ca tiếng Việt.
+Hãy tạo ${questions.length} nội dung sáng tạo theo các yêu cầu sau.
 
-      // Try gemini-2.5-flash first (newer, faster model)
-      const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
-      const result = await model.generateContent(prompt);
+QUAN TRỌNG: Trả về ĐÚNG format JSON này, không thêm markdown hoặc text khác:
+{
+  "contents": [
+    "nội dung 1",
+    "nội dung 2",
+    "nội dung 3",
+    "nội dung 4",
+    "nội dung 5"
+  ]
+}
+
+Các yêu cầu cho từng nội dung:
+
+1. ${questions[0].aiPrompt}
+
+2. ${questions[1].aiPrompt}
+
+3. ${questions[2].aiPrompt}
+
+4. ${questions[3].aiPrompt}
+
+5. ${questions[4].aiPrompt}
+
+Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
+
+      const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
+      const result = await model.generateContent(combinedPrompt);
       const text = result.response.text();
-      return text.trim();
+      
+      // Parse JSON response
+      const cleanedText = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      const parsed = JSON.parse(cleanedText);
+      
+      if (!parsed.contents || parsed.contents.length !== questions.length) {
+        throw new Error("Invalid response format from AI");
+      }
+      
+      return parsed.contents;
     } catch (error) {
-      console.error("Error generating AI content:", error);
-
-      // Check if it's a quota error
-      if (error.status === 429) {
-        console.warn("⚠️ API Quota exceeded - using fallback content");
+      // Check error type for better error messages
+      if (error.message && error.message.includes("Failed to fetch")) {
+        // Network error - DNS or connectivity issue
+      } else if (error.status === 400) {
+        console.error("❌ API KEY INVALID - Please check your API key");
+      } else if (error.status === 503) {
+        console.warn("⚠️ Model overloaded - Please try again");
+      } else if (error.status === 429) {
+        console.warn("⚠️ API Quota exceeded");
       }
 
-      // Return fallback content based on prompt type
-      if (prompt.includes("thơ")) {
-        return "Mùa thu đến với lá vàng\nGió nhẹ thổi qua đường phố\nNhớ về thời gian cũ\nLòng người vẫn mong chờ";
-      } else if (prompt.includes("văn")) {
-        return "Một cô gái bước vào quán. Cô tìm chỗ ngồi. Tay cô cầm cuốn sách. Ngoài trời mưa. Cô bắt đầu đọc.";
-      } else if (prompt.includes("JavaScript")) {
-        return "function fibonacci(n) {\n  if (n <= 1) return n;\n  return fibonacci(n - 1) + fibonacci(n - 2);\n}";
-      } else if (prompt.includes("ý nghĩa cuộc sống")) {
-        return "Con người cần có mục đích sống. Mỗi người tìm ý nghĩa riêng. Chúng ta nên sống có giá trị.";
-      } else {
-        return "Đêm về ngồi viết thơ\nGiấy bút trước mặt\nSuy ngẫm về đời\nTìm câu trả lời";
-      }
+      // Re-throw error to be handled by caller
+      throw error;
     }
   };
 
@@ -271,24 +299,44 @@ const Game4_CreativityTest = () => {
       // Only run if game not initialized yet
       if (!gameInitialized) {
         setLoading(true);
+        setError(null);
 
-        // Randomly select 5 questions from the bank
-        const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
-        const selected = shuffled.slice(0, 5);
-        setSelectedQuestions(selected);
+        try {
+          // Randomly select 5 questions from the bank
+          const shuffled = [...questionBank].sort(() => Math.random() - 0.5);
+          const selected = shuffled.slice(0, 5);
+          setSelectedQuestions(selected);
 
-        // Generate random positions
-        const positions = selected.map(() => Math.random() > 0.5);
-        setAiPositions(positions);
+          // Generate random positions
+          const positions = selected.map(() => Math.random() > 0.5);
+          setAiPositions(positions);
 
-        // Generate AI content for selected questions
-        const aiContents = await Promise.all(
-          selected.map((q) => generateAIContent(q.aiPrompt))
-        );
-        setAiGeneratedContents(aiContents);
+          // ✨ Generate AI content for ALL questions in ONE API call
+          const aiContents = await generateAllAIContent(selected);
+          setAiGeneratedContents(aiContents);
 
-        setLoading(false);
-        setGameInitialized(true);
+          setLoading(false);
+          setGameInitialized(true);
+        } catch (err) {
+          setLoading(false);
+          
+          // Determine error message
+          let errorMessage = "Không thể khởi tạo trò chơi. ";
+          if (err.message && err.message.includes("Failed to fetch")) {
+            errorMessage += "Không thể kết nối với Google AI API. Vui lòng kiểm tra:\n\n" +
+              "1. Kết nối internet của bạn\n" +
+              "2. Tắt VPN nếu đang bật\n" +
+              "3. Kiểm tra Firewall/Antivirus\n" +
+              "4. Thử trình duyệt khác\n\n" +
+              "Lỗi kỹ thuật: ERR_NAME_NOT_RESOLVED";
+          } else if (err.status === 400) {
+            errorMessage += "API Key không hợp lệ hoặc đã hết hạn.";
+          } else {
+            errorMessage += err.message || "Lỗi không xác định.";
+          }
+          
+          setError(errorMessage);
+        }
       }
     };
 
@@ -432,21 +480,67 @@ const Game4_CreativityTest = () => {
   return (
     <div className="max-w-5xl mx-auto">
       {loading ? (
-        // Loading screen - hide everything
-        <div className="text-center py-20">
+        // Loading screen - centered vertically and horizontally
+        <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
           <motion.div
             animate={{ rotate: 360 }}
             transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-            className="text-6xl mb-4 inline-block"
+            className="text-6xl mb-4"
           >
             ⚙️
           </motion.div>
           <p className="text-cream-white/80 text-xl font-bold mb-2">
             AI đang tạo nội dung cho tất cả câu hỏi...
           </p>
-          <p className="text-cream-white/60 text-sm">
-            Đợi chút nhé, đang generate 5 câu 🤖
-          </p>
+        </div>
+      ) : error ? (
+        // Error screen - show error and retry button
+        <div className="text-center py-10">
+          <div className="text-6xl mb-4">⚠️</div>
+          <h2 className="text-2xl font-bold text-red-500 mb-4">
+            Lỗi Kết Nối
+          </h2>
+          <div className="bg-red-900/20 border border-red-500/30 rounded-xl p-6 max-w-2xl mx-auto mb-6">
+            <p className="text-cream-white/90 whitespace-pre-line text-left">
+              {error}
+            </p>
+          </div>
+          <div className="flex gap-4 justify-center">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => {
+                setError(null);
+                setGameInitialized(false);
+              }}
+              className="px-6 py-3 bg-cyber-blue hover:bg-cyber-blue/80 text-white rounded-lg font-bold transition-colors"
+            >
+              🔄 Thử Lại
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => window.location.reload()}
+              className="px-6 py-3 bg-steel-gray hover:bg-steel-gray/80 text-white rounded-lg font-bold transition-colors"
+            >
+              ↻ Tải Lại Trang
+            </motion.button>
+          </div>
+          <div className="mt-6 bg-cyber-blue/10 border border-cyber-blue/30 rounded-lg p-4 max-w-2xl mx-auto">
+            <p className="text-sm text-cream-white/80 text-left">
+              <strong className="text-cyber-blue">💡 Gợi ý khắc phục:</strong>
+              <br />
+              • Kiểm tra kết nối internet
+              <br />
+              • Tắt VPN/Proxy nếu đang bật
+              <br />
+              • Thử trình duyệt khác (Chrome, Firefox, Edge)
+              <br />
+              • Kiểm tra Firewall không chặn googleapis.com
+              <br />
+              • Xóa cache trình duyệt và thử lại
+            </p>
+          </div>
         </div>
       ) : (
         <>
