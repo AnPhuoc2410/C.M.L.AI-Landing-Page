@@ -1,6 +1,8 @@
 import { useMediaQuery } from "react-responsive";
+import { useTranslation } from "react-i18next";
 
 const FooterSection = () => {
+  const { t } = useTranslation();
   const isMobile = useMediaQuery({
     query: "(max-width: 768px)",
   });
@@ -16,7 +18,7 @@ const FooterSection = () => {
       <div className="2xl:h-[80dvh] md:h-[90dvh] h-auto relative md:pt-[10vh] pt-[5vh]">
         <div className="overflow-hidden z-10">
           <h1 className="2xl:text-7xl md:text-6xl text-4xl font-bold uppercase text-center text-milk py-3">
-            #PHILOSOPHY4.0
+            {t("footer.hashtag")}
           </h1>
         </div>
 
@@ -50,30 +52,28 @@ const FooterSection = () => {
         <div className="2xl:mt-20 md:mt-16 mt-10 md:px-10 px-5 flex gap-10 md:flex-row flex-col justify-between text-milk font-paragraph md:text-base text-sm font-medium">
           <div className="flex items-center md:gap-16 gap-5">
             <div>
-              <p>Philosophy 4.0</p>
+              <p>{t("footer.philosophy")}</p>
             </div>
             <div>
-              <p>AI Club</p>
-              <p>Triết học AI</p>
-              <p>Tư duy 4.0</p>
+              <p>{t("footer.aiClub")}</p>
+              <p>{t("footer.aiPhilosophy")}</p>
+              <p>{t("footer.thinking")}</p>
             </div>
             <div>
-              <p>Cộng đồng</p>
-              <p>Liên hệ</p>
-              <p>Philosophy Talk</p>
+              <p>{t("footer.community")}</p>
+              <p>{t("footer.contact")}</p>
+              <p>{t("footer.philosophyTalk")}</p>
             </div>
           </div>
 
           <div className="md:max-w-lg">
             <p>
-              Tham gia cộng đồng Philosophy 4.0 để được cập nhật những
-              breakthrough mới nhất về AI edge và triết học, cùng các sự kiện
-              học tập thú vị!
+              {t("footer.joinText")}
             </p>
             <div className="flex justify-between items-center border-b border-[#D9D9D9] py-5 md:mt-10">
               <input
                 type="email"
-                placeholder="Nhập email của bạn"
+                placeholder={t("footer.emailPlaceholder")}
                 className="w-full placeholder:font-sans placeholder:text-[#999999]"
               />
               <img src="/images/arrow.svg" alt="arrow" />
@@ -82,10 +82,10 @@ const FooterSection = () => {
         </div>
 
         <div className="copyright-box">
-          <p>Copyright © 2025 Philosophy 4.0 - All Rights Reserved</p>
+          <p>{t("footer.copyright")}</p>
           <div className="flex items-center gap-7">
-            <p>Chính sách bảo mật</p>
-            <p>Điều khoản sử dụng</p>
+            <p>{t("footer.privacy")}</p>
+            <p>{t("footer.terms")}</p>
           </div>
         </div>
       </div>

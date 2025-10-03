@@ -2,16 +2,18 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useTranslation } from "react-i18next";
 
 const NavBar = () => {
+  const { t } = useTranslation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const menuItems = [
-    { title: "Trang chủ", path: "/", icon: "🏠" },
-    { title: "Lý do dự án", path: "/why-project", icon: "❓" },
-    { title: "Mục tiêu", path: "/goals", icon: "🎯" },
-    { title: "Hoạt động", path: "/activities", icon: "🎮" },
-    { title: "Trải nghiệm", path: "/experience", icon: "✨" },
+    { title: t("nav.home"), path: "/", icon: "🏠" },
+    { title: t("nav.whyProject"), path: "/why-project", icon: "❓" },
+    { title: t("nav.goals"), path: "/goals", icon: "🎯" },
+    { title: t("nav.activities"), path: "/activities", icon: "🎮" },
+    { title: t("nav.experience"), path: "/experience", icon: "✨" },
   ];
 
   useGSAP(() => {

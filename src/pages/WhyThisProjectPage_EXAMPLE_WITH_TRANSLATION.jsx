@@ -144,7 +144,9 @@ const WhyThisProjectPage = () => {
                   <h3 className="text-2xl font-bold mb-3 text-communist-red group-hover:text-cream-white uppercase">
                     {t("whyProject.differences.innovation.title")}
                   </h3>
-                  <p className="text-steel-gray group-hover:text-cream-white leading-relaxed">{t("whyProject.differences.innovation.description")}</p>
+                  <p className="text-steel-gray group-hover:text-cream-white leading-relaxed">
+                    {t("whyProject.differences.innovation.description")}
+                  </p>
                 </div>
               </div>
               
@@ -159,7 +161,9 @@ const WhyThisProjectPage = () => {
                   <h3 className="text-2xl font-bold mb-3 text-communist-red group-hover:text-cream-white uppercase">
                     {t("whyProject.differences.practical.title")}
                   </h3>
-                  <p className="text-steel-gray group-hover:text-cream-white leading-relaxed">{t("whyProject.differences.practical.description")}</p>
+                  <p className="text-steel-gray group-hover:text-cream-white leading-relaxed">
+                    {t("whyProject.differences.practical.description")}
+                  </p>
                 </div>
               </div>
               
@@ -174,7 +178,9 @@ const WhyThisProjectPage = () => {
                   <h3 className="text-2xl font-bold mb-3 text-communist-red group-hover:text-cream-white uppercase">
                     {t("whyProject.differences.community.title")}
                   </h3>
-                  <p className="text-steel-gray group-hover:text-cream-white leading-relaxed">{t("whyProject.differences.community.description")}</p>
+                  <p className="text-steel-gray group-hover:text-cream-white leading-relaxed">
+                    {t("whyProject.differences.community.description")}
+                  </p>
                 </div>
               </div>
             </div>

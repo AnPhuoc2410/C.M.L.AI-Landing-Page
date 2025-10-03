@@ -2,10 +2,12 @@ import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 import { image } from "framer-motion/client";
+import { useTranslation } from "react-i18next";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const TimelineSection = () => {
+  const { t } = useTranslation();
   const sectionRef = useRef(null);
   const timelineRef = useRef(null);
   const lineRef = useRef(null);
@@ -13,63 +15,58 @@ const TimelineSection = () => {
 
   const timelineData = [
     {
-      period: "Tiền Sử",
-      title: "Công Cụ Thô Sơ",
-      subtitle: "Lao động thủ công",
-      description:
-        "Bàn tay con người cầm cuốc, đào đất. Năng suất lao động: Rất thấp, phụ thuộc hoàn toàn vào sức người. Tác động xã hội: Cộng đồng bộ lạc, tự cung tự cấp.",
+      period: t("timeline.prehistoric.period"),
+      title: t("timeline.prehistoric.title"),
+      subtitle: t("timeline.prehistoric.subtitle"),
+      description: t("timeline.prehistoric.description"),
       icon: "🪓",
       image: "/images2/AncientMan.png",
-      productivity: "Rất thấp",
-      impact: "Cộng đồng bộ lạc",
+      productivity: t("timeline.prehistoric.productivity"),
+      impact: t("timeline.prehistoric.impact"),
       side: "left",
     },
     {
-      period: "1760-1840",
-      title: "Cách Mạng Công Nghiệp 1.0",
-      subtitle: "Máy móc cơ khí",
-      description:
-        "Máy hơi nước, máy dệt cơ khí. Năng suất lao động: Tăng 10-20 lần so với thủ công. Tác động xã hội: Hình thành giai cấp công nhân, đô thị hóa bùng nổ, xã hội chuyển từ nông nghiệp sang công nghiệp.",
+      period: t("timeline.industrial1.period"),
+      title: t("timeline.industrial1.title"),
+      subtitle: t("timeline.industrial1.subtitle"),
+      description: t("timeline.industrial1.description"),
       icon: "⚙️",
       image: "/images2/IndustrialRevolution1.png",
-      productivity: "Tăng 10-20 lần",
-      impact: "Đô thị hóa, giai cấp công nhân",
+      productivity: t("timeline.industrial1.productivity"),
+      impact: t("timeline.industrial1.impact"),
       side: "right",
     },
     {
-      period: "1870-1914",
-      title: "Cách Mạng Công Nghiệp 2.0",
-      subtitle: "Dây chuyền điện khí hóa",
-      description:
-        "Dây chuyền sản xuất hàng loạt, động cơ điện. Năng suất lao động: Tăng gấp đôi so với 1.0 nhờ chuyên môn hóa. Tác động xã hội: Sản xuất hàng loạt, tiêu chuẩn hóa sản phẩm, tăng trưởng kinh tế nhanh chóng.",
+      period: t("timeline.industrial2.period"),
+      title: t("timeline.industrial2.title"),
+      subtitle: t("timeline.industrial2.subtitle"),
+      description: t("timeline.industrial2.description"),
       icon: "⚡",
       image: "/images2/IndustrialRevolution2.png",
-      productivity: "Tăng gấp đôi",
-      impact: "Sản xuất hàng loạt",
+      productivity: t("timeline.industrial2.productivity"),
+      impact: t("timeline.industrial2.impact"),
       side: "left",
     },
     {
-      period: "1969-Nay",
-      title: "Cách Mạng Công Nghiệp 3.0",
-      subtitle: "Máy tính & Tự động hóa",
-      description:
-        "Máy tính, robot công nghiệp, internet. Năng suất lao động: Tăng 50-100 lần nhờ tự động hóa quy trình. Tác động xã hội: Toàn cầu hóa, kinh tế tri thức, giảm việc làm sản xuất.",
+      period: t("timeline.industrial3.period"),
+      title: t("timeline.industrial3.title"),
+      subtitle: t("timeline.industrial3.subtitle"),
+      description: t("timeline.industrial3.description"),
       icon: "💻",
       image: "/images2/IndustrialRevolution3.png",
-      productivity: "Tăng 50-100 lần",
-      impact: "Toàn cầu hóa, kinh tế tri thức",
+      productivity: t("timeline.industrial3.productivity"),
+      impact: t("timeline.industrial3.impact"),
       side: "right",
     },
     {
-      period: "2010-Tương Lai",
-      title: "Cách Mạng Công Nghiệp 4.0",
-      subtitle: "AI, Robot, Big Data",
-      description:
-        "Trí tuệ nhân tạo, IoT, robot thông minh, phân tích dữ liệu lớn. Năng suất lao động: Tăng đột biến, gấp hàng trăm lần trong một số ngành. Tác động xã hội: Nguy cơ thất nghiệp công nghệ cao, tái cấu trúc lao động, xuất hiện nghề nghiệp mới.",
+      period: t("timeline.industrial4.period"),
+      title: t("timeline.industrial4.title"),
+      subtitle: t("timeline.industrial4.subtitle"),
+      description: t("timeline.industrial4.description"),
       icon: "🤖",
       image: "/images2/IndustrialRevolution4.png",
-      productivity: "Tăng đột biến (x100-1000)",
-      impact: "⚠️ Thất nghiệp công nghệ",
+      productivity: t("timeline.industrial4.productivity"),
+      impact: t("timeline.industrial4.impact"),
       side: "left",
     },
   ];
@@ -170,11 +167,10 @@ const TimelineSection = () => {
             className="text-5xl md:text-7xl font-bold mb-4"
             style={{ color: "#993140" }}
           >
-            Sự Phát Triển Lực Lượng Sản Xuất
+            {t("timeline.title")}
           </h2>
           <p className="text-xl md:text-2xl text-stone-700">
-            Từ công cụ thô sơ đến trí tuệ nhân tạo - Hành trình tiến hóa của
-            nhân loại
+            {t("timeline.subtitle")}
           </p>
         </div>
 
@@ -341,15 +337,13 @@ const TimelineSection = () => {
             style={{ borderColor: "#993140" }}
           >
             <p className="text-xl md:text-2xl text-stone-800 mb-4 font-bold">
-              ⚠️ Thách Thức Của Kỷ Nguyên 4.0
+              ⚠️ {t("timeline.cta.challengeTitle")}
             </p>
             <p className="text-lg md:text-xl text-stone-700 mb-2">
-              Năng suất tăng đột biến, nhưng đi kèm là nguy cơ thất nghiệp công
-              nghệ.
+              {t("timeline.cta.challengeDesc")}
             </p>
             <p className="text-base md:text-lg text-stone-600">
-              Triết học 4.0 giúp chúng ta tái định nghĩa vai trò con người
-              trong xã hội mới.
+              {t("timeline.cta.challengeHumanRole")}
             </p>
           </div>
         </div>
