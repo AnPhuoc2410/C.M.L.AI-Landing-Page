@@ -15,7 +15,7 @@ const ActivitiesPage = () => {
       subtitle: "Xung đột Lực lượng Sản xuất AI và Quan hệ Sản xuất",
       description:
         "Nhập vai nhà cố vấn thời gian du hành qua các giai đoạn lịch sử. Điều chỉnh quan hệ sản xuất cho phù hợp với sự xuất hiện của AI để tránh cách mạng xã hội.",
-      image: "/images2/TrietAI1.png",
+      image: "/game/Game_Mauthuan.png",
       type: "Chiến lược",
       features: ["Lựa chọn tương tác", "Nhiều kết cục", "Mentor Mác hướng dẫn"],
       difficulty: "Trung bình",
@@ -27,7 +27,7 @@ const ActivitiesPage = () => {
       subtitle: "Bóc lột Lao động trong Kỷ nguyên AI",
       description:
         "Vào vai nhà tư bản điều hành nhà máy. Cân bằng giữa việc bóc lột công nhân và đầu tư Robot AI để tối đa hóa giá trị thặng dư mà không gây đình công.",
-      image: "/images2/TrietAI3.png",
+      image: "/game/Game_Thohun.png",
       type: "Mô phỏng",
       features: ["Quản lý tài nguyên", "Cân bằng chiến lược", "Hệ thống điểm"],
       difficulty: "Khó",
@@ -39,7 +39,7 @@ const ActivitiesPage = () => {
       subtitle: "Lợi ích Tư bản Công nghệ vs. Lao động Số",
       description:
         "Trải nghiệm cả hai góc nhìn giai cấp: Tư bản công nghệ và Lao động số. Hiểu rõ sự khác biệt về lợi ích kinh tế trong thời đại AI.",
-      image: "/images2/TrietAI4.png",
+      image: "/game/Game_Dautranh.png",
       type: "Nhập vai",
       features: ["Hai chế độ chơi", "Sự kiện ngẫu nhiên", "So sánh kết quả"],
       difficulty: "Khó",
@@ -98,9 +98,9 @@ const ActivitiesPage = () => {
           alt="Activities and Games"
           className="absolute inset-0 w-full h-full object-cover opacity-40"
         />
-        
+
         <div className="absolute inset-0 bg-gradient-to-b from-cream-white/60 via-transparent to-cream-white/60"></div>
-        
+
         <div className="container mx-auto max-w-4xl text-center relative z-10 px-4 pt-24 pb-12">
           <h1 className="text-5xl md:text-7xl font-bold mb-6 text-communist-red uppercase tracking-tight">
             Minigame & Hoạt Động
@@ -115,9 +115,9 @@ const ActivitiesPage = () => {
           </div>
 
           <p className="text-lg mb-6 text-steel-gray max-w-3xl mx-auto leading-relaxed">
-            Trải nghiệm bốn mini-game tương tác được thiết kế dựa trên các chủ đề 
-            lý thuyết chính của Triết học Mác-Lênin trong kỷ nguyên AI. Mỗi trò 
-            chơi kết hợp nhập vai, mô phỏng và câu đố để giúp bạn hiểu sâu hơn về 
+            Trải nghiệm bốn mini-game tương tác được thiết kế dựa trên các chủ đề
+            lý thuyết chính của Triết học Mác-Lênin trong kỷ nguyên AI. Mỗi trò
+            chơi kết hợp nhập vai, mô phỏng và câu đố để giúp bạn hiểu sâu hơn về
             các khái niệm triết học thông qua thực hành.
           </p>
         </div>
@@ -130,7 +130,7 @@ const ActivitiesPage = () => {
           alt="Games Background"
           className="absolute inset-0 w-full h-full object-cover opacity-10"
         />
-        
+
         <div className="container mx-auto max-w-6xl relative z-10">
           <h2 className="text-4xl md:text-5xl font-bold text-center mb-3 text-cream-white uppercase">
             Bốn Mini-Game Tương Tác
@@ -149,23 +149,22 @@ const ActivitiesPage = () => {
                   <img
                     src={game.image}
                     alt={game.name}
-                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700"
+                    className="w-full h-90 object-cover group-hover:scale-110 transition-transform duration-700"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-communist-red/80 via-communist-red/20 to-transparent"></div>
-                  
+
                   {/* Badges on image */}
                   <div className="absolute top-3 left-3 flex gap-2">
-                    <span className={`px-2.5 py-1 rounded-md text-xs font-bold backdrop-blur-sm ${
-                      game.difficulty === "Dễ" 
-                        ? "bg-neural-green/90 text-black" 
-                        : game.difficulty === "Trung bình"
+                    <span className={`px-2.5 py-1 rounded-md text-xs font-bold backdrop-blur-sm ${game.difficulty === "Dễ"
+                      ? "bg-neural-green/90 text-black"
+                      : game.difficulty === "Trung bình"
                         ? "bg-cyber-blue/90 text-black"
                         : "bg-revolutionary-gold/90 text-black"
-                    }`}>
+                      }`}>
                       {game.difficulty}
                     </span>
                   </div>
-                  
+
                   <div className="absolute top-3 right-3">
                     <span className="bg-black/80 backdrop-blur-sm text-revolutionary-gold font-bold text-xs px-2.5 py-1 rounded-md border border-revolutionary-gold/40">
                       {game.type}
@@ -193,7 +192,7 @@ const ActivitiesPage = () => {
                       {game.features.map((feature, idx) => (
                         <span
                           key={idx}
-                          className="bg-neural-green/15 text-neural-green px-2 py-0.5 rounded text-xs border border-neural-green/25 hover:bg-neural-green/25 transition-colors"
+                          className="bg-[#FFD700]/80 text-black px-2 py-0.5 rounded text-xs border border-[#FFD700]/60 hover:bg-[#FFD700]/90 transition-colors"
                         >
                           {feature}
                         </span>
@@ -201,7 +200,7 @@ const ActivitiesPage = () => {
                     </div>
                   </div>
 
-                  <button 
+                  <button
                     onClick={() => setActiveGame(game)}
                     className="w-full bg-cyber-blue/10 border border-cyber-blue/50 text-cyber-blue py-2.5 rounded-lg font-bold text-sm hover:bg-cyber-blue hover:text-black hover:border-cyber-blue transition-all duration-300 hover:shadow-lg hover:shadow-cyber-blue/50"
                   >
@@ -221,12 +220,12 @@ const ActivitiesPage = () => {
           alt="Educational Background"
           className="absolute inset-0 w-full h-full object-cover opacity-20"
         />
-        
+
         <div className="container mx-auto max-w-5xl relative z-10">
           <h2 className="text-3xl font-bold text-center mb-6 text-communist-red uppercase">
             Về Các Mini-Game
           </h2>
-          
+
           <div className="grid md:grid-cols-2 gap-6">
             <div className="bg-cyber-blue rounded-xl p-6 border-4 border-communist-red hover:bg-communist-red hover:text-cream-white transition-all duration-300 group">
               <h3 className="text-xl font-bold text-communist-red group-hover:text-cream-white mb-3 flex items-center gap-2 uppercase">
@@ -281,9 +280,9 @@ const ActivitiesPage = () => {
 
           <div className="mt-6 bg-neural-green rounded-xl p-5 border-4 border-communist-red">
             <p className="text-center text-sm text-steel-gray leading-relaxed">
-              <span className="text-communist-red font-bold">💡</span> Mỗi mini-game 
-              được thiết kế dựa trên nội dung học thuật Triết học Mác-Lênin, 
-              kết hợp bối cảnh AI hiện đại. Vừa giải trí vừa hiểu sâu khái niệm 
+              <span className="text-communist-red font-bold">💡</span> Mỗi mini-game
+              được thiết kế dựa trên nội dung học thuật Triết học Mác-Lênin,
+              kết hợp bối cảnh AI hiện đại. Vừa giải trí vừa hiểu sâu khái niệm
               triết học qua trải nghiệm tương tác.
             </p>
           </div>
@@ -297,13 +296,13 @@ const ActivitiesPage = () => {
           alt="CTA Background"
           className="absolute inset-0 w-full h-full object-cover opacity-10"
         />
-        
+
         <div className="container mx-auto text-center max-w-4xl relative z-10">
           <h2 className="text-3xl md:text-5xl font-bold mb-4 text-cream-white uppercase">
             Sẵn Sàng Khám Phá?
           </h2>
           <p className="text-base md:text-xl mb-6 text-cream-white/90 max-w-2xl mx-auto">
-            Trải nghiệm cách học Triết học Mác-Lênin hoàn toàn mới thông qua 
+            Trải nghiệm cách học Triết học Mác-Lênin hoàn toàn mới thông qua
             các mini-game tương tác với công nghệ AI
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
@@ -328,7 +327,7 @@ const ActivitiesPage = () => {
           </div>
         </div>
       </section>
-      
+
       {/* Game Modals */}
       {activeGame && (
         <GameModal
