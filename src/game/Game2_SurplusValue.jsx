@@ -4,10 +4,10 @@ import Confetti from "react-confetti";
 
 const Game2_SurplusValue = () => {
   const [workers, setWorkers] = useState([
-    { id: 1, health: 100, productivity: 20, position: 0 },
-    { id: 2, health: 100, productivity: 20, position: 1 },
-    { id: 3, health: 100, productivity: 20, position: 2 },
-    { id: 4, health: 100, productivity: 20, position: 3 },
+    { id: 1, health: 100, productivity: PRODUCTIVITY, position: 0 },
+    { id: 2, health: 100, productivity: PRODUCTIVITY, position: 1 },
+    { id: 3, health: 100, productivity: PRODUCTIVITY, position: 2 },
+    { id: 4, health: 100, productivity: PRODUCTIVITY, position: 3 },
   ]);
   const [nextWorkerId, setNextWorkerId] = useState(5);
   const [robots, setRobots] = useState([]);
@@ -35,6 +35,7 @@ const Game2_SurplusValue = () => {
   const TARGET_VALUE = 300;
   const STRIKE_THRESHOLD = 30; // Worker health below this triggers strike
   const CRITICAL_WORKERS_THRESHOLD = 3; // Number of critical health workers to trigger strike
+  const PRODUCTIVITY = 20; // productivity per worker
 
   useEffect(() => {
     if (!isPlaying || gameOver) return;
@@ -178,7 +179,7 @@ const Game2_SurplusValue = () => {
       setMoney(money - WORKER_HIRE_COST);
       setWorkers([
         ...workers,
-        { id: nextWorkerId, health: 100, productivity: 10, position: workers.length },
+        { id: nextWorkerId, health: 100, productivity: PRODUCTIVITY, position: workers.length },
       ]);
       setNextWorkerId(nextWorkerId + 1);
       setMessage("👷 Đã thuê công nhân mới!");
@@ -374,10 +375,10 @@ const Game2_SurplusValue = () => {
 
   const resetGame = () => {
     setWorkers([
-      { id: 1, health: 100, productivity: 10, position: 0 },
-      { id: 2, health: 100, productivity: 10, position: 1 },
-      { id: 3, health: 100, productivity: 10, position: 2 },
-      { id: 4, health: 100, productivity: 10, position: 3 },
+      { id: 1, health: 100, productivity: PRODUCTIVITY, position: 0 },
+      { id: 2, health: 100, productivity: PRODUCTIVITY, position: 1 },
+      { id: 3, health: 100, productivity: PRODUCTIVITY, position: 2 },
+      { id: 4, health: 100, productivity: PRODUCTIVITY, position: 3 },
     ]);
     setNextWorkerId(5);
     setRobots([]);
@@ -520,7 +521,7 @@ const Game2_SurplusValue = () => {
             <div className="bg-steel-gray/20 rounded p-3">
               <div className="text-cream-white/60">Công nhân</div>
               <div className="text-xl font-bold text-neural-green">
-                {workers.filter((w) => w.health > 50).length}/4
+                {workers.filter((w) => w.health > 0).length}
               </div>
             </div>
             <div className="bg-steel-gray/20 rounded p-3">
@@ -740,19 +741,19 @@ const Game2_SurplusValue = () => {
               <ul className="space-y-2 text-sm text-cream-white/90">
                 <li className="flex items-start gap-2">
                   <span className="text-revolutionary-gold">👷</span>
-                  <span><strong>Click công nhân</strong> để bóc lột (+20 GTTD, -15 HP)</span>
+                  <span><strong>Click công nhân</strong> để bóc lột (+20💧 GTTD, -15 HP)</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-neural-green">🤖</span>
-                  <span><strong>Mua Robot AI</strong> ($50, tối đa 6 con) - Tự động tạo +5 GTTD/giây</span>
+                  <span><strong>Mua Robot AI</strong> ($50, tối đa 6 con) - Tự động +5💧/giây</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400">👷</span>
-                  <span><strong>Thuê công nhân</strong> ($40) - Tăng nguồn lao động</span>
+                  <span className="text-yellow-400">➕</span>
+                  <span><strong>Thuê công nhân mới</strong> ($40) - Tăng nguồn lao động</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-400">✕</span>
-                  <span><strong>Sa thải công nhân</strong> (thu về $20) - Giảm chi phí</span>
+                  <span><strong>Sa thải công nhân</strong> (thu về $20) - Phải giữ tối thiểu 1 người</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-revolutionary-gold">💰</span>
@@ -769,23 +770,23 @@ const Game2_SurplusValue = () => {
               <ul className="space-y-2 text-sm text-cream-white/90">
                 <li className="flex items-start gap-2">
                   <span className="text-red-500">💔</span>
-                  <span><strong>HP &lt; 10%:</strong> Công nhân không thể làm việc</span>
+                  <span><strong>HP &lt; 10:</strong> Công nhân kiệt sức, không thể bóc lột</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-red-600">🚨</span>
-                  <span><strong>ĐÌNH CÔNG:</strong> 3+ công nhân HP &lt; 10% → Tất cả ngừng làm!</span>
+                  <span><strong>ĐÌNH CÔNG:</strong> 3+ công nhân HP &lt; 10 → TẤT CẢ ngừng làm!</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-orange-400">💥</span>
-                  <span><strong>Robot hỏng:</strong> Tỷ lệ tăng khi độ bền thấp (8%/3%/1%)</span>
+                  <span><strong>Robot hỏng:</strong> Tỷ lệ tăng dần (độ bền &lt;40: 8%, &lt;75: 3%, &gt;75: 1%)</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-yellow-400">⏰</span>
-                  <span><strong>Sửa robot:</strong> $30, phải sửa trong 5 giây hoặc mất robot!</span>
+                  <span className="text-yellow-400">🔧</span>
+                  <span><strong>Sửa robot:</strong> $30 - Phải sửa trong 5 giây hoặc mất luôn!</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400">💚</span>
-                  <span><strong>Hồi máu:</strong> +2 HP/giây tự động</span>
+                  <span><strong>Hồi phục:</strong> Công nhân tự hồi +2 HP/giây</span>
                 </li>
               </ul>
             </div>
