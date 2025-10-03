@@ -19,12 +19,16 @@ const Game2_SurplusValue = () => {
   const [message, setMessage] = useState("");
   const [showStrike, setShowStrike] = useState(false);
   const [isOnStrike, setIsOnStrike] = useState(false);
+  const [showNameForm, setShowNameForm] = useState(false);
+  const [playerName, setPlayerName] = useState("");
+  const [isSaving, setIsSaving] = useState(false);
+  const [saveMessage, setSaveMessage] = useState("");
 
   const ROBOT_COST = 50;
   const ROBOT_REPAIR_COST = 30;
   const MAX_ROBOTS = 6;
   const WORKER_HIRE_COST = 40;
-  const TARGET_VALUE = 500;
+  const TARGET_VALUE = 300;
   const STRIKE_THRESHOLD = 30; // Worker health below this triggers strike
   const CRITICAL_WORKERS_THRESHOLD = 3; // Number of critical health workers to trigger strike
 
@@ -212,6 +216,78 @@ const Game2_SurplusValue = () => {
   const endGame = () => {
     setIsPlaying(false);
     setGameOver(true);
+    
+    // If player wins, show name form to save result
+    const success = surplusValue >= TARGET_VALUE;
+    if (success) {
+      setShowNameForm(true);
+    }
+  };
+
+  const calculateScore = () => {
+    // Điểm = GTTD + Tiền × 8
+    return surplusValue + money * 8;
+  };
+
+  const saveResultToSheet = async () => {
+    if (!playerName.trim()) {
+      setSaveMessage("❌ Vui lòng nhập tên!");
+      setTimeout(() => setSaveMessage(""), 2000);
+      return;
+    }
+
+    setIsSaving(true);
+    setSaveMessage("💾 Đang lưu kết quả...");
+
+    try {
+      const score = calculateScore();
+      const currentDate = new Date().toLocaleString("vi-VN", {
+        timeZone: "Asia/Ho_Chi_Minh"
+      });
+
+      const data = {
+        name: playerName.trim(),
+        surplusValue: surplusValue,
+        money: money,
+        score: score,
+        date: currentDate
+      };
+
+      const sheetUrl = import.meta.env.VITE_SHEET_URL;
+      
+      console.log("📤 Đang gửi dữ liệu lên Google Sheet...");
+      console.log("🔗 URL:", sheetUrl);
+      console.log("📊 Data:", data);
+
+      const response = await fetch(sheetUrl, {
+        method: "POST",
+        mode: "no-cors", // Important for Google Apps Script
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(data),
+      });
+
+      console.log("✅ Response:", response);
+      console.log("📝 Status:", response.status, response.statusText);
+
+      // With no-cors, we can't read the response, so assume success
+      setSaveMessage("✅ Đã lưu kết quả thành công!");
+      setShowNameForm(false);
+      setTimeout(() => setSaveMessage(""), 3000);
+      
+    } catch (error) {
+      console.error("❌ Lỗi khi lưu:", error);
+      setSaveMessage("❌ Lỗi khi lưu. Vui lòng thử lại!");
+      setTimeout(() => setSaveMessage(""), 3000);
+    } finally {
+      setIsSaving(false);
+    }
+  };
+
+  const skipSave = () => {
+    setShowNameForm(false);
+    setSaveMessage("");
   };
 
   const resetGame = () => {
@@ -229,6 +305,9 @@ const Game2_SurplusValue = () => {
     setIsPlaying(false);
     setGameOver(false);
     setMessage("");
+    setShowNameForm(false);
+    setPlayerName("");
+    setSaveMessage("");
   };
 
   if (gameOver) {
@@ -245,6 +324,79 @@ const Game2_SurplusValue = () => {
         <h2 className="text-4xl font-bold mb-4">
           {success ? "🎉 Thắng!" : "😢 Thua!"}
         </h2>
+
+        {/* Name Form Modal for Winners */}
+        {showNameForm && success && (
+          <motion.div
+            initial={{ scale: 0.8, opacity: 0 }}
+            animate={{ scale: 1, opacity: 1 }}
+            className="bg-black/90 border-2 border-revolutionary-gold rounded-xl p-6 max-w-md mx-auto mb-6"
+          >
+            <h3 className="text-2xl font-bold text-revolutionary-gold mb-4">
+              🏆 Lưu Kết Quả Vào Bảng Xếp Hạng
+            </h3>
+            <div className="bg-cyber-blue/10 border border-cyber-blue/30 rounded-lg p-4 mb-4">
+              <div className="text-left text-sm space-y-2">
+                <p className="text-cream-white/80">
+                  📊 <strong>Điểm của bạn:</strong>{" "}
+                  <span className="text-revolutionary-gold text-xl font-bold">
+                    {calculateScore()}
+                  </span>
+                </p>
+                <p className="text-cream-white/60 text-xs italic">
+                  (Điểm = GTTD {surplusValue} + Tiền ${money} × 8)
+                </p>
+              </div>
+            </div>
+            
+            <input
+              type="text"
+              placeholder="Nhập tên của bạn..."
+              value={playerName}
+              onChange={(e) => setPlayerName(e.target.value)}
+              onKeyPress={(e) => e.key === 'Enter' && saveResultToSheet()}
+              className="w-full bg-steel-gray/30 border border-cyber-blue/50 rounded-lg px-4 py-3 mb-4 text-cream-white placeholder-cream-white/40 focus:outline-none focus:border-cyber-blue"
+              disabled={isSaving}
+              maxLength={50}
+            />
+            
+            {saveMessage && (
+              <motion.p
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                className={`text-sm mb-3 ${
+                  saveMessage.includes('✅') ? 'text-neural-green' : 
+                  saveMessage.includes('❌') ? 'text-red-400' : 
+                  'text-cyber-blue'
+                }`}
+              >
+                {saveMessage}
+              </motion.p>
+            )}
+
+            <div className="flex gap-3">
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={saveResultToSheet}
+                disabled={isSaving}
+                className="flex-1 bg-revolutionary-gold text-black px-6 py-3 rounded-lg font-bold disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                {isSaving ? "Đang lưu..." : "💾 Lưu Kết Quả"}
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={skipSave}
+                disabled={isSaving}
+                className="flex-1 bg-steel-gray/50 text-cream-white px-6 py-3 rounded-lg font-bold disabled:opacity-50"
+              >
+                Bỏ qua
+              </motion.button>
+            </div>
+          </motion.div>
+        )}
+
         <div className="bg-black/60 border border-cyber-blue rounded-xl p-6 max-w-2xl mx-auto mb-6">
           <p className="text-2xl text-cyber-blue mb-4">
             Giá trị thặng dư: {surplusValue}/{TARGET_VALUE}
@@ -365,20 +517,118 @@ const Game2_SurplusValue = () => {
           className="text-center py-12"
         >
           <h3 className="text-3xl font-bold text-cyber-blue mb-4">
-            🏭 Nhà Máy Ma Cà Rồng
+            🧛‍♂️ Thợ Săn Giá Trị Thặng Dư
           </h3>
-          <p className="text-cream-white/80 mb-6 max-w-2xl mx-auto">
-            Bạn là nhà tư bản! Mục tiêu: Thu thập <strong>{TARGET_VALUE} giọt máu giá trị
-            thặng dư</strong> trong 2 phút. Click công nhân để bóc lột, mua robot AI để tự động
-            sản xuất. Nhưng cẩn thận: kiệt sức quá sẽ đình công!
+          <p className="text-cream-white/80 mb-8 max-w-2xl mx-auto text-lg">
+            Bạn là <span className="text-revolutionary-gold font-bold">nhà tư bản ma cà rồng</span> điều hành nhà máy! 
+            <br />
+            <span className="text-neural-green font-bold">Mục tiêu: Thu thập {TARGET_VALUE} giọt máu giá trị thặng dư trong 2 phút</span>
           </p>
+
+          {/* Game Guide */}
+          <div className="grid md:grid-cols-2 gap-6 mb-8 text-left max-w-4xl mx-auto">
+            {/* Cách chơi */}
+            <div className="bg-gradient-to-br from-cyber-blue/20 to-steel-gray/20 border-2 border-cyber-blue/50 rounded-xl p-6">
+              <h4 className="text-cyber-blue font-bold text-lg mb-4 flex items-center gap-2">
+                🎮 Cách Chơi
+              </h4>
+              <ul className="space-y-2 text-sm text-cream-white/90">
+                <li className="flex items-start gap-2">
+                  <span className="text-revolutionary-gold">👷</span>
+                  <span><strong>Click công nhân</strong> để bóc lột (+20 GTTD, -15 HP)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-neural-green">🤖</span>
+                  <span><strong>Mua Robot AI</strong> ($50, tối đa 6 con) - Tự động tạo +5 GTTD/giây</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-yellow-400">👷</span>
+                  <span><strong>Thuê công nhân</strong> ($40) - Tăng nguồn lao động</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-400">✕</span>
+                  <span><strong>Sa thải công nhân</strong> (thu về $20) - Giảm chi phí</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-revolutionary-gold">💰</span>
+                  <span><strong>Bán GTTD</strong> (10💧 = $1) - Chuyển đổi thành tiền</span>
+                </li>
+              </ul>
+            </div>
+
+            {/* Cảnh báo & Cơ chế */}
+            <div className="bg-gradient-to-br from-red-500/20 to-orange-500/20 border-2 border-red-500/50 rounded-xl p-6">
+              <h4 className="text-red-400 font-bold text-lg mb-4 flex items-center gap-2">
+                ⚠️ Cảnh Báo & Cơ Chế
+              </h4>
+              <ul className="space-y-2 text-sm text-cream-white/90">
+                <li className="flex items-start gap-2">
+                  <span className="text-red-500">💔</span>
+                  <span><strong>HP &lt; 10%:</strong> Công nhân không thể làm việc</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-red-600">🚨</span>
+                  <span><strong>ĐÌNH CÔNG:</strong> 3+ công nhân HP &lt; 10% → Tất cả ngừng làm!</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-orange-400">💥</span>
+                  <span><strong>Robot hỏng:</strong> Tỷ lệ tăng khi độ bền thấp (8%/3%/1%)</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-yellow-400">⏰</span>
+                  <span><strong>Sửa robot:</strong> $30, phải sửa trong 5 giây hoặc mất robot!</span>
+                </li>
+                <li className="flex items-start gap-2">
+                  <span className="text-green-400">💚</span>
+                  <span><strong>Hồi máu:</strong> +2 HP/giây tự động</span>
+                </li>
+              </ul>
+            </div>
+          </div>
+
+          {/* Strategy Tips */}
+          <div className="bg-revolutionary-gold/10 border border-revolutionary-gold/30 rounded-xl p-6 max-w-4xl mx-auto mb-8 text-left">
+            <h4 className="text-revolutionary-gold font-bold text-lg mb-3 flex items-center gap-2">
+              💡 Chiến Thuật
+            </h4>
+            <div className="grid md:grid-cols-3 gap-4 text-sm">
+              <div className="space-y-1">
+                <div className="text-cyber-blue font-bold">🎯 Cân Bằng:</div>
+                <p className="text-cream-white/80">Đừng bóc lột quá nhiều công nhân cùng lúc. Giữ ít nhất 2 công nhân khỏe mạnh!</p>
+              </div>
+              <div className="space-y-1">
+                <div className="text-neural-green font-bold">🤖 Robot AI:</div>
+                <p className="text-cream-white/80">Đầu tư robot sớm để thu GTTD tự động. Nhưng cẩn thận robot hỏng!</p>
+              </div>
+              <div className="space-y-1">
+                <div className="text-revolutionary-gold font-bold">💰 Quản Lý:</div>
+                <p className="text-cream-white/80">Bán GTTD để có tiền mua robot và thuê công nhân khi cần.</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Philosophy Note */}
+          <div className="bg-steel-gray/20 border border-steel-gray/50 rounded-xl p-6 max-w-4xl mx-auto mb-8 text-left">
+            <h4 className="text-cream-white font-bold text-lg mb-3 flex items-center gap-2">
+              📚 Triết Học Mác
+            </h4>
+            <p className="text-cream-white/80 text-sm leading-relaxed italic">
+              <span className="text-revolutionary-gold font-bold">"Giá trị thặng dư (GTTD)"</span> là khái niệm cốt lõi của Marx - 
+              phần giá trị công nhân tạo ra nhưng bị chủ nhân chiếm giữ. Marx ví tư bản như 
+              <span className="text-red-400 font-bold"> "ma cà rồng hút máu lao động sống"</span>. 
+              Trong thời đại AI: <span className="text-cyber-blue font-bold">Robot có tạo giá trị mới, 
+              hay chỉ chuyển hóa giá trị từ lao động con người?</span> Game này giúp bạn trải nghiệm 
+              mâu thuẫn giữa tư bản và lao động!
+            </p>
+          </div>
+
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
             onClick={startGame}
-            className="bg-revolutionary-gold text-black px-8 py-3 rounded-lg font-bold"
+            className="bg-gradient-to-r from-revolutionary-gold to-neural-green text-black px-12 py-4 rounded-xl font-bold text-xl shadow-lg"
           >
-            Bắt Đầu Chơi
+            🎮 Bắt Đầu Săn Lùng!
           </motion.button>
         </motion.div>
       ) : (

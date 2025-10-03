@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Google Apps Script</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #1a1a1a;
+            color: #fff;
+        }
+        .container {
+            background: #2a2a2a;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+        }
+        h1 { color: #4CAF50; }
+        input, button {
+            width: 100%;
+            padding: 12px;
+            margin: 10px 0;
+            border-radius: 5px;
+            border: 1px solid #444;
+            font-size: 16px;
+        }
+        input {
+            background: #333;
+            color: #fff;
+        }
+        button {
+            background: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        button:hover {
+            background: #45a049;
+        }
+        button:disabled {
+            background: #666;
+            cursor: not-allowed;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 15px;
+            border-radius: 5px;
+            white-space: pre-wrap;
+            word-break: break-all;
+        }
+        .success {
+            background: #1b5e20;
+            border: 2px solid #4CAF50;
+        }
+        .error {
+            background: #b71c1c;
+            border: 2px solid #f44336;
+        }
+        .info {
+            background: #0d47a1;
+            border: 2px solid #2196F3;
+        }
+        .step {
+            background: #333;
+            padding: 10px;
+            margin: 10px 0;
+            border-left: 4px solid #4CAF50;
+        }
+        code {
+            background: #1a1a1a;
+            padding: 2px 6px;
+            border-radius: 3px;
+            color: #4CAF50;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Google Apps Script</h1>
+        
+        <div class="step">
+            <strong>Bước 1:</strong> Paste URL từ Apps Script deployment:
+        </div>
+        
+        <input 
+            type="text" 
+            id="scriptUrl" 
+            placeholder="https://script.google.com/macros/s/.../exec"
+            value="https://script.google.com/macros/s/AKfycbznAbGryKRcEns9rsCWmdc-e2InfMo1B6ggHuuVkiTSbnnY1Lh-IleHWkXryz2y_wHq/exec"
+        >
+        
+        <div class="step">
+            <strong>Bước 2:</strong> Test GET request (xem Apps Script có hoạt động không):
+        </div>
+        
+        <button onclick="testGet()">📥 Test GET Request</button>
+        
+        <div class="step">
+            <strong>Bước 3:</strong> Test POST request (giống như game gửi):
+        </div>
+        
+        <button onclick="testPost()">📤 Test POST Request</button>
+        
+        <div id="result"></div>
+        
+        <div class="step" style="margin-top: 30px;">
+            <strong>💡 Giải thích kết quả:</strong>
+            <ul style="margin: 10px 0; padding-left: 20px;">
+                <li>✅ <strong>Status 200</strong> + JSON response → Apps Script OK!</li>
+                <li>❌ <strong>Status 401</strong> → Chưa authorize hoặc deploy sai</li>
+                <li>❌ <strong>Status 403</strong> → "Who has access" chưa đúng</li>
+                <li>⚠️ <strong>Status 0</strong> (với no-cors) → Bình thường, request đã gửi</li>
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        const resultDiv = document.getElementById('result');
+        
+        function showResult(title, content, type = 'info') {
+            resultDiv.innerHTML = `
+                <div class="result ${type}">
+                    <strong>${title}</strong><br><br>
+                    ${content}
+                </div>
+            `;
+        }
+        
+        async function testGet() {
+            const url = document.getElementById('scriptUrl').value.trim();
+            
+            if (!url) {
+                showResult('❌ Lỗi', 'Vui lòng nhập URL!', 'error');
+                return;
+            }
+            
+            showResult('⏳ Đang test...', 'Gửi GET request đến Apps Script...', 'info');
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'GET',
+                    mode: 'cors'
+                });
+                
+                console.log('GET Response:', response);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showResult(
+                        '✅ Thành công!',
+                        `Status: ${response.status} ${response.statusText}\n\n` +
+                        `Response:\n${JSON.stringify(data, null, 2)}\n\n` +
+                        `✅ Apps Script đang hoạt động!\n` +
+                        `✅ Có thể dùng URL này trong game!`,
+                        'success'
+                    );
+                } else {
+                    showResult(
+                        '❌ Lỗi ' + response.status,
+                        `Status: ${response.status} ${response.statusText}\n\n` +
+                        `${response.status === 401 ? 
+                            '⚠️ Lỗi 401: Apps Script chưa được authorize!\n' +
+                            'Hướng dẫn fix:\n' +
+                            '1. Vào Apps Script Editor\n' +
+                            '2. Chọn function "doPost" → Run ▶️\n' +
+                            '3. Review Permissions → Allow\n' +
+                            '4. Advanced → Go to project → Allow' :
+                        response.status === 403 ?
+                            '⚠️ Lỗi 403: Kiểm tra deployment settings!\n' +
+                            '"Who has access" phải là "Anyone"' :
+                            'Lỗi không xác định'
+                        }`,
+                        'error'
+                    );
+                }
+            } catch (error) {
+                console.error('GET Error:', error);
+                showResult(
+                    '❌ Network Error',
+                    `Error: ${error.message}\n\n` +
+                    `Có thể URL không đúng hoặc có vấn đề về network.`,
+                    'error'
+                );
+            }
+        }
+        
+        async function testPost() {
+            const url = document.getElementById('scriptUrl').value.trim();
+            
+            if (!url) {
+                showResult('❌ Lỗi', 'Vui lòng nhập URL!', 'error');
+                return;
+            }
+            
+            showResult('⏳ Đang test...', 'Gửi POST request với dữ liệu test...', 'info');
+            
+            const testData = {
+                name: 'Test Player',
+                surplusValue: 520,
+                money: 80,
+                score: 1160,
+                date: new Date().toLocaleString('vi-VN')
+            };
+            
+            try {
+                const response = await fetch(url, {
+                    method: 'POST',
+                    mode: 'cors',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(testData)
+                });
+                
+                console.log('POST Response:', response);
+                console.log('Test Data:', testData);
+                
+                if (response.ok) {
+                    const data = await response.json();
+                    showResult(
+                        '✅ POST Thành công!',
+                        `Status: ${response.status} ${response.statusText}\n\n` +
+                        `Data gửi:\n${JSON.stringify(testData, null, 2)}\n\n` +
+                        `Response:\n${JSON.stringify(data, null, 2)}\n\n` +
+                        `✅ Dữ liệu đã được lưu vào Google Sheet!\n` +
+                        `✅ Kiểm tra Sheet để xác nhận.`,
+                        'success'
+                    );
+                } else {
+                    const errorText = await response.text();
+                    showResult(
+                        '❌ POST Lỗi ' + response.status,
+                        `Status: ${response.status} ${response.statusText}\n\n` +
+                        `Response: ${errorText}\n\n` +
+                        `${response.status === 401 ? 
+                            '⚠️ Lỗi 401: Xem hướng dẫn ở CHECKLIST_401.md' :
+                            '⚠️ Kiểm tra Apps Script logs để xem chi tiết lỗi'
+                        }`,
+                        'error'
+                    );
+                }
+            } catch (error) {
+                console.error('POST Error:', error);
+                showResult(
+                    '❌ Network Error',
+                    `Error: ${error.message}\n\n` +
+                    `Có thể URL không đúng hoặc CORS chưa được cấu hình.`,
+                    'error'
+                );
+            }
+        }
+        
+        // Auto-test GET on load if URL is present
+        window.onload = () => {
+            const url = document.getElementById('scriptUrl').value;
+            if (url) {
+                setTimeout(() => {
+                    showResult(
+                        '👋 Sẵn sàng test!',
+                        'URL đã có sẵn từ .env\n\n' +
+                        'Nhấn "Test GET Request" để kiểm tra Apps Script có hoạt động không.\n\n' +
+                        'Nếu GET OK, nhấn "Test POST Request" để test ghi dữ liệu.',
+                        'info'
+                    );
+                }, 500);
+            }
+        };
+    </script>
+</body>
+</html>
