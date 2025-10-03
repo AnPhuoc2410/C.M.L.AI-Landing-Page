@@ -101,8 +101,9 @@ const Game2_SurplusValue = () => {
     setWorkers((prevWorkers) =>
       prevWorkers.map((worker) => {
         if (worker.id === workerId && worker.health > 10) {
+          const newHealth = Math.max(0, worker.health - 15); // Đảm bảo không âm
           setSurplusValue((prev) => prev + worker.productivity);
-          return { ...worker, health: worker.health - 15 };
+          return { ...worker, health: newHealth };
         }
         return worker;
       })
@@ -419,10 +420,10 @@ const Game2_SurplusValue = () => {
                               ? "bg-revolutionary-gold"
                               : "bg-red-500"
                           }`}
-                          style={{ width: `${worker.health}%` }}
+                          style={{ width: `${Math.max(0, worker.health)}%` }}
                         />
                       </div>
-                      <div className="text-xs font-bold">HP: {worker.health}%</div>
+                      <div className="text-xs font-bold">HP: {Math.max(0, worker.health)}%</div>
                     </motion.button>
                   </div>
                 ))}
