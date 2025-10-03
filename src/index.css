@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Antonio:wght@100..700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&family=Exo+2:wght@100;200;300;400;500;600;700;800;900&family=Be+Vietnam+Pro:wght@100;200;300;400;500;600;700;800;900&display=swap");
+
 @import "tailwindcss";
 
 /*
@@ -22,11 +23,6 @@
  * - Steel Gray: #2F4F4F (industrial/tech background)
  * - Dark Crimson: #660000 (deeper red variant)
  */
-
-@font-face {
-  font-family: "ProximaNova, sans-serif";
-  src: url("/fonts/ProximaNova-Regular.otf");
-}
 
 @theme {
   /* Communist-AI Theme Colors */
@@ -52,8 +48,10 @@
   --color-milk-yellow: #fff8dc;
   --color-red: #993140;
   --color-milk: #fff8dc;
-  --font-sans: "Antonio", sans-serif;
-  --font-paragraph: "ProximaNova, sans-serif";
+  --font-sans: "Exo 2", sans-serif;
+  --font-heading: "Exo 2", sans-serif;
+  --font-paragraph: "Manrope", sans-serif;
+  --font-ui: "Be Vietnam Pro", sans-serif;
 }
 
 html,
@@ -63,7 +61,7 @@ body {
   box-sizing: border-box;
   background-color: #050001;
   color: #fff8dc;
-  font-family: "Antonio", sans-serif;
+  font-family: "Exo 2", sans-serif;
   overflow-x: hidden;
   scroll-behavior: smooth;
   scrollbar-width: none; /* Firefox */
