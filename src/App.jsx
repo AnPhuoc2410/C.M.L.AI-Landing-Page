@@ -5,11 +5,13 @@ import WhyThisProjectPage from "./pages/WhyThisProjectPage";
 import GoalsPage from "./pages/GoalsPage";
 import ActivitiesPage from "./pages/ActivitiesPage";
 import ExperiencePage from "./pages/ExperiencePage";
+import ScrollToTop from "./components/ScrollToTop";
 
 const App = () => {
   return (
     <AudioProvider>
       <Router>
+        <ScrollToTop />
         <main>
           <Routes>
             <Route path="/" element={<HomePage />} />

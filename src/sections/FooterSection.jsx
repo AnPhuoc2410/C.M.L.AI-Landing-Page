@@ -13,9 +13,9 @@ const FooterSection = () => {
         className="w-full object-cover -translate-y-1"
       />
 
-      <div className="2xl:h-[110dvh] relative md:pt-[20vh] pt-[10vh]">
+      <div className="2xl:h-[80dvh] md:h-[90dvh] h-auto relative md:pt-[10vh] pt-[5vh]">
         <div className="overflow-hidden z-10">
-          <h1 className="general-title text-center text-milk py-5">
+          <h1 className="2xl:text-7xl md:text-6xl text-4xl font-bold uppercase text-center text-milk py-3">
             #PHILOSOPHY4.0
           </h1>
         </div>
@@ -47,7 +47,7 @@ const FooterSection = () => {
           </div>
         </div>
 
-        <div className="mt-40 md:px-10 px-5 flex gap-10 md:flex-row flex-col justify-between text-milk font-paragraph md:text-lg font-medium">
+        <div className="2xl:mt-20 md:mt-16 mt-10 md:px-10 px-5 flex gap-10 md:flex-row flex-col justify-between text-milk font-paragraph md:text-base text-sm font-medium">
           <div className="flex items-center md:gap-16 gap-5">
             <div>
               <p>Philosophy 4.0</p>
