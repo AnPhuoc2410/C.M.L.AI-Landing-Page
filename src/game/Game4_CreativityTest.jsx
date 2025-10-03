@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import Confetti from "react-confetti";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 const genAI = new GoogleGenerativeAI(import.meta.env.VITE_API_KEY);
 
@@ -266,15 +267,18 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
       const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash-exp" });
       const result = await model.generateContent(combinedPrompt);
       const text = result.response.text();
-      
+
       // Parse JSON response
-      const cleanedText = text.replace(/```json\n?/g, '').replace(/```\n?/g, '').trim();
+      const cleanedText = text
+        .replace(/```json\n?/g, "")
+        .replace(/```\n?/g, "")
+        .trim();
       const parsed = JSON.parse(cleanedText);
-      
+
       if (!parsed.contents || parsed.contents.length !== questions.length) {
         throw new Error("Invalid response format from AI");
       }
-      
+
       return parsed.contents;
     } catch (error) {
       // Check error type for better error messages
@@ -319,11 +323,12 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
           setGameInitialized(true);
         } catch (err) {
           setLoading(false);
-          
+
           // Determine error message
           let errorMessage = "Không thể khởi tạo trò chơi. ";
           if (err.message && err.message.includes("Failed to fetch")) {
-            errorMessage += "Không thể kết nối với Google AI API. Vui lòng kiểm tra:\n\n" +
+            errorMessage +=
+              "Không thể kết nối với Google AI API. Vui lòng kiểm tra:\n\n" +
               "1. Kết nối internet của bạn\n" +
               "2. Tắt VPN nếu đang bật\n" +
               "3. Kiểm tra Firewall/Antivirus\n" +
@@ -334,7 +339,7 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
           } else {
             errorMessage += err.message || "Lỗi không xác định.";
           }
-          
+
           setError(errorMessage);
         }
       }
@@ -345,12 +350,12 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
 
   const handleAnswer = (clickedRight) => {
     const aiIsOnRight = aiPositions[currentQuestion];
-    
+
     // Question asks: "Which is HUMAN creativity?"
     // User clicks A or B to choose where they think HUMAN content is
     // Human is on the OPPOSITE side of AI
     const humanIsOnRight = !aiIsOnRight;
-    
+
     // User is correct if they clicked the side where HUMAN actually is
     const correct = clickedRight === humanIsOnRight;
 
@@ -482,13 +487,7 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
       {loading ? (
         // Loading screen - centered vertically and horizontally
         <div className="flex flex-col items-center justify-center min-h-[400px] text-center">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ repeat: Infinity, duration: 1, ease: "linear" }}
-            className="text-6xl mb-4"
-          >
-            ⚙️
-          </motion.div>
+          <DotLottieReact src="eve.json" loop autoplay />
           <p className="text-cream-white/80 text-xl font-bold mb-2">
             AI đang tạo nội dung cho tất cả câu hỏi...
           </p>
@@ -497,9 +496,7 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
         // Error screen - show error and retry button
         <div className="text-center py-10">
           <div className="text-6xl mb-4">⚠️</div>
-          <h2 className="text-2xl font-bold text-red-500 mb-4">
-            Lỗi Kết Nối
-          </h2>
+          <h2 className="text-2xl font-bold text-red-500 mb-4">Lỗi Kết Nối</h2>
           <div className="bg-red-900/20 border border-red-500/30 rounded-xl p-6 max-w-2xl mx-auto mb-6">
             <p className="text-cream-white/90 whitespace-pre-line text-left">
               {error}
@@ -537,8 +534,7 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
               • Thử trình duyệt khác (Chrome, Firefox, Edge)
               <br />
               • Kiểm tra Firewall không chặn googleapis.com
-              <br />
-              • Xóa cache trình duyệt và thử lại
+              <br />• Xóa cache trình duyệt và thử lại
             </p>
           </div>
         </div>
@@ -600,90 +596,90 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                 </h3>
 
                 <div className="grid md:grid-cols-2 gap-6 mb-6">
-                {/* Option A (Left) */}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleAnswer(false)} // false = clicked left/A
-                  className="bg-gradient-to-br from-revolutionary-gold/10 to-steel-gray/20 border-2 border-revolutionary-gold/30 hover:border-revolutionary-gold rounded-xl p-6 text-left transition-all group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-bold text-revolutionary-gold">
-                      A
-                    </span>
-                    <span className="text-sm text-cream-white/60 group-hover:text-revolutionary-gold transition-colors">
-                      Con người
-                    </span>
-                  </div>
-                  <div className="bg-black/40 rounded-lg p-4 min-h-[150px] flex items-center">
-                    <pre className="text-cream-white/90 text-sm whitespace-pre-wrap font-mono">
-                      {getContentForSide(false)}
-                    </pre>
-                  </div>
-                </motion.button>
+                  {/* Option A (Left) */}
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleAnswer(false)} // false = clicked left/A
+                    className="bg-gradient-to-br from-revolutionary-gold/10 to-steel-gray/20 border-2 border-revolutionary-gold/30 hover:border-revolutionary-gold rounded-xl p-6 text-left transition-all group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-2xl font-bold text-revolutionary-gold">
+                        A
+                      </span>
+                      <span className="text-sm text-cream-white/60 group-hover:text-revolutionary-gold transition-colors">
+                        Con người
+                      </span>
+                    </div>
+                    <div className="bg-black/40 rounded-lg p-4 min-h-[150px] flex items-center">
+                      <pre className="text-cream-white/90 text-sm whitespace-pre-wrap font-mono">
+                        {getContentForSide(false)}
+                      </pre>
+                    </div>
+                  </motion.button>
 
-                {/* Option B (Right) */}
-                <motion.button
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                  onClick={() => handleAnswer(true)} // true = clicked right/B
-                  className="bg-gradient-to-br from-cyber-blue/10 to-steel-gray/20 border-2 border-cyber-blue/30 hover:border-cyber-blue rounded-xl p-6 text-left transition-all group"
-                >
-                  <div className="flex items-center justify-between mb-4">
-                    <span className="text-2xl font-bold text-cyber-blue">
-                      B
-                    </span>
-                    <span className="text-sm text-cream-white/60 group-hover:text-cyber-blue transition-colors">
-                      Con người
-                    </span>
-                  </div>
-                  <div className="bg-black/40 rounded-lg p-4 min-h-[150px] flex items-center">
-                    <pre className="text-cream-white/90 text-sm whitespace-pre-wrap font-mono">
-                      {getContentForSide(true)}
-                    </pre>
-                  </div>
-                </motion.button>
-              </div>
+                  {/* Option B (Right) */}
+                  <motion.button
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                    onClick={() => handleAnswer(true)} // true = clicked right/B
+                    className="bg-gradient-to-br from-cyber-blue/10 to-steel-gray/20 border-2 border-cyber-blue/30 hover:border-cyber-blue rounded-xl p-6 text-left transition-all group"
+                  >
+                    <div className="flex items-center justify-between mb-4">
+                      <span className="text-2xl font-bold text-cyber-blue">
+                        B
+                      </span>
+                      <span className="text-sm text-cream-white/60 group-hover:text-cyber-blue transition-colors">
+                        Con người
+                      </span>
+                    </div>
+                    <div className="bg-black/40 rounded-lg p-4 min-h-[150px] flex items-center">
+                      <pre className="text-cream-white/90 text-sm whitespace-pre-wrap font-mono">
+                        {getContentForSide(true)}
+                      </pre>
+                    </div>
+                  </motion.button>
+                </div>
 
-              <div className="text-center text-sm text-cream-white/60">
-                Bạn có 15 giây để quyết định...
-              </div>
-            </motion.div>
-          ) : (
-          <motion.div
-            key="result"
-            initial={{ opacity: 0, scale: 0.8 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            className="text-center py-16"
-          >
-            <motion.div
-              animate={{ scale: [1, 1.2, 1] }}
-              transition={{ repeat: 2, duration: 0.5 }}
-              className="text-8xl mb-6"
-            >
-              {showResult.correct ? "✅" : "❌"}
-            </motion.div>
-            <p className="text-2xl text-cream-white/90 mb-4">
-              {showResult.correct ? "Chính xác!" : "Chưa đúng!"}
-            </p>
-            <div className="bg-black/60 border border-cyber-blue/50 rounded-xl p-6 max-w-xl mx-auto">
-              <p className="text-lg text-cream-white/80">
-                <strong className="text-neural-green">
-                  {showResult.humanIsOnRight ? "B" : "A"}
-                </strong>{" "}
-                là Con người
-              </p>
-              <p className="text-lg text-cream-white/80 mt-2">
-                <strong className="text-revolutionary-gold">
-                  {showResult.aiIsOnRight ? "B" : "A"}
-                </strong>{" "}
-                là AI
-              </p>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
+                <div className="text-center text-sm text-cream-white/60">
+                  Bạn có 15 giây để quyết định...
+                </div>
+              </motion.div>
+            ) : (
+              <motion.div
+                key="result"
+                initial={{ opacity: 0, scale: 0.8 }}
+                animate={{ opacity: 1, scale: 1 }}
+                exit={{ opacity: 0 }}
+                className="text-center py-16"
+              >
+                <motion.div
+                  animate={{ scale: [1, 1.2, 1] }}
+                  transition={{ repeat: 2, duration: 0.5 }}
+                  className="text-8xl mb-6"
+                >
+                  {showResult.correct ? "✅" : "❌"}
+                </motion.div>
+                <p className="text-2xl text-cream-white/90 mb-4">
+                  {showResult.correct ? "Chính xác!" : "Chưa đúng!"}
+                </p>
+                <div className="bg-black/60 border border-cyber-blue/50 rounded-xl p-6 max-w-xl mx-auto">
+                  <p className="text-lg text-cream-white/80">
+                    <strong className="text-neural-green">
+                      {showResult.humanIsOnRight ? "B" : "A"}
+                    </strong>{" "}
+                    là Con người
+                  </p>
+                  <p className="text-lg text-cream-white/80 mt-2">
+                    <strong className="text-revolutionary-gold">
+                      {showResult.aiIsOnRight ? "B" : "A"}
+                    </strong>{" "}
+                    là AI
+                  </p>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </>
       )}
     </div>
