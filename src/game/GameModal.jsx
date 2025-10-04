@@ -21,7 +21,7 @@ const GameModal = ({ isOpen, onClose, children, title }) => {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 25, stiffness: 300 }}
-            className="fixed inset-4 md:inset-8 lg:inset-16 z-50 overflow-hidden"
+            className="fixed inset-2 md:inset-4 lg:inset-6 z-50 overflow-hidden"
           >
             <div className="h-full bg-gradient-to-br from-main-bg via-steel-gray/20 to-main-bg rounded-2xl border-2 border-cyber-blue/50 shadow-2xl shadow-cyber-blue/20 flex flex-col">
               {/* Header */}
