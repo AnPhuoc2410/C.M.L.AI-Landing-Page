@@ -7,7 +7,7 @@ const HallSection = () => {
   return (
     <section
       id="hall-section"
-      className="hall-section bg-[#2e2e2e] min-h-screen py-20"
+      className="hall-section bg-black min-h-screen py-20 relative"
     >
       <div className="container mx-auto">
         {/* Header */}
@@ -16,7 +16,7 @@ const HallSection = () => {
             {t("hall.title")}
           </h1>
 
-          <div className="max-w-3xl mx-auto space-y-4 text-gray-300">
+          <div className="max-w-3xl mx-auto space-y-4 text-cream-white">
             <p className="text-lg">
               {t("hall.intro1")} <span className="text-gold">{t("hall.intro2")}</span> {t("hall.intro3")}
             </p>
