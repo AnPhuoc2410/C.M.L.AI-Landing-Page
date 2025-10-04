@@ -1,5 +1,6 @@
 import React, { useState, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { DotLottieReact } from "@lottiefiles/dotlottie-react";
 
 const Game6_TheCave = () => {
   // Main game states
@@ -627,19 +628,12 @@ const Game6_TheCave = () => {
             </h2>
 
             <div className="mb-8">
-              <motion.div
-                className="text-[75px] inline-block"
-                animate={{
-                  scale: [1, 1.1, 1],
-                  rotate: 360
-                }}
-                transition={{
-                  scale: { duration: 6, repeat: Infinity },
-                  rotate: { duration: 25, repeat: Infinity, ease: "linear" }
-                }}
-              >
-                ☀️
-              </motion.div>
+              <DotLottieReact
+                src="/lottie/sunny.json"
+                autoplay
+                loop
+                className="w-32 h-32 mx-auto"
+              />
             </div>
 
             <motion.div
