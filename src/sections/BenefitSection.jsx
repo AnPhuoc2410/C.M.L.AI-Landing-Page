@@ -2,8 +2,10 @@ import { useGSAP } from "@gsap/react";
 import ClipPathTitle from "../components/ClipPathTitle";
 import gsap from "gsap";
 import VideoPinSection from "../components/VideoPinSection";
+import { useTranslation } from "react-i18next";
 
 const BenefitSection = () => {
+  const { t } = useTranslation();
   useGSAP(() => {
     const revealTl = gsap.timeline({
       delay: 1,
@@ -47,34 +49,34 @@ const BenefitSection = () => {
       <div className="container mx-auto pt-20">
         <div className="col-center">
           <p>
-            Khám phá những lợi ích vượt trội: <br />
-            Tại sao nên chọn Philosophy 4.0 cho tương lai tư duy
+            {t("benefit.intro")} <br />
+            {t("benefit.subtitle")}
           </p>
 
           <div className="mt-20 col-center">
             <ClipPathTitle
-              title={"AI Edge Thinking"}
+              title={t("benefit.title1")}
               color={"#faeade"}
               bg={"#c88e64"}
               className={"first-title"}
               borderColor={"#222123"}
             />
             <ClipPathTitle
-              title={"Philosophy 4.0"}
+              title={t("benefit.title2")}
               color={"#222123"}
               bg={"#faeade"}
               className={"second-title"}
               borderColor={"#222123"}
             />
             <ClipPathTitle
-              title={"Tư duy tương lai"}
+              title={t("benefit.title3")}
               color={"#faeade"}
               bg={"#7F3B2D"}
               className={"third-title"}
               borderColor={"#222123"}
             />
             <ClipPathTitle
-              title={"Trí tuệ vô hạn"}
+              title={t("benefit.title4")}
               color={"#2E2D2F"}
               bg={"#FED775"}
               className={"fourth-title"}
@@ -83,7 +85,7 @@ const BenefitSection = () => {
           </div>
 
           <div className="md:mt-0 mt-10">
-            <p>Và nhiều hơn thế nữa...</p>
+            <p>{t("benefit.moreText")}</p>
 
             {/* Philosophy 4.0 Benefits Images */}
             <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-16 max-w-4xl mx-auto">
@@ -94,7 +96,7 @@ const BenefitSection = () => {
                   className="w-20 h-20 rounded-full object-cover border-2 border-revolutionary-gold"
                 />
                 <p className="text-sm mt-2 text-revolutionary-gold">
-                  Đổi mới AI
+                  {t("benefit.benefits.innovation")}
                 </p>
               </div>
               <div className="flex flex-col items-center">
@@ -103,7 +105,7 @@ const BenefitSection = () => {
                   alt="Future Thinking"
                   className="w-20 h-20 rounded-full object-cover border-2 border-cyber-blue"
                 />
-                <p className="text-sm mt-2 text-cyber-blue">Tư duy tương lai</p>
+                <p className="text-sm mt-2 text-cyber-blue">{t("benefit.benefits.futureThinking")}</p>
               </div>
               <div className="flex flex-col items-center">
                 <img
@@ -112,7 +114,7 @@ const BenefitSection = () => {
                   className="w-20 h-20 rounded-full object-cover border-2 border-neural-green"
                 />
                 <p className="text-sm mt-2 text-neural-green">
-                  Triết học thông minh
+                  {t("benefit.benefits.smartPhilosophy")}
                 </p>
               </div>
               <div className="flex flex-col items-center">
@@ -122,7 +124,7 @@ const BenefitSection = () => {
                   className="w-20 h-20 rounded-full object-cover border-2 border-revolutionary-gold"
                 />
                 <p className="text-sm mt-2 text-revolutionary-gold">
-                  Trí tuệ vô hạn
+                  {t("benefit.benefits.infiniteWisdom")}
                 </p>
               </div>
             </div>

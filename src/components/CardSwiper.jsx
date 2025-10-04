@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation, Pagination } from "swiper/modules";
+import { useTranslation } from "react-i18next";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 const CardSwiper = () => {
+  const { t } = useTranslation();
   const [currentSlide, setCurrentSlide] = useState(1);
   const [totalSlides] = useState(10);
 
@@ -13,73 +15,53 @@ const CardSwiper = () => {
   const cards = [
     {
       id: 1,
-      title: "Socrates Philosophiæ",
+      key: "socrates",
       image: "/Philosophy/Socrates.jpg",
-      description:
-        "Socrates (470 TCN – 399 TCN) được xem là một trong những nhà triết học vĩ đại và có ảnh hưởng nhất trong lịch sử triết học phương Tây. Ông không để lại bất kỳ tác phẩm viết nào, nhưng qua những ghi chép từ các học trò như Plato và Xenophon, tư tưởng và phương pháp của Socrates đã trở thành nền tảng cho triết học hiện đại.",
     },
     {
       id: 2,
-      title: "Plato Philosophiæ",
+      key: "plato",
       image: "/Philosophy/Plato.jpg",
-      description:
-        "Plato (427 TCN – 347 TCN) là một trong những nhà triết học vĩ đại nhất của lịch sử phương Tây, nổi bật với những đóng góp sâu sắc vào nền triết học lý tưởng và chính trị học. Ông là học trò của Socrates và thầy của Aristotle, góp phần định hình hệ tư tưởng triết học qua các tác phẩm mang tầm ảnh hưởng suốt hàng ngàn năm.",
     },
     {
       id: 3,
-      title: "Aristotles Philosophiæ",
+      key: "aristotle",
       image: "/Philosophy/Aristotles.jpg",
-      description:
-        "Aristotles (384 TCN – 322 TCN) là một trong những nhà triết học vĩ đại nhất trong lịch sử nhân loại, nổi bật với tư duy toàn diện và hệ thống tri thức sâu rộng. Là học trò xuất sắc của Plato, ông không chỉ kế thừa mà còn phát triển triết học theo hướng thực tế và khoa học, tạo nên nền móng cho nhiều lĩnh vực từ logic, đạo đức, chính trị đến khoa học tự nhiên.",
     },
     {
       id: 4,
-      title: "Khổng Tử",
+      key: "confucius",
       image: "/Philosophy/Khong_Tu.jpg",
-      description:
-        "Khổng Tử (551 TCN – 479 TCN) là một trong những nhà triết học vĩ đại nhất của Trung Quốc, nổi bật với những tư tưởng về đạo đức, chính trị và giáo dục. Ông đã sáng lập ra Nho giáo, một hệ thống tư tưởng có ảnh hưởng sâu rộng đến văn hóa và xã hội Trung Quốc cũng như nhiều nước châu Á khác.",
     },
     {
       id: 5,
-      title: "Immanuel Kant",
+      key: "kant",
       image: "/Philosophy/Immanuel_Kant.jpg",
-      description:
-        "Immanuel Kant (1724 – 1804) là một trong những nhà triết học vĩ đại nhất của thế kỷ 18, nổi bật với những đóng góp sâu sắc vào triết học đạo đức và nhận thức luận. Ông đã phát triển thuyết duy nghiệm và lý thuyết về đạo đức dựa trên nguyên tắc phổ quát, ảnh hưởng lớn đến triết học hiện đại và các lĩnh vực khác như chính trị và nghệ thuật.",
     },
     {
       id: 6,
-      title: "Pythagoras Philosophiæ",
+      key: "pythagoras",
       image: "/Philosophy/Pythagoras.jpg",
-      description:
-        "Pythagoras (c. 570 – c. 495 TCN) là một trong những nhà triết học và nhà toán học vĩ đại nhất của thế giới cổ đại, nổi tiếng với những đóng góp quan trọng cho hình học và triết học. Ông đã sáng lập ra một trường phái triết học dựa trên các nguyên tắc toán học và âm nhạc, ảnh hưởng lớn đến tư tưởng phương Tây.",
     },
     {
       id: 7,
-      title: "René Descartes",
+      key: "descartes",
       image: "/Philosophy/Rene_Descartes.jpg",
-      description:
-        "René Descartes (1596 – 1650) là một trong những nhà triết học và toán học vĩ đại nhất của thời kỳ Khai sáng, nổi tiếng với câu nói 'Tôi tư duy, vậy tôi tồn tại'. Ông đã đặt nền móng cho triết học hiện đại thông qua phương pháp hoài nghi và phân tích.",
     },
     {
       id: 8,
-      title: "Simone de Beauvoir",
+      key: "beauvoir",
       image: "/Philosophy/Simone_de_Beauvoir.png",
-      description:
-        "Simone de Beauvoir (1908 – 1986) là một trong những nhà triết học và nhà văn nổi bật của thế kỷ 20, được biết đến với những đóng góp quan trọng cho triết học hiện sinh và nữ quyền. Tác phẩm nổi tiếng nhất của bà, 'The Second Sex', đã đặt ra những câu hỏi sâu sắc về bản chất của giới tính và vai trò của phụ nữ trong xã hội.",
     },
     {
       id: 9,
-      title: "Friedrich Nietzsche",
+      key: "nietzsche",
       image: "/Philosophy/Friedrich_Nietzsche.jpg",
-      description:
-        "Friedrich Nietzsche (1844 – 1900) là một trong những nhà triết học vĩ đại nhất của thế kỷ 19, nổi bật với những tư tưởng về siêu nhân, ý chí mạnh mẽ và sự phản kháng đối với các giá trị truyền thống. Ông đã đặt ra những câu hỏi sâu sắc về bản chất của con người, đạo đức và sự tồn tại.",
     },
     {
       id: 10,
-      title: "Karl Marx",
+      key: "marx",
       image: "/Philosophy/Karl_Marx.jpg",
-      description:
-        "Karl Marx (1818 – 1883) là một trong những nhà triết học và nhà kinh tế học vĩ đại nhất của thế kỷ 19, nổi tiếng với những phân tích sâu sắc về xã hội, kinh tế và chính trị. Ông đã phát triển lý thuyết về chủ nghĩa duy vật biện chứng và phê phán chủ nghĩa tư bản, ảnh hưởng lớn đến nhiều phong trào chính trị và xã hội trên toàn thế giới.",
     },
   ];
 
@@ -158,10 +140,10 @@ const CardSwiper = () => {
                       {/* Right Side - Title and Description */}
                       <div className="flex-1 flex flex-col justify-center pr-4">
                         <h3 className="text-3xl font-bold text-gray-800 mb-4">
-                          {card.title}
+                          {t(`philosophers.${card.key}.title`)}
                         </h3>
                         <p className="text-lg text-gray-600 leading-relaxed">
-                          {card.description}
+                          {t(`philosophers.${card.key}.description`)}
                         </p>
                       </div>
 

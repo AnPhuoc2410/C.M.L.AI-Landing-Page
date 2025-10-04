@@ -1,8 +1,10 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
 import { SplitText } from "gsap/all";
+import { useTranslation } from "react-i18next";
 
 const MessageSection = () => {
+  const { t } = useTranslation();
   useGSAP(() => {
     const firstMsgSplit = SplitText.create(".first-message", {
       type: "words",
@@ -71,7 +73,7 @@ const MessageSection = () => {
       <div className="container mx-auto flex-center py-28 relative">
         <div className="w-full h-full">
           <div className="msg-wrapper">
-            <h1 className="first-message">Vì sao cần có dự án</h1>
+            <h1 className="first-message">{t("message.firstMessage")}</h1>
 
             <div
               style={{
@@ -80,21 +82,19 @@ const MessageSection = () => {
               className="msg-text-scroll"
             >
               <div className="bg-light-brown md:pb-5 pb-3 px-5">
-                <h2 className="text-red-brown">Philosophy 4.0</h2>
+                <h2 className="text-red-brown">{t("message.highlight")}</h2>
               </div>
             </div>
 
             <h1 className="second-message">
-              trong kỷ nguyên AI và công nghệ số
+              {t("message.secondMessage")}
             </h1>
           </div>
 
           <div className="flex-center md:mt-20 mt-10">
             <div className="max-w-md px-10 flex-center overflow-hidden">
               <p>
-                Triết học cần tiến hóa cùng với công nghệ. Philosophy 4.0 là cầu
-                nối giữa trí tuệ nhân tạo và tư duy triết học, mở ra những khả
-                năng vô hạn cho tương lai.
+                {t("message.content")}
               </p>
             </div>
           </div>

@@ -305,7 +305,7 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
 
   const handleAnswer = (clickedRight, isTimeout = false) => {
     const aiIsOnRight = aiPositions[currentQuestion];
-    
+
     const humanIsOnRight = !aiIsOnRight;
 
     const correct = clickedRight === humanIsOnRight;
@@ -351,43 +351,72 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
     const percentage = Math.round((score / selectedQuestions.length) * 100);
     return (
       <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="py-4"
+        initial={{ opacity: 0, y: 30 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.6 }}
+        className="py-6"
       >
-        {percentage >= 60 && <Confetti recycle={false} numberOfPieces={200} />}
-        
-        {/* Compact Result Layout */}
-        <div className="grid md:grid-cols-2 gap-4 max-w-6xl mx-auto">
+        {percentage >= 60 && (
+          <Confetti
+            recycle={false}
+            numberOfPieces={percentage === 100 ? 400 : 200}
+            gravity={0.2}
+          />
+        )}
+
+        <div className="grid md:grid-cols-2 gap-6 max-w-6xl mx-auto">
           {/* Left Column - Score & Feedback */}
-          <div className="space-y-4">
+          <div className="space-y-5">
             {/* Score Card */}
-            <div className="bg-black/60 border border-cyber-blue rounded-xl p-5 text-center">
+            <motion.div
+              initial={{ scale: 0.9 }}
+              animate={{ scale: 1 }}
+              className="bg-black/60 border border-cyber-blue rounded-2xl p-6 text-center shadow-lg"
+            >
               <h2 className="text-2xl font-bold text-neural-green mb-3">
                 🎨 Kết Quả
               </h2>
-              <p className="text-5xl font-bold text-cyber-blue mb-2">
+              <motion.p
+                key={score}
+                initial={{ scale: 0.5, opacity: 0 }}
+                animate={{ scale: 1, opacity: 1 }}
+                transition={{ type: "spring", stiffness: 200 }}
+                className="text-6xl font-extrabold text-cyber-blue drop-shadow-lg"
+              >
                 {score}/{selectedQuestions.length}
-              </p>
+              </motion.p>
               <p className="text-lg text-cream-white/80">
-                Độ chính xác: <span className="font-bold text-neural-green">{percentage}%</span>
+                Độ chính xác:{" "}
+                <span className="font-bold text-neural-green">{percentage}%</span>
               </p>
-            </div>
+            </motion.div>
 
             {/* Feedback Card */}
-            <div className="bg-revolutionary-gold/10 border border-revolutionary-gold/30 rounded-lg p-4">
-              <p className="text-sm text-cream-white/90 leading-relaxed">
+            <div className="bg-gradient-to-r from-revolutionary-gold/20 to-cyber-blue/10 border border-revolutionary-gold/40 rounded-xl p-5">
+              <p className="text-base text-cream-white/90 leading-relaxed flex items-start gap-2">
                 {percentage >= 80 ? (
                   <>
-                    🌟 <strong>Xuất sắc!</strong> Bạn có con mắt tinh tường phân biệt sáng tạo của con người và AI!
+                    <span className="text-3xl">🌟</span>
+                    <span>
+                      <strong>Xuất sắc!</strong> Bạn có con mắt tinh tường phân
+                      biệt sáng tạo của con người và AI!
+                    </span>
                   </>
                 ) : percentage >= 60 ? (
                   <>
-                    👍 <strong>Tốt!</strong> Bạn nhận biết được một số đặc điểm. AI đang tiến bộ nhưng vẫn còn khoảng cách.
+                    <span className="text-3xl">👍</span>
+                    <span>
+                      <strong>Tốt!</strong> Bạn nhận biết được một số đặc điểm.
+                      AI đang tiến bộ nhưng vẫn còn khoảng cách.
+                    </span>
                   </>
                 ) : (
                   <>
-                    🤔 <strong>AI đã cải trang rất khéo!</strong> Điều này cho thấy AI có thể bắt chước khá tốt bề mặt của sáng tạo.
+                    <span className="text-3xl">🤔</span>
+                    <span>
+                      <strong>AI đã cải trang rất khéo!</strong> Điều này cho thấy
+                      AI có thể bắt chước khá tốt bề mặt của sáng tạo.
+                    </span>
                   </>
                 )}
               </p>
@@ -395,25 +424,26 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
 
             {/* Play Again Button */}
             <motion.button
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
+              whileHover={{ scale: 1.05, rotate: 1 }}
+              whileTap={{ scale: 0.95, rotate: -1 }}
               onClick={() => {
                 setCurrentQuestion(0);
                 setScore(0);
                 setGameComplete(false);
                 setGameInitialized(false);
               }}
-              className="w-full bg-cyber-blue text-black py-3 rounded-lg font-bold text-lg hover:bg-cyber-blue/90 transition-colors"
+              className="w-full bg-gradient-to-r from-cyber-blue to-neural-green text-black py-3 rounded-lg font-bold text-lg shadow-md hover:shadow-cyber-blue/50 transition-all"
             >
               🔄 Chơi Lại
             </motion.button>
           </div>
 
-          {/* Right Column - Reflection & Message */}
-          <div className="space-y-4">
+          {/* Right Column - Reflection & Assistant */}
+          <div className="space-y-5">
             {/* Reflection Question */}
-            <div className="bg-cyber-blue/10 border border-cyber-blue/30 rounded-lg p-4">
-              <h3 className="text-base font-bold text-cyber-blue mb-2 flex items-center gap-2">
+            <div className="relative bg-cyber-blue/10 border border-cyber-blue/30 rounded-lg p-5">
+              <div className="absolute left-0 top-0 h-full w-1 bg-cyber-blue rounded-l-lg animate-pulse" />
+              <h3 className="text-base font-bold text-cyber-blue mb-3 flex items-center gap-2">
                 💭 Câu Hỏi Suy Ngẫm
               </h3>
               <p className="text-sm text-cream-white/80 italic leading-relaxed">
@@ -424,12 +454,19 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
             </div>
 
             {/* Turing Assistant Message */}
-            <div className="bg-neural-green/10 border border-neural-green/30 rounded-lg p-4">
+            <div className="relative bg-neural-green/10 border border-neural-green/30 rounded-lg p-5">
+              <div className="absolute left-0 top-0 h-full w-1 bg-neural-green rounded-l-lg animate-pulse" />
               <p className="text-sm text-cream-white/90 leading-relaxed">
-                <span className="text-neural-green font-bold">🧙‍♂️ Trợ lý Turing:</span>
-                {" "}"Con người sáng tạo không ngừng – và nay có AI đồng hành. Hãy nhớ lời Marx:{" "}
-                <em className="text-revolutionary-gold">sáng tạo là biểu hiện cao quý của bản chất con người có ý thức.</em>
-                {" "}Dù công nghệ tiến đến đâu, ý nghĩa của sáng tạo vẫn nằm trong tay chúng ta."
+                <span className="text-neural-green font-bold">
+                  🧙‍♂️ Trợ lý Turing:
+                </span>{" "}
+                "Con người sáng tạo không ngừng – và nay có AI đồng hành. Hãy nhớ
+                lời Marx:{" "}
+                <em className="text-revolutionary-gold">
+                  sáng tạo là biểu hiện cao quý của bản chất con người có ý thức.
+                </em>{" "}
+                Dù công nghệ tiến đến đâu, ý nghĩa của sáng tạo vẫn nằm trong tay
+                chúng ta."
               </p>
             </div>
           </div>
@@ -437,6 +474,7 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
       </motion.div>
     );
   }
+
 
   const question = selectedQuestions[currentQuestion];
   const aiIsOnRight = aiPositions[currentQuestion];
@@ -521,10 +559,10 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                   Điểm: {score}
                 </span>
               </div>
-              
+
               <motion.div
                 className="flex items-center gap-2"
-                animate={{ 
+                animate={{
                   scale: timeLeft <= 5 ? [1, 1.05, 1] : 1,
                 }}
                 transition={{ duration: 0.5, repeat: timeLeft <= 5 ? Infinity : 0 }}
@@ -549,41 +587,39 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                       stroke="currentColor"
                       strokeWidth="2.5"
                       strokeDasharray="100"
-                      animate={{ 
+                      animate={{
                         strokeDashoffset: 100 - (timeLeft / 15) * 100,
                       }}
                       className={
-                        timeLeft <= 5 
-                          ? "text-red-500" 
-                          : timeLeft <= 10 
-                          ? "text-yellow-500" 
-                          : "text-cyber-blue"
+                        timeLeft <= 5
+                          ? "text-red-500"
+                          : timeLeft <= 10
+                            ? "text-yellow-500"
+                            : "text-cyber-blue"
                       }
                       strokeLinecap="round"
                     />
                   </svg>
                   <div className="absolute inset-0 flex items-center justify-center">
-                    <span className={`text-xs font-bold ${
-                      timeLeft <= 5 
-                        ? "text-red-500" 
-                        : timeLeft <= 10 
-                        ? "text-yellow-500" 
-                        : "text-cyber-blue"
-                    }`}>
+                    <span className={`text-xs font-bold ${timeLeft <= 5
+                        ? "text-red-500"
+                        : timeLeft <= 10
+                          ? "text-yellow-500"
+                          : "text-cyber-blue"
+                      }`}>
                       {timeLeft}s
                     </span>
                   </div>
                 </div>
               </motion.div>
             </div>
-            
+
             <div className="w-full bg-steel-gray/30 rounded-full h-1.5">
               <motion.div
                 initial={{ width: 0 }}
                 animate={{
-                  width: `${
-                    ((currentQuestion + 1) / selectedQuestions.length) * 100
-                  }%`,
+                  width: `${((currentQuestion + 1) / selectedQuestions.length) * 100
+                    }%`,
                 }}
                 className="bg-gradient-to-r from-cyber-blue to-neural-green h-1.5 rounded-full"
               />
@@ -673,14 +709,14 @@ Nhớ: Chỉ trả về JSON, không thêm giải thích gì khác.`;
                   />
                 </div>
                 <p className="text-2xl text-cream-white/90 mb-4">
-                  {showResult.isTimeout 
-                    ? "Hết giờ rồi!" 
-                    : showResult.correct 
-                    ? "Chính xác!" 
-                    : "Chưa đúng!"}
+                  {showResult.isTimeout
+                    ? "Hết giờ rồi!"
+                    : showResult.correct
+                      ? "Chính xác!"
+                      : "Chưa đúng!"}
                 </p>
                 {showResult.isTimeut && (
-                  <motion.p 
+                  <motion.p
                     initial={{ opacity: 0, y: 10 }}
                     animate={{ opacity: 1, y: 0 }}
                     className="text-base text-yellow-400/90 mb-4 font-medium"

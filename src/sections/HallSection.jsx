@@ -1,6 +1,9 @@
 import CardSwiper from "../components/CardSwiper";
+import { useTranslation } from "react-i18next";
 
 const HallSection = () => {
+  const { t } = useTranslation();
+  
   return (
     <section
       id="hall-section"
@@ -10,20 +13,22 @@ const HallSection = () => {
         {/* Header */}
         <div className="text-center mb-12 px-4">
           <h1 className="text-5xl md:text-7xl font-bold text-white mb-6">
-            Minigame & Hoạt Động
+            {t("hall.title")}
           </h1>
 
           <div className="max-w-3xl mx-auto space-y-4 text-gray-300">
             <p className="text-lg">
-              Khám phá các minigame tương tác và hoạt động thú vị được thiết kế
-              để phát triển tư duy triết học 4.0.
+              {t("hall.intro1")} <span className="text-gold">{t("hall.intro2")}</span> {t("hall.intro3")}
             </p>
 
             <p className="text-base">
-              Từ những trò chơi logic AI đến các bài tập tư duy phản biện, trải
-              nghiệm học tập đa tương tác giúp bạn phát triển khả năng tư duy
-              triết học trong kỷ nguyên số. Mỗi hoạt động được thiết kế để kết
-              hợp giải trí với học tập sâu sắc.
+              {t("hall.description1")} <span className="text-gold">{t("hall.plato")}</span>,{" "}
+              <span className="text-gold">{t("hall.aristotle")}</span>,{" "}
+              <span className="text-gold">{t("hall.descartes")}</span> {t("hall.description2")}{" "}
+              <span className="text-gold">{t("hall.nietzsche")}</span> {t("hall.description3")}{" "}
+              <span className="text-gold">{t("hall.marx")}</span> {t("hall.description4")}{" "}
+              <br />
+              {t("hall.swipeInstruction")}
             </p>
           </div>
         </div>
