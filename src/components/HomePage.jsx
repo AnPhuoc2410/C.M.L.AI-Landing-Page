@@ -13,6 +13,7 @@ import { ScrollSmoother, ScrollTrigger } from "gsap/all";
 import gsap from "gsap";
 import { useAudio } from "../contexts/AudioContext";
 import { useEffect } from "react";
+import TeamSection from "../sections/TeamSection";
 
 gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
@@ -51,7 +52,8 @@ const HomePage = () => {
             <BenefitSection />
             <TestimonialSection />
           </div>
-
+          
+          <TeamSection />
           <FooterSection />
         </div>
       </div>
