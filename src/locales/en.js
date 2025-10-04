@@ -367,6 +367,7 @@ const en = {
   footer: {
     hashtag: "#PHILOSOPHY4.0",
     contact: "Contact",
+    privacy: "Privacy",
     followUs: "Follow Us",
     copyright: "Copyright © 2025 Philosophy 4.0 - All Rights Reserved",
     philosophy: "Philosophy 4.0",
