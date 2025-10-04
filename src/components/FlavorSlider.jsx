@@ -3,8 +3,10 @@ import { flavorlists } from "../constants";
 import gsap from "gsap";
 import { useRef } from "react";
 import { useMediaQuery } from "react-responsive";
+import { useTranslation } from "react-i18next";
 
 const FlavorSlider = () => {
+  const { t } = useTranslation();
   const sliderRef = useRef();
 
   const isTablet = useMediaQuery({
@@ -117,15 +119,10 @@ const FlavorSlider = () => {
             {/* Content */}
             <div className="relative z-10 p-8 h-full flex flex-col justify-end">
               <h1 className="text-white text-2xl font-bold mb-4">
-                {flavor.name}
+                {t(`flavor.flavors.${flavor.key}`)}
               </h1>
               <p className="text-gray-200 text-sm">
-                {index === 0 && "Khởi nguồn của triết học trong kỷ nguyên số"}
-                {index === 1 && "Ý thức nhân tạo và tự nhận thức"}
-                {index === 2 && "Trí tuệ số hoá cho tương lai"}
-                {index === 3 && "Triết học thông qua mạng neural"}
-                {index === 4 && "Tính toán biên cho tư duy nhanh"}
-                {index === 5 && "Tư duy tiên phong cho thế hệ mới"}
+                {t(`flavor.descriptions.desc${index}`)}
               </p>
             </div>
           </div>
