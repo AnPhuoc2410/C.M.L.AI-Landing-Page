@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useTranslation } from "react-i18next";
+import NavBar from "../components/Navbar";
 
 const ExperiencePage = () => {
   const { t } = useTranslation();
@@ -78,37 +79,10 @@ const ExperiencePage = () => {
   return (
     <div className="min-h-screen bg-main-bg text-cream-white">
       {/* Navigation */}
-      <nav className="fixed top-0 left-0 right-0 z-50 bg-black/80 backdrop-blur-lg border-b border-revolutionary-gold/30">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
-          <Link to="/" className="text-revolutionary-gold font-bold text-xl hover:text-cyber-blue transition-colors">
-            ← {t("experience.backHome")}
-          </Link>
-
-          <div className="flex gap-4">
-            <Link
-              to="/why-project"
-              className="text-cyber-blue hover:text-revolutionary-gold transition-colors font-semibold"
-            >
-              {t("nav.whyProject")}
-            </Link>
-            <Link
-              to="/goals"
-              className="text-cyber-blue hover:text-revolutionary-gold transition-colors font-semibold"
-            >
-              {t("nav.goals")}
-            </Link>
-            <Link
-              to="/activities"
-              className="text-cyber-blue hover:text-revolutionary-gold transition-colors font-semibold"
-            >
-              {t("nav.activities")}
-            </Link>
-          </div>
-        </div>
-      </nav>
+      <NavBar />
 
       {/* Hero Section */}
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream-white">
+      <section className="relative min-h-screen flex items-center justify-center overflow-hidden bg-cream-white pt-16">
         <img
           src="/images2/Triet6.png"
           alt="Experience and Expectations"

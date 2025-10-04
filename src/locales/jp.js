@@ -366,6 +366,7 @@ const jp = {
   footer: {
     hashtag: "#PHILOSOPHY4.0",
     contact: "お問い合わせ",
+    privacy: "プライバシー",
     followUs: "フォローする",
     copyright: "Copyright © 2025 Philosophy 4.0 - All Rights Reserved",
     philosophy: "哲学 4.0",

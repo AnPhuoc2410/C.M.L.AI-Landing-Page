@@ -371,6 +371,7 @@ const vi = {
   footer: {
     hashtag: "#PHILOSOPHY4.0",
     contact: "Liên hệ",
+    privacy: "Chính sách bảo mật",
     followUs: "Theo dõi chúng tôi",
     copyright: "Copyright © 2025 Philosophy 4.0 - All Rights Reserved",
     philosophy: "Philosophy 4.0",
