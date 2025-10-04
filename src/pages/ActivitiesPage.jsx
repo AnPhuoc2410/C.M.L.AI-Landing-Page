@@ -16,17 +16,18 @@ const ActivitiesPage = () => {
   
   const minigames = [
     {
-      name: "Trí Nhớ Biện Chứng",
-      subtitle: "Ghép triết gia với tư tưởng bất hủ",
-      description:
-        "Một mini game lật thẻ nơi bạn thử thách trí nhớ bằng cách ghép hình ảnh các triết gia với tên của họ. Càng nhớ đúng nhiều cặp, bạn càng hiểu rõ hơn về họ.",
+      id: 1,
+      name: t("activities.game5.name"),
+      subtitle: t("activities.game5.subtitle"),
+      description: t("activities.game5.description"),
       image: "/game/Game_MemoryMatch.png",
-      type: "Trí nhớ",
+      type: t("activities.game5.type"),
       features: [
-        "Ghép ảnh - tên triết gia",
-        "Đếm điểm và thời gian",
+        t("activities.game5.features.flip"),
+        t("activities.game5.features.match"),
+        t("activities.game5.features.timer"),
       ],
-      difficulty: "Trung bình",
+      difficulty: t("activities.game5.difficulty"),
       component: Game5_MemoryMatch,
     },
     {
@@ -46,14 +47,17 @@ const ActivitiesPage = () => {
     },
     {
       id: 3,
-      name: "The Cave - Thuyết Ẩn Dụ Hang Động",
-      subtitle: "Hành trình từ Bóng tối đến Ánh sáng",
-      description:
-        "Nhập vai một tù nhân bị giam trong hang động của Plato. Khởi đầu bạn chỉ thấy những chiếc bóng, nhưng qua từng bước bạn sẽ khám phá ngọn lửa, thoát khỏi xiềng xích, và cuối cùng bước ra ánh sáng chân lý. Một trải nghiệm triết học tương tác, nơi bạn trực tiếp cảm nhận hành trình nhận thức từ ảo tưởng đến sự thật.",
+      name: t("activities.game6.name"),
+      subtitle: t("activities.game6.subtitle"),
+      description: t("activities.game6.description"),
       image: "/game/Game_TheCave.png",
-      type: "Nhập vai",
-      features: ["Hai chế độ chơi", "Sự kiện ngẫu nhiên", "So sánh kết quả"],
-      difficulty: "Dễ",
+      type: t("activities.game6.type"),
+      features: [
+        t("activities.game6.features.mode"),
+        t("activities.game6.features.event"),
+        t("activities.game6.features.compare")
+      ],
+      difficulty: t("activities.game6.difficulty"),
       component: Game6_TheCave,
     },
     {

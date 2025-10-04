@@ -232,6 +232,30 @@ const vi = {
         turing: "Trợ lý Turing"
       }
     },
+    game5:{
+      name: "Trí Nhớ Biện Chứng",
+      subtitle: "Ghép triết gia với tư tưởng bất hủ",
+      description:"Một mini game lật thẻ nơi bạn thử thách trí nhớ bằng cách ghép hình ảnh các triết gia với tên của họ. Càng nhớ đúng nhiều cặp, bạn càng hiểu rõ hơn về họ.",
+      type: "Trí nhớ",
+      difficulty: "Trung Bình",
+      features: {
+        flip: "Lật thẻ",
+        match: "Ghép cặp",
+        timer: "Đếm thời gian"
+      }
+    },
+    game6:{
+      name:"The Cave - Thuyết Ẩn Dụ Hang Động",
+      subtitle: "Hành trình từ Bóng tối đến Ánh sáng",
+      description: "Nhập vai một tù nhân bị giam trong hang động của Plato. Khởi đầu bạn chỉ thấy những chiếc bóng, nhưng qua từng bước bạn sẽ khám phá ngọn lửa, thoát khỏi xiềng xích, và cuối cùng bước ra ánh sáng chân lý. Một trải nghiệm triết học tương tác, nơi bạn trực tiếp cảm nhận hành trình nhận thức từ ảo tưởng đến sự thật.",
+      type: "Nhập vai",
+      difficulty: "Dễ",
+      features: {
+        mode: "Hai chế độ chơi",
+        event: "Sự kiện ngẫu nhiên",
+        compare: "So sánh kết quả"
+      }
+    },
     additionalSection: {
       title: "Hoạt Động Cộng Đồng",
       subtitle: "Kết nối và chia sẻ cùng cộng đồng",

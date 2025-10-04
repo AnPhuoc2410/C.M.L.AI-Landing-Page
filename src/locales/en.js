@@ -230,6 +230,30 @@ const en = {
         turing: "Turing Assistant"
       }
     },
+    game5:{
+      name: "Dialectical Memory",
+      subtitle: "Match philosophers with their timeless ideas",
+      description:"A card-flipping mini-game where you challenge your memory by matching images of philosophers with their names. The more pairs you remember correctly, the better you understand them.",
+      type: "Memory",
+      difficulty: "Medium",
+      features: {
+        flip: "Flip cards",
+        match: "Match pairs",
+        timer: "Timer"
+      }
+    },
+    game6:{
+      name:"The Cave - Allegory of Enlightenment",
+      subtitle: "Journey from Darkness to Light",
+      description: "Role-play as a prisoner trapped in Plato's cave. At first, you only see shadows, but with each step, you will discover the fire, break free from chains, and finally step into the light of truth. An interactive philosophical experience where you directly feel the journey of consciousness from illusion to reality.",
+      type: "Role-playing",
+      difficulty: "Easy",
+      features: {
+        mode: "Two play modes",
+        event: "Random events",
+        compare: "Result comparison"
+      }
+    },
     additionalSection: {
       title: "Community Activities",
       subtitle: "Connect and share with the community",
