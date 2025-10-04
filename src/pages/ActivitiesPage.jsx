@@ -7,6 +7,8 @@ import Game1_Contradiction from "../game/Game1_Contradiction";
 import Game2_SurplusValue from "../game/Game2_SurplusValue";
 import Game3_ClassStruggle from "../game/Game3_ClassStruggle";
 import Game4_CreativityTest from "../game/Game4_CreativityTest";
+import Game5_MemoryMatch from "../game/Game5_MemoryMatch";
+import Game6_TheCave from "../game/Game6_TheCave";
 
 const ActivitiesPage = () => {
   const { t } = useTranslation();
@@ -15,18 +17,18 @@ const ActivitiesPage = () => {
   const minigames = [
     {
       id: 1,
-      name: t("activities.game1.name"),
-      subtitle: t("activities.game1.subtitle"),
-      description: t("activities.game1.description"),
-      image: "/game/Game_Mauthuan.png",
-      type: t("activities.game1.type"),
+      name: t("activities.game5.name"),
+      subtitle: t("activities.game5.subtitle"),
+      description: t("activities.game5.description"),
+      image: "/game/Game_MemoryMatch.png",
+      type: t("activities.game5.type"),
       features: [
-        t("activities.game1.features.interactive"),
-        t("activities.game1.features.multiple"),
-        t("activities.game1.features.mentor")
+        t("activities.game5.features.flip"),
+        t("activities.game5.features.match"),
+        t("activities.game5.features.timer"),
       ],
-      difficulty: t("activities.game1.difficulty"),
-      component: Game1_Contradiction,
+      difficulty: t("activities.game5.difficulty"),
+      component: Game5_MemoryMatch,
     },
     {
       id: 2,
@@ -45,18 +47,18 @@ const ActivitiesPage = () => {
     },
     {
       id: 3,
-      name: t("activities.game3.name"),
-      subtitle: t("activities.game3.subtitle"),
-      description: t("activities.game3.description"),
-      image: "/game/Game_Dautranh.png",
-      type: t("activities.game3.type"),
+      name: t("activities.game6.name"),
+      subtitle: t("activities.game6.subtitle"),
+      description: t("activities.game6.description"),
+      image: "/game/Game_TheCave.png",
+      type: t("activities.game6.type"),
       features: [
-        t("activities.game3.features.dual"),
-        t("activities.game3.features.random"),
-        t("activities.game3.features.compare")
+        t("activities.game6.features.mode"),
+        t("activities.game6.features.event"),
+        t("activities.game6.features.compare")
       ],
-      difficulty: t("activities.game3.difficulty"),
-      component: Game3_ClassStruggle,
+      difficulty: t("activities.game6.difficulty"),
+      component: Game6_TheCave,
     },
     {
       id: 4,
@@ -141,12 +143,15 @@ const ActivitiesPage = () => {
 
                   {/* Badges on image */}
                   <div className="absolute top-3 left-3 flex gap-2">
-                    <span className={`px-2.5 py-1 rounded-md text-xs font-bold backdrop-blur-sm ${game.difficulty === "Dễ"
-                      ? "bg-neural-green/90 text-black"
-                      : game.difficulty === "Trung bình"
-                        ? "bg-cyber-blue/90 text-black"
-                        : "bg-revolutionary-gold/90 text-black"
-                      }`}>
+                    <span
+                      className={`px-2.5 py-1 rounded-md text-xs font-bold backdrop-blur-sm ${
+                        game.difficulty === "Dễ"
+                          ? "bg-neural-green/90 text-black"
+                          : game.difficulty === "Trung bình"
+                          ? "bg-cyber-blue/90 text-black"
+                          : "bg-revolutionary-gold/90 text-black"
+                      }`}
+                    >
                       {game.difficulty}
                     </span>
                   </div>
@@ -220,19 +225,27 @@ const ActivitiesPage = () => {
               </h3>
               <ul className="space-y-2 text-steel-gray group-hover:text-cream-white text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">✓</span>
+                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">
+                    ✓
+                  </span>
                   <span>{t("activities.aboutGames.learningMethod.point1")}</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">✓</span>
+                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">
+                    ✓
+                  </span>
                   <span>{t("activities.aboutGames.learningMethod.point2")}</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">✓</span>
+                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">
+                    ✓
+                  </span>
                   <span>{t("activities.aboutGames.learningMethod.point3")}</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">✓</span>
+                  <span className="text-communist-red group-hover:text-revolutionary-gold mt-0.5">
+                    ✓
+                  </span>
                   <span>{t("activities.aboutGames.learningMethod.point4")}</span>
                 </li>
               </ul>
@@ -245,19 +258,27 @@ const ActivitiesPage = () => {
               </h3>
               <ul className="space-y-2 text-steel-gray group-hover:text-cream-white text-sm">
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">•</span>
+                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">
+                    •
+                  </span>
                   <span>{t("activities.aboutGames.knowledgeGained.point1")}</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">•</span>
+                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">
+                    •
+                  </span>
                   <span>{t("activities.aboutGames.knowledgeGained.point2")}</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">•</span>
+                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">
+                    •
+                  </span>
                   <span>{t("activities.aboutGames.knowledgeGained.point3")}</span>
                 </li>
                 <li className="flex items-start gap-2">
-                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">•</span>
+                  <span className="text-communist-red group-hover:text-cyber-blue mt-0.5">
+                    •
+                  </span>
                   <span>{t("activities.aboutGames.knowledgeGained.point4")}</span>
                 </li>
               </ul>

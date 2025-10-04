@@ -78,7 +78,7 @@ const NutritionSection = () => {
         <div className="relative inline-block md:translate-y-20">
           <div className="general-title relative flex flex-col justify-center items-center gap-24">
             <div className="overflow-hidden place-self-start">
-              <h1 className="nutrition-title">It still does</h1>
+              <h1 className="nutrition-title">Triết học 4.0</h1>
             </div>
             <div
               style={{
@@ -87,7 +87,7 @@ const NutritionSection = () => {
               className="nutrition-text-scroll place-self-start"
             >
               <div className="bg-yellow-brown pb-5 md:pt-0 pt-3 md:px-5 px-3">
-                <h2 className="text-milk-yellow">Collective Good</h2>
+                <h2 className="text-milk-yellow">Tư Duy Tương Lai</h2>
               </div>
             </div>
           </div>
@@ -96,8 +96,8 @@ const NutritionSection = () => {
         <div className="flex md:justify-center items-center translate-y-5">
           <div className="md:max-w-xs max-w-md">
             <p className="text-lg md:text-right text-balance font-paragraph">
-              Revolutionary AI contains a wide array of principles, including equality,
-              solidarity, and collective intelligence, and this is bias-free
+              Triết học 4.0 kết hợp trí tuệ nhân tạo với tư duy triết học cổ điển, 
+              mang đến những nguyên tắc về bình đẳng, đoàn kết và trí tuệ tập thể trong kỷ nguyên số
             </p>
           </div>
         </div>
