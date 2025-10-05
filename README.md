@@ -67,3 +67,17 @@ npm run build
 ```
 
 Replace assets in `public/images` and `public/videos` as needed.
+
+## 👥 Contributors
+
+Thanks to all the amazing people who have contributed to this project! ✨
+
+<div align="center">
+
+<a href="https://github.com/AnPhuoc2410/C.M.L.AI-Landing-Page/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=AnPhuoc2410/C.M.L.AI-Landing-Page" />
+</a>
+
+</div>
+
+---
