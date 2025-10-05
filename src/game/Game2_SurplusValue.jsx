@@ -5,7 +5,7 @@ import Confetti from "react-confetti";
 const Game2_SurplusValue = () => {
 
   const ROBOT_COST = 50;
-  const ROBOT_REPAIR_COST = 30;
+  const ROBOT_REPAIR_COST = 15;
   const MAX_ROBOTS = 6;
   const WORKER_HIRE_COST = 40;
   const TARGET_VALUE = 300;
@@ -147,7 +147,7 @@ const Game2_SurplusValue = () => {
       setMoney(money - ROBOT_COST);
       setRobots([
         ...robots,
-        { id: Date.now(), condition: 100, productivity: 5, isBroken: false, brokenTime: null },
+        { id: Date.now(), condition: 100, productivity: 50, isBroken: false, brokenTime: null },
       ]);
       setMessage("🤖 Đã mua Robot AI! Tự động sản xuất giá trị thặng dư.");
       setTimeout(() => setMessage(""), 2000);
@@ -746,7 +746,7 @@ const Game2_SurplusValue = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-neural-green">🤖</span>
-                  <span><strong>Mua Robot AI</strong> ($50, tối đa 6 con) - Tự động +5💧/giây</span>
+                  <span><strong>Mua Robot AI</strong> ($50, tối đa 6 con) - Tự động +50💧/giây</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-yellow-400">➕</span>
@@ -783,7 +783,7 @@ const Game2_SurplusValue = () => {
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-yellow-400">🔧</span>
-                  <span><strong>Sửa robot:</strong> $30 - Phải sửa trong 5 giây hoặc mất luôn!</span>
+                  <span><strong>Sửa robot:</strong> $15 - Phải sửa trong 5 giây hoặc mất luôn!</span>
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="text-green-400">💚</span>
