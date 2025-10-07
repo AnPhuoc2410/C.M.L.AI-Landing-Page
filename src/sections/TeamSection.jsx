@@ -114,7 +114,7 @@ const TeamSection = () => {
   const teamMembers = [
     {
       id: 1,
-      name: "Hoàng Quốc Em",
+      name: "Hoàng Quốc An",
       role: "SE181520",
       imageUrl: "/member/hqan.jpg",
       github: "https://github.com/QuocAn108",
