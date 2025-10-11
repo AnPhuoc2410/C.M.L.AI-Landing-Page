@@ -105,6 +105,20 @@ const Game5_MemoryMatch = () => {
     hard: { pairs: 10, gridCols: 5, timeBonus: 100 }
   };
 
+  // Màu viền cho từng cặp thẻ khớp
+  const pairColors = [
+    'ring-red-400 bg-red-50',
+    'ring-blue-400 bg-blue-50', 
+    'ring-green-400 bg-green-50',
+    'ring-yellow-400 bg-yellow-50',
+    'ring-purple-400 bg-purple-50',
+    'ring-pink-400 bg-pink-50',
+    'ring-indigo-400 bg-indigo-50',
+    'ring-orange-400 bg-orange-50',
+    'ring-teal-400 bg-teal-50',
+    'ring-cyan-400 bg-cyan-50'
+  ];
+
   // Tạo và xáo trộn thẻ
   const shuffleCards = useCallback(() => {
     const selectedPhilosophers = philosophers.slice(0, difficultySettings[difficulty].pairs);
@@ -339,7 +353,7 @@ const Game5_MemoryMatch = () => {
                       <div
                         className={`w-full h-full bg-white rounded-lg shadow-lg flex items-center justify-center ${
                           matchedPairs.includes(card.matchId)
-                            ? 'ring-4 ring-green-400 bg-green-50'
+                            ? `ring-4 ${pairColors[card.matchId - 1] || 'ring-green-400 bg-green-50'}`
                             : ''
                         }`}
                       >
@@ -390,17 +404,17 @@ const Game5_MemoryMatch = () => {
                       <div className="bg-gray-50 rounded-lg p-4">
                         <h3 className="text-xl font-bold mb-3 text-gray-800">Kết quả game</h3>
                         <div className="space-y-2">
-                          <p className="text-lg">
-                            <span className="font-semibold">Điểm số:</span> {score}
+                          <p className="text-lg text-gray-800">
+                            <span className="font-semibold text-black">Điểm số:</span> {score}
                           </p>
-                          <p className="text-lg">
-                            <span className="font-semibold">Thời gian:</span> {formatTime(timeElapsed)}
+                          <p className="text-lg text-gray-800">
+                            <span className="font-semibold text-black">Thời gian:</span> {formatTime(timeElapsed)}
                           </p>
-                          <p className="text-lg">
-                            <span className="font-semibold">Số lượt:</span> {moves}
+                          <p className="text-lg text-gray-800">
+                            <span className="font-semibold text-black">Số lượt:</span> {moves}
                           </p>
-                          <p className="text-lg">
-                            <span className="font-semibold">Độ khó:</span> 
+                          <p className="text-lg text-gray-800">
+                            <span className="font-semibold text-black">Độ khó:</span> 
                             {difficulty === 'easy' && ' Dễ (6 cặp)'}
                             {difficulty === 'medium' && ' Trung bình (8 cặp)'}
                             {difficulty === 'hard' && ' Khó (10 cặp)'}
